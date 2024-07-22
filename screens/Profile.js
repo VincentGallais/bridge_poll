@@ -4,14 +4,12 @@ import {
   Image,
   SafeAreaView,
   ScrollView,
-  StatusBar,
   StyleSheet,
   Switch,
   Text,
   TouchableOpacity,
   View,
 } from "react-native";
-import { Colors } from "../assets/constants/Colors";
 import ProfileImage from "../assets/images/profile.jpg";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import CountryPickerModal from "../components/CountryPickerModal";
@@ -84,7 +82,6 @@ const Profile = () => {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.White }}>
-      <StatusBar backgroundColor={Colors.Green500} />
       <ScrollView contentContainerStyle={styles.container}>
         <View style={styles.header}>
           <Text style={styles.title}>Mon profil</Text>

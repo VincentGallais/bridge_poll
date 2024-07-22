@@ -17,54 +17,11 @@ import StackedCircularAvatar from "../components/StackedCircularAvatar";
 const SPACING = 5;
 const ITEM_SIZE = Platform.OS === "ios" ? width * 0.81 : width * 0.85;
 const EMPTY_ITEM_SIZE = (width - ITEM_SIZE) / 2;
-const BACKDROP_HEIGHT = height * 0.65;
-
-const Backdrop = ({ movies, scrollX }) => {
-  return (
-    <View style={{ height: BACKDROP_HEIGHT, width, position: "absolute" }}>
-      <FlatList
-        data={movies.reverse()}
-        keyExtractor={(item) => item.key + "-backdrop"}
-        removeClippedSubviews={false}
-        contentContainerStyle={{ width, height: BACKDROP_HEIGHT }}
-        renderItem={({ item, index }) => {
-          if (!item.backdrop) {
-            return null;
-          }
-          const translateX = scrollX.interpolate({
-            inputRange: [(index - 2) * ITEM_SIZE, (index - 1) * ITEM_SIZE],
-            outputRange: [0, width],
-          });
-          return (
-            <Animated.View
-              removeClippedSubviews={false}
-              style={{
-                position: "absolute",
-                width: translateX,
-                height,
-                overflow: "hidden",
-              }}
-            >
-              <Image
-                source={{ uri: item.backdrop }}
-                style={{
-                  width,
-                  height: BACKDROP_HEIGHT,
-                  position: "absolute",
-                }}
-              />
-            </Animated.View>
-          );
-        }}
-      />
-    </View>
-  );
-};
+const BACKGROUND_IMG_HEIGHT = height * 0.65;
 
 const Carousel = ({ movies, scrollX }) => {
   return (
-    <View style={{ ...styles.container, marginBottom: 64 }}>
-      <Backdrop movies={movies} scrollX={scrollX} />
+    <View style={{ ...styles.container, backgroundColor: "green" }}>
       <Animated.FlatList
         showsHorizontalScrollIndicator={false}
         data={movies}
@@ -73,7 +30,7 @@ const Carousel = ({ movies, scrollX }) => {
         bounces={false}
         decelerationRate={Platform.OS === "ios" ? 0 : 0.88}
         renderToHardwareTextureAndroid
-        contentContainerStyle={{ alignItems: "center" }}
+        contentContainerStyle={{ justifyContent: "flex-start" }}
         snapToInterval={ITEM_SIZE}
         snapToAlignment="start"
         onScroll={Animated.event(
@@ -94,7 +51,7 @@ const Carousel = ({ movies, scrollX }) => {
 
           const translateY = scrollX.interpolate({
             inputRange,
-            outputRange: [100, 50, 100],
+            outputRange: [60, 30, 60],
             extrapolate: "clamp",
           });
 
@@ -104,31 +61,34 @@ const Carousel = ({ movies, scrollX }) => {
                 style={{
                   marginHorizontal: SPACING,
                   padding: SPACING * 2,
-                  alignItems: "center",
                   transform: [{ translateY }],
                   backgroundColor: "white",
                   borderRadius: 34,
                 }}
               >
-                <Text style={{ fontSize: 24 }}>
-                  Auteur : {item.author}
-                </Text>
-                <Text style={{ fontSize: 12 }}>
-                  Date: 20/02/2024
-                </Text>
-                <Genres genres={item.genres} />
-                <Text style={{ fontSize: 12 }}>
-                  {item.description}
-                </Text>
-                <Image
-                  source={{ uri: item.poster }}
-                  style={{ ...styles.posterImage, height: ITEM_SIZE * 1.4 }}
-                />
-
-                <View style={{flexDirection: 'row'}}>
-                  <StackedCircularAvatar size="medium" />
-                  <Text style={{ fontSize: 12 }}>+5 ont répondu</Text>
+                <View style={{alignItems: 'center'}}>
+                  <Text style={{ fontSize: 24 }}>Auteur : {item.author}</Text>
+                  <Text style={{ fontSize: 12 }}>Date: 20/02/2024</Text>
+                  <Genres genres={item.genres} />
+                  <Text style={{ fontSize: 12 }}>{item.description}</Text>
+                  <Image
+                    source={{ uri: item.poster }}
+                    style={{ ...styles.posterImage, height: ITEM_SIZE }}
+                  />
                 </View>
+
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    marginHorizontal: 8,
+                  }}
+                >
+                  <StackedCircularAvatar size="small" additionalUsers={5} />
+                  <Text style={{ fontSize: 14 }}>20 commentaires</Text>
+                </View>
+                
               </Animated.View>
             </View>
           );

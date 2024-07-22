@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "score_app",
-    "slug": "score_app",
+    "name": "bridge_poll",
+    "slug": "bridge_poll",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

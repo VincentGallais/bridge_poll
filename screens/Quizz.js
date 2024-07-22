@@ -2,6 +2,7 @@ import * as React from "react";
 import { View, Animated, Text, StyleSheet } from "react-native";
 import Carousel from "../components/Carousel";
 import Header from "../components/Header";
+import QuizzFilter from "../components/QuizzFilter";
 
 const defaultMovies = [
   {
@@ -69,11 +70,9 @@ const Quizz = () => {
 
   return (
     <View style={styles.container}>
-      <Header/>
+      <Header notificationCount={3}/>
+      <QuizzFilter/>
       <Carousel movies={movies} scrollX={scrollX} />
-
-      {/* Mettre des flèches pour passer au suivant / précédent */}
-
     </View>
   );
 };

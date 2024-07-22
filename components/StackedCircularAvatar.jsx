@@ -1,8 +1,8 @@
 // StackedCircularAvatar.js
 import React from 'react';
-import { StyleSheet, View, Image } from 'react-native';
+import { StyleSheet, View, Image, Text } from 'react-native';
 
-const StackedCircularAvatar = ({ size = 'small' }) => {
+const StackedCircularAvatar = ({ size = 'small', additionalUsers = 0 }) => {
   const sizes = {
     small: 32,
     medium: 48,
@@ -13,7 +13,7 @@ const StackedCircularAvatar = ({ size = 'small' }) => {
   const marginLeft = -(avatarSize / 4);
 
   return (
-    <View style={[styles.avatarWrapper, { width: avatarSize * 4, height: avatarSize }]}>
+    <View style={[styles.avatarWrapper, { width: (avatarSize * 4) + (additionalUsers > 0 ? avatarSize : 0), height: avatarSize }]}>
       {[...Array(4)].map((_, index) => (
         <Image
           key={index}
@@ -23,6 +23,11 @@ const StackedCircularAvatar = ({ size = 'small' }) => {
           style={[styles.avatar, { width: avatarSize, height: avatarSize, marginLeft }]}
         />
       ))}
+      {additionalUsers > 0 && (
+        <View style={[styles.additionalAvatar, { width: avatarSize, height: avatarSize, marginLeft }]}>
+          <Text style={styles.additionalText}>+{additionalUsers}</Text>
+        </View>
+      )}
     </View>
   );
 };
@@ -37,6 +42,18 @@ const styles = StyleSheet.create({
     borderRadius: 9999,
     borderWidth: 3,
     borderColor: '#fff',
+  },
+  additionalAvatar: {
+    borderRadius: 9999,
+    borderWidth: 3,
+    borderColor: '#fff',
+    backgroundColor: '#ccc',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  additionalText: {
+    color: '#fff',
+    fontWeight: 'bold',
   },
 });
 
