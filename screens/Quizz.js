@@ -1,6 +1,7 @@
 import * as React from "react";
 import { View, Animated, Text, StyleSheet } from "react-native";
 import Carousel from "../components/Carousel";
+import Header from "../components/Header";
 
 const defaultMovies = [
   {
@@ -8,32 +9,32 @@ const defaultMovies = [
     author: "Vincent",
     poster: "https://via.placeholder.com/300x450",
     backdrop: "https://via.placeholder.com/1200x800",
-    genres: ["Action", "Adventure"],
-    description: "This is a default Quizz description.",
+    genres: ["Enchère"],
+    description: "Quelle est votre enchère ?",
   },
   {
     key: "2",
-    author: "Vincent",
+    author: "Clara",
     poster: "https://via.placeholder.com/300x450",
     backdrop: "https://via.placeholder.com/1200x800",
-    genres: ["Drama", "Thriller"],
-    description: "This is another default Quizz description.",
+    genres: ["Entame"],
+    description: "Quelle est votre entame ?",
   },
   {
     key: "3",
     author: "Vincent",
     poster: "https://via.placeholder.com/300x450",
     backdrop: "https://via.placeholder.com/1200x800",
-    genres: ["Drama", "Thriller"],
-    description: "This is another default Quizz description.",
+    genres: ["Enchère"],
+    description: "Quelle est votre enchère ?",
   },
   {
     key: "4",
     author: "Vincent",
     poster: "https://via.placeholder.com/300x450",
     backdrop: "https://via.placeholder.com/1200x800",
-    genres: ["Drama", "Thriller"],
-    description: "This is another default Quizz description.",
+    genres: ["Entame"],
+    description: "Quelle est votre entame ?",
   },
   // Add more default movies as needed
 ];
@@ -68,7 +69,11 @@ const Quizz = () => {
 
   return (
     <View style={styles.container}>
+      <Header/>
       <Carousel movies={movies} scrollX={scrollX} />
+
+      {/* Mettre des flèches pour passer au suivant / précédent */}
+
     </View>
   );
 };
@@ -91,4 +96,3 @@ export const styles = StyleSheet.create({
     textAlign: "center",
   },
 });
-

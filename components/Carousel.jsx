@@ -110,11 +110,14 @@ const Carousel = ({ movies, scrollX }) => {
                   borderRadius: 34,
                 }}
               >
-                <Text style={{ fontSize: 24 }} numberOfLines={1}>
+                <Text style={{ fontSize: 24 }}>
                   Auteur : {item.author}
                 </Text>
+                <Text style={{ fontSize: 12 }}>
+                  Date: 20/02/2024
+                </Text>
                 <Genres genres={item.genres} />
-                <Text style={{ fontSize: 12 }} numberOfLines={3}>
+                <Text style={{ fontSize: 12 }}>
                   {item.description}
                 </Text>
                 <Image
