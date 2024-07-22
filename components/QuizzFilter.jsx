@@ -5,7 +5,7 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 
 const QuizzFilter = () => {
   const [modalVisible, setModalVisible] = useState(false);
-  const [quizzDate, setQuizzDate] = useState('Day');
+  const [quizzDate, setQuizzDate] = useState('Yesterday');
   const [quizzType, setQuizzType] = useState('Lead');
   const [type, setType] = useState({
     Sport: true,
@@ -57,29 +57,29 @@ const QuizzFilter = () => {
             <TouchableOpacity
               style={[
                 modalStyles.button,
-                quizzDate === 'Day' && modalStyles.selectedButton,
+                quizzDate === 'Yesterday' && modalStyles.selectedButton,
               ]}
-              onPress={() => setQuizzDate('Day')}
+              onPress={() => setQuizzDate('Yesterday')}
             >
-              <Text style={quizzDate === 'Day' ? modalStyles.selectedButtonText : modalStyles.buttonText}>Day</Text>
+              <Text style={quizzDate === 'Yesterday' ? modalStyles.selectedButtonText : modalStyles.buttonText}>Yesterday</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={[
                 modalStyles.button,
-                quizzDate === 'Month' && modalStyles.selectedButton,
+                quizzDate === 'Last Month' && modalStyles.selectedButton,
               ]}
-              onPress={() => setQuizzDate('Month')}
+              onPress={() => setQuizzDate('Last Month')}
             >
-              <Text style={quizzDate === 'Month' ? modalStyles.selectedButtonText : modalStyles.buttonText}>Month</Text>
+              <Text style={quizzDate === 'Last Month' ? modalStyles.selectedButtonText : modalStyles.buttonText}>Last Month</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={[
                 modalStyles.button,
-                quizzDate === 'Year' && modalStyles.selectedButton,
+                quizzDate === 'Last Year' && modalStyles.selectedButton,
               ]}
-              onPress={() => setQuizzDate('Year')}
+              onPress={() => setQuizzDate('Last Year')}
             >
-              <Text style={quizzDate === 'Year' ? modalStyles.selectedButtonText : modalStyles.buttonText}>Year</Text>
+              <Text style={quizzDate === 'Last Year' ? modalStyles.selectedButtonText : modalStyles.buttonText}>Last Year</Text>
             </TouchableOpacity>
           </View>
 

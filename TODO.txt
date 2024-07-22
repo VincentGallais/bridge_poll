@@ -3,8 +3,9 @@ Choix niveau de jeu
 
 Vue lors d'un clic sur un autre user
 Refaire modale filter
-Clic sur un quizz l'ouvre en grand
+Clic sur un quizz l'ouvre en grand (version répondu et non répondu)
 Modale notifications
+Vue quand quizz répondu 
 
 Mettre un effet sur le footer au changement de page
 Fondu lors d'un changement de page
@@ -16,3 +17,6 @@ Notifications push
 
 Mettre la photo des amis en priorié sous le sondage
 Faire des contours sur la photo de profil
+
+Traductions en anglais
+Créer des premiers sondages

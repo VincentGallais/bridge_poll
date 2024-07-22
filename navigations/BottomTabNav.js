@@ -116,7 +116,7 @@ const BottomTabNav = () => {
                 color={focused ? Colors.DarkPurple : Colors.Black}
               />
               <Text style={[styles.label, { color: focused ? Colors.DarkPurple : Colors.Black }]}>
-                Ajouter
+                Nouveau
               </Text>
             </View>
           ),

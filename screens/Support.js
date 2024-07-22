@@ -108,7 +108,7 @@ export default function Support() {
             }}
           >
             <View style={styles.btn}>
-              <Text style={styles.btnText}>Continue</Text>
+              <Text style={styles.btnText}>Soutenir le projet</Text>
             </View>
           </TouchableOpacity>
 
