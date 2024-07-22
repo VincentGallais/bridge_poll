@@ -66,15 +66,29 @@ const Carousel = ({ movies, scrollX }) => {
                   borderRadius: 34,
                 }}
               >
-                <View style={{alignItems: 'center'}}>
+                <View style={{ alignItems: "center", marginBottom: 16 }}>
                   <Text style={{ fontSize: 24 }}>Auteur : {item.author}</Text>
                   <Text style={{ fontSize: 12 }}>Date: 20/02/2024</Text>
                   <Genres genres={item.genres} />
                   <Text style={{ fontSize: 12 }}>{item.description}</Text>
-                  <Image
-                    source={{ uri: item.poster }}
-                    style={{ ...styles.posterImage, height: ITEM_SIZE }}
-                  />
+                </View>
+                <Image
+                  source={{ uri: item.poster }}
+                  style={{ ...styles.posterImage, height: ITEM_SIZE }}
+                />
+
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    marginHorizontal: 10,
+                    marginVertical: 16,
+                  }}
+                >
+                  <Text>Reponse 1</Text>
+                  <Text>Reponse 2</Text>
+                  <Text>Reponse 3</Text>
+                  <Text>Share</Text>
                 </View>
 
                 <View
@@ -88,7 +102,6 @@ const Carousel = ({ movies, scrollX }) => {
                   <StackedCircularAvatar size="small" additionalUsers={5} />
                   <Text style={{ fontSize: 14 }}>20 commentaires</Text>
                 </View>
-                
               </Animated.View>
             </View>
           );

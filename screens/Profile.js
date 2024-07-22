@@ -13,6 +13,7 @@ import {
 import ProfileImage from "../assets/images/profile.jpg";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import CountryPickerModal from "../components/CountryPickerModal";
+import { Colors } from "../assets/constants/Colors";
 
 const user = {
   'countryId' : 'FR',
