@@ -3,6 +3,7 @@ import { Platform, StyleSheet, Text, View } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Support from '../screens/Support';
 import Quizz from '../screens/Quizz';
+import Submit from '../screens/Submit';
 import Profile from '../screens/Profile';
 import { FontAwesome, MaterialCommunityIcons, AntDesign } from '@expo/vector-icons';
 import { Colors } from '../assets/constants/Colors';
@@ -53,6 +54,24 @@ const BottomTabNav = () => {
               ]}
             >
               <MaterialCommunityIcons name="cards" size={32} color="white" />
+            </View>
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Submit"
+        component={Submit}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <View style={styles.iconContainer}>
+              <FontAwesome
+                name="plus"
+                size={24}
+                color={focused ? Colors.DarkPurple : Colors.Black}
+              />
+              <Text style={[styles.label, { color: focused ? Colors.DarkPurple : Colors.Black }]}>
+                Ajouter
+              </Text>
             </View>
           ),
         }}

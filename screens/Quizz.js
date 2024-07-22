@@ -70,7 +70,7 @@ const Quizz = () => {
 
   return (
     <View style={styles.container}>
-      <Header notificationCount={3}/>
+      <Header notificationCount={3} screen="quizz"/>
       <QuizzFilter/>
       <Carousel movies={movies} scrollX={scrollX} />
     </View>

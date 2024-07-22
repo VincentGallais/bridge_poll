@@ -1,4 +1,3 @@
-// Profile.jsx
 import React from "react";
 import {
   Image,
@@ -9,21 +8,26 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Modal,
+  Alert,
 } from "react-native";
-import ProfileImage from "../assets/images/profile.jpg";
+import ProfileImage from "../assets/images/profile.png";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import CountryPickerModal from "../components/CountryPickerModal";
 import { Colors } from "../assets/constants/Colors";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import ImagePicker from "react-native-image-picker";
+import Header from "../components/Header";
 
 const user = {
-  'countryId' : 'FR',
-  'country': 'France',
-  'friendsNbr' : 15,
-  'pollNbr': 30,
-  'bridgeLevel': 'Expert',
-  'firstName': 'Vincent',
-  'lastName': 'Gallais'
-}
+  countryId: "FR",
+  country: "France",
+  friendsNbr: 15,
+  pollNbr: 30,
+  bridgeLevel: "Expert",
+  firstName: "Vincent",
+  lastName: "Gallais",
+};
 
 const SECTIONS = [
   {
@@ -35,38 +39,41 @@ const SECTIONS = [
         label: "Country",
         type: "input",
       },
-    ],
-  },
-  {
-    header: "Help",
-    icon: "help-circle",
-    items: [
       {
-        id: "bla1",
-        label: "bla1",
+        id: "level",
+        label: "Level",
         type: "input",
       },
       {
-        id: "bla2",
-        label: "bla2",
-        type: "input",
-      },
-      {
-        id: "bla3",
-        label: "bla3",
+        id: "notification",
+        label: "Notifications",
         type: "toggle",
       },
     ],
+  },
+  {
+    header: "Mes sondages",
+    icon: "plus",
+    items: [],
+  },
+  {
+    header: "Mes réponses",
+    icon: "plus",
+    items: [],
   },
 ];
 
 const Profile = () => {
   const [form, setForm] = React.useState({
     country: user.country,
-    bla3: true,
+    level: user.bridgeLevel,
+    notification: true,
   });
   const [value, setValue] = React.useState(0);
   const [countryModalVisible, setCountryModalVisible] = React.useState(false);
+  const [photoModalVisible, setPhotoModalVisible] = React.useState(false);
+  const [profileImage, setProfileImage] = React.useState(ProfileImage);
+
   const { tabs, items } = React.useMemo(() => {
     return {
       tabs: SECTIONS.map(({ header, icon }) => ({
@@ -81,40 +88,85 @@ const Profile = () => {
     setForm((prevForm) => ({ ...prevForm, language }));
   };
 
+  const handleImagePicker = (source) => {
+    const options = {
+      title: "Select Photo",
+      storageOptions: {
+        skipBackup: true,
+        path: "images",
+      },
+    };
+
+    ImagePicker[`${source}Image`](options, (response) => {
+      if (response.didCancel) {
+        console.log("User cancelled image picker");
+      } else if (response.error) {
+        console.log("ImagePicker Error: ", response.error);
+      } else {
+        setProfileImage({ uri: response.uri });
+      }
+    });
+  };
+
+  const handleDeleteImage = () => {
+    Alert.alert(
+      "Delete Photo",
+      "Are you sure you want to delete this photo?",
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "OK",
+          onPress: () => setProfileImage(ProfileImage),
+        },
+      ],
+      { cancelable: false }
+    );
+  };
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.White }}>
-      <ScrollView contentContainerStyle={styles.container}>
-        <View style={styles.header}>
-          <Text style={styles.title}>Mon profil</Text>
-          <Text style={styles.subtitle}>blabla</Text>
-        </View>
-
+      <Header screen="profile" />
+      <ScrollView>
         <View style={styles.profile}>
           <View style={styles.profileHeader}>
-            <Image
-              alt="Profile Picture"
-              source={ProfileImage}
-              style={styles.profileAvatar}
-            />
-
+            <View style={styles.profileImageContainer}>
+              <Image
+                alt="Profile Picture"
+                source={profileImage}
+                style={styles.profileAvatar}
+              />
+              <TouchableOpacity
+                style={styles.cameraIconContainer}
+                onPress={() => setPhotoModalVisible(true)}
+              >
+                <MaterialCommunityIcons
+                  name="camera-outline"
+                  size={24}
+                  color="orange"
+                />
+              </TouchableOpacity>
+            </View>
             <View style={styles.profileBody}>
-              <View style={{flexDirection: 'row'}}>
+              <View style={{ flexDirection: "row" }}>
                 <Image
                   style={styles.radioImage}
                   source={{
                     uri: `https://flagsapi.com/${user.countryId}/flat/64.png`,
                   }}
                 />
-                <Text style={styles.profileName}>{user.firstName} {user.lastName}</Text>
+                <Text style={styles.profileName}>
+                  {user.firstName} {user.lastName}
+                </Text>
               </View>
-              <Text style={styles.profileLevel}>Niveau {user.bridgeLevel}</Text>
+              <Text style={styles.profileLevel}>Bridgeur {user.bridgeLevel}</Text>
+              <View style={{ flexDirection: "row", marginTop: 6, gap: 16 }}>
+                <Text>{user.friendsNbr} amis</Text>
+                <Text>{user.pollNbr} sondages</Text>
+              </View>
             </View>
-          </View>
-
-          <View style={{ flexDirection: "row", marginTop: 16, gap: 16 }}>
-            <Text>{user.friendsNbr} amis</Text>
-
-            <Text>{user.pollNbr} sondages</Text>
           </View>
 
           <View style={styles.profileActionsContainer}>
@@ -228,31 +280,58 @@ const Profile = () => {
         onClose={() => setCountryModalVisible(false)}
         onSelect={handleLanguageChange}
       />
+
+      {/* Photo Modal */}
+      <Modal
+        visible={photoModalVisible}
+        transparent={true}
+        animationType="slide"
+        onRequestClose={() => setPhotoModalVisible(false)}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>Choose an option</Text>
+            <TouchableOpacity
+              style={styles.modalButton}
+              onPress={() => {
+                handleImagePicker("launchCamera");
+                setPhotoModalVisible(false);
+              }}
+            >
+              <Text style={styles.modalButtonText}>Take Photo</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.modalButton}
+              onPress={() => {
+                handleImagePicker("launchImageLibrary");
+                setPhotoModalVisible(false);
+              }}
+            >
+              <Text style={styles.modalButtonText}>Choose from Library</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.modalButton}
+              onPress={() => {
+                handleDeleteImage();
+                setPhotoModalVisible(false);
+              }}
+            >
+              <Text style={styles.modalButtonText}>Delete Photo</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.modalButton}
+              onPress={() => setPhotoModalVisible(false)}
+            >
+              <Text style={styles.modalButtonText}>Cancel</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 };
 
-export default Profile;
-
 const styles = StyleSheet.create({
-  container: {
-    paddingVertical: 24,
-  },
-  header: {
-    paddingHorizontal: 24,
-    marginBottom: 12,
-  },
-  title: {
-    fontSize: 32,
-    fontWeight: "700",
-    color: "#1d1d1d",
-    marginBottom: 6,
-  },
-  subtitle: {
-    fontSize: 15,
-    fontWeight: "500",
-    color: "#929292",
-  },
   profile: {
     paddingTop: 12,
     paddingHorizontal: 24,
@@ -268,15 +347,15 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
   },
   profileAvatar: {
-    width: 60,
-    height: 60,
+    width: 80,
+    height: 80,
     borderRadius: 9999,
     borderWidth: 1,
     borderColor: "#ccc",
-    marginRight: 12,
   },
   profileBody: {
     flex: 1,
+    marginLeft: 16,
   },
   profileName: {
     fontSize: 15,
@@ -371,4 +450,44 @@ const styles = StyleSheet.create({
     height: 20,
     marginRight: 4,
   },
+  profileImageContainer: {
+    position: "relative",
+  },
+  cameraIconContainer: {
+    position: "absolute",
+    bottom: -2,
+    right: -2,
+    backgroundColor: "#f1f1f1",
+    borderRadius: 50,
+    padding: 5,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  modalContent: {
+    backgroundColor: "#fff",
+    borderRadius: 8,
+    padding: 16,
+    width: "80%",
+    alignItems: "center",
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: "600",
+    marginBottom: 16,
+  },
+  modalButton: {
+    paddingVertical: 12,
+    width: "100%",
+    alignItems: "center",
+  },
+  modalButtonText: {
+    fontSize: 16,
+    color: "#007bff",
+  },
 });
+
+export default Profile;

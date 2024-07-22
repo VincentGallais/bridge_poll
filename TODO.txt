@@ -6,3 +6,7 @@ Cliquer sur le nom de l'auteur pour voir son profil dans une modale
 Cliquer sur les têtes pour voir qui a répondu (possibilité d'ajouter en ami)
 Icônes de pays en local pour ne pas fetch une api ?
 Modale choix pays : Pays de l'user présélectionné et mise à jour sur la page (et drapeau en haut à côté nom)
+Faire boucler les quizz, jamais de fin
+
+Le profil s'accède depuis le header
+L'onglet profil devient un onglet de submit de quizz
