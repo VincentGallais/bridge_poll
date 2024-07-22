@@ -1,0 +1,3 @@
+Mettre un effet y sur le footer
+Remonter le carrousel
+Profil : Ajouts amis, modifier profil
