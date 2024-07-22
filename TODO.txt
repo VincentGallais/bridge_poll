@@ -1,3 +1,8 @@
-Mettre un effet y sur le footer
-Remonter le carrousel
-Profil : Ajouts amis, modifier profil
+Mettre un effet sur le footer
+Animation lors du changement de page
+Scroll horizontal dans profil sur les rubriques
+Arriver sur la page quizz par défaut
+Cliquer sur le nom de l'auteur pour voir son profil dans une modale
+Cliquer sur les têtes pour voir qui a répondu (possibilité d'ajouter en ami)
+Icônes de pays en local pour ne pas fetch une api ?
+Modale choix pays : Pays de l'user présélectionné et mise à jour sur la page (et drapeau en haut à côté nom)

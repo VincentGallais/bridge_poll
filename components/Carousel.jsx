@@ -7,11 +7,12 @@ import {
   Dimensions,
   Animated,
   Platform,
+  StyleSheet,
 } from "react-native";
 import Genres from "../Genre";
 
 const { width, height } = Dimensions.get("window");
-import { styles } from "../assets/styles";
+import StackedCircularAvatar from "../components/StackedCircularAvatar";
 
 const SPACING = 5;
 const ITEM_SIZE = Platform.OS === "ios" ? width * 0.81 : width * 0.85;
@@ -62,7 +63,7 @@ const Backdrop = ({ movies, scrollX }) => {
 
 const Carousel = ({ movies, scrollX }) => {
   return (
-    <View style={{...styles.container, marginBottom: 64}}>
+    <View style={{ ...styles.container, marginBottom: 64 }}>
       <Backdrop movies={movies} scrollX={scrollX} />
       <Animated.FlatList
         showsHorizontalScrollIndicator={false}
@@ -109,17 +110,22 @@ const Carousel = ({ movies, scrollX }) => {
                   borderRadius: 34,
                 }}
               >
-                <Image
-                  source={{ uri: item.poster }}
-                  style={{ ...styles.posterImage, height: ITEM_SIZE * 1.4 }}
-                />
                 <Text style={{ fontSize: 24 }} numberOfLines={1}>
-                  {item.title}
+                  Auteur : {item.author}
                 </Text>
                 <Genres genres={item.genres} />
                 <Text style={{ fontSize: 12 }} numberOfLines={3}>
                   {item.description}
                 </Text>
+                <Image
+                  source={{ uri: item.poster }}
+                  style={{ ...styles.posterImage, height: ITEM_SIZE * 1.4 }}
+                />
+
+                <View style={{flexDirection: 'row'}}>
+                  <StackedCircularAvatar size="medium" />
+                  <Text style={{ fontSize: 12 }}>+5 ont répondu</Text>
+                </View>
               </Animated.View>
             </View>
           );
@@ -130,3 +136,16 @@ const Carousel = ({ movies, scrollX }) => {
 };
 
 export default Carousel;
+
+export const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  posterImage: {
+    width: "100%",
+    resizeMode: "cover",
+    borderRadius: 24,
+    margin: 0,
+    marginBottom: 10,
+  },
+});

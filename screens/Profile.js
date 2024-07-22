@@ -1,3 +1,4 @@
+// Profile.jsx
 import React from "react";
 import {
   Image,
@@ -13,6 +14,17 @@ import {
 import { Colors } from "../assets/constants/Colors";
 import ProfileImage from "../assets/images/profile.jpg";
 import FeatherIcon from "react-native-vector-icons/Feather";
+import CountryPickerModal from "../components/CountryPickerModal";
+
+const user = {
+  'countryId' : 'FR',
+  'country': 'France',
+  'friendsNbr' : 15,
+  'pollNbr': 30,
+  'bridgeLevel': 'Expert',
+  'firstName': 'Vincent',
+  'lastName': 'Gallais'
+}
 
 const SECTIONS = [
   {
@@ -20,8 +32,8 @@ const SECTIONS = [
     icon: "settings",
     items: [
       {
-        id: "language",
-        label: "Language",
+        id: "country",
+        label: "Country",
         type: "input",
       },
     ],
@@ -51,10 +63,11 @@ const SECTIONS = [
 
 const Profile = () => {
   const [form, setForm] = React.useState({
-    language: "English",
+    country: user.country,
     bla3: true,
   });
   const [value, setValue] = React.useState(0);
+  const [countryModalVisible, setCountryModalVisible] = React.useState(false);
   const { tabs, items } = React.useMemo(() => {
     return {
       tabs: SECTIONS.map(({ header, icon }) => ({
@@ -65,12 +78,16 @@ const Profile = () => {
     };
   }, [value]);
 
+  const handleLanguageChange = (language) => {
+    setForm((prevForm) => ({ ...prevForm, language }));
+  };
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.White }}>
       <StatusBar backgroundColor={Colors.Green500} />
       <ScrollView contentContainerStyle={styles.container}>
         <View style={styles.header}>
-          <Text style={styles.title}>Profile</Text>
+          <Text style={styles.title}>Mon profil</Text>
           <Text style={styles.subtitle}>blabla</Text>
         </View>
 
@@ -83,15 +100,23 @@ const Profile = () => {
             />
 
             <View style={styles.profileBody}>
-              <Text style={styles.profileName}>FR Vincent Gallais</Text>
-              <Text style={styles.profileLevel}>Niveau Expert</Text>
+              <View style={{flexDirection: 'row'}}>
+                <Image
+                  style={styles.radioImage}
+                  source={{
+                    uri: `https://flagsapi.com/${user.countryId}/flat/64.png`,
+                  }}
+                />
+                <Text style={styles.profileName}>{user.firstName} {user.lastName}</Text>
+              </View>
+              <Text style={styles.profileLevel}>Niveau {user.bridgeLevel}</Text>
             </View>
           </View>
 
           <View style={{ flexDirection: "row", marginTop: 16, gap: 16 }}>
-            <Text>15 amis</Text>
+            <Text>{user.friendsNbr} amis</Text>
 
-            <Text>30 sondages</Text>
+            <Text>{user.pollNbr} sondages</Text>
           </View>
 
           <View style={styles.profileActionsContainer}>
@@ -100,9 +125,10 @@ const Profile = () => {
                 //handleOnpress
               }}
               style={styles.profileActionButton}
-
             >
-              <View style={{...styles.profileAction, backgroundColor: "#007bff"}}>
+              <View
+                style={{ ...styles.profileAction, backgroundColor: "#007bff" }}
+              >
                 <Text style={styles.profileActionText}>Edit Profile</Text>
                 <FeatherIcon name="edit-3" color="#fff" size={16} />
               </View>
@@ -113,10 +139,11 @@ const Profile = () => {
                 //handleOnpress
               }}
               style={styles.profileActionButton}
-
             >
-              <View style={{...styles.profileAction, backgroundColor: "#28a745"}}>
-              <Text style={styles.profileActionText}>Add Friend</Text>
+              <View
+                style={{ ...styles.profileAction, backgroundColor: "#28a745" }}
+              >
+                <Text style={styles.profileActionText}>Add Friend</Text>
                 <FeatherIcon name="user-plus" color="#fff" size={16} />
               </View>
             </TouchableOpacity>
@@ -160,7 +187,9 @@ const Profile = () => {
             <View key={index} style={styles.profileRowWrapper}>
               <TouchableOpacity
                 onPress={() => {
-                  //handle onPress
+                  if (id === "country") {
+                    setCountryModalVisible(true);
+                  }
                 }}
               >
                 <View style={styles.profileRow}>
@@ -195,6 +224,12 @@ const Profile = () => {
           ))}
         </View>
       </ScrollView>
+
+      <CountryPickerModal
+        visible={countryModalVisible}
+        onClose={() => setCountryModalVisible(false)}
+        onSelect={handleLanguageChange}
+      />
     </SafeAreaView>
   );
 };
@@ -332,5 +367,10 @@ const styles = StyleSheet.create({
   profileActionButton: {
     flex: 1,
     marginHorizontal: 8,
+  },
+  radioImage: {
+    width: 20,
+    height: 20,
+    marginRight: 4,
   },
 });

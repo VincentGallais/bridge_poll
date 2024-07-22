@@ -1,40 +1,39 @@
 import * as React from "react";
-import { View, Animated, Text } from "react-native";
+import { View, Animated, Text, StyleSheet } from "react-native";
 import Carousel from "../components/Carousel";
-import { styles } from "../assets/styles";
 
 const defaultMovies = [
   {
     key: "1",
-    title: "Default Movie 1",
+    author: "Vincent",
     poster: "https://via.placeholder.com/300x450",
     backdrop: "https://via.placeholder.com/1200x800",
     genres: ["Action", "Adventure"],
-    description: "This is a default movie description.",
+    description: "This is a default Quizz description.",
   },
   {
     key: "2",
-    title: "Default Movie 2",
+    author: "Vincent",
     poster: "https://via.placeholder.com/300x450",
     backdrop: "https://via.placeholder.com/1200x800",
     genres: ["Drama", "Thriller"],
-    description: "This is another default movie description.",
+    description: "This is another default Quizz description.",
   },
   {
     key: "3",
-    title: "Default Movie 2",
+    author: "Vincent",
     poster: "https://via.placeholder.com/300x450",
     backdrop: "https://via.placeholder.com/1200x800",
     genres: ["Drama", "Thriller"],
-    description: "This is another default movie description.",
+    description: "This is another default Quizz description.",
   },
   {
     key: "4",
-    title: "Default Movie 2",
+    author: "Vincent",
     poster: "https://via.placeholder.com/300x450",
     backdrop: "https://via.placeholder.com/1200x800",
     genres: ["Drama", "Thriller"],
-    description: "This is another default movie description.",
+    description: "This is another default Quizz description.",
   },
   // Add more default movies as needed
 ];
@@ -75,3 +74,21 @@ const Quizz = () => {
 };
 
 export default Quizz;
+
+export const styles = StyleSheet.create({
+  loadingContainer: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  container: {
+    flex: 1,
+  },
+  paragraph: {
+    margin: 24,
+    fontSize: 18,
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+});
+
