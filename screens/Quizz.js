@@ -1,40 +1,47 @@
 import * as React from "react";
 import { View, Animated, Text, StyleSheet } from "react-native";
 import Carousel from "../components/Carousel";
-import Header from "../components/Header";
 import QuizzFilter from "../components/QuizzFilter";
 
 const defaultMovies = [
   {
     key: "1",
     author: "Vincent",
+    date: "20/02/2024",
+    answers: 2,
     poster: "https://via.placeholder.com/300x450",
     backdrop: "https://via.placeholder.com/1200x800",
-    genres: ["Enchère"],
+    tags: ["Enchère"],
     description: "Quelle est votre enchère ?",
   },
   {
     key: "2",
     author: "Clara",
+    date: "20/02/2024",
+    answers: 150,
     poster: "https://via.placeholder.com/300x450",
     backdrop: "https://via.placeholder.com/1200x800",
-    genres: ["Entame"],
+    tags: ["Entame"],
     description: "Quelle est votre entame ?",
   },
   {
     key: "3",
     author: "Vincent",
+    date: "20/02/2024",
+    answers: 25,
     poster: "https://via.placeholder.com/300x450",
     backdrop: "https://via.placeholder.com/1200x800",
-    genres: ["Enchère"],
+    tags: ["Enchère"],
     description: "Quelle est votre enchère ?",
   },
   {
     key: "4",
     author: "Vincent",
+    date: "20/02/2024",
+    answers: 15,
     poster: "https://via.placeholder.com/300x450",
     backdrop: "https://via.placeholder.com/1200x800",
-    genres: ["Entame"],
+    tags: ["Entame"],
     description: "Quelle est votre entame ?",
   },
   // Add more default movies as needed
@@ -70,7 +77,6 @@ const Quizz = () => {
 
   return (
     <View style={styles.container}>
-      <Header notificationCount={3} screen="quizz"/>
       <QuizzFilter/>
       <Carousel movies={movies} scrollX={scrollX} />
     </View>

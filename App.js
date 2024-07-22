@@ -6,6 +6,7 @@ import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "react-native";
 import { Colors } from "./assets/constants/Colors";
+import Profile from './screens/Profile'; // Importez votre composant Profile
 
 SplashScreen.preventAutoHideAsync();
 const Stack = createNativeStackNavigator();
@@ -30,7 +31,6 @@ export default function App() {
   }
 
   return (
-
     <NavigationContainer onReady={onLayoutRootView}>
       <StatusBar backgroundColor={Colors.Green500} />
       <Stack.Navigator initialRouteName="BottomTabNavigation">
@@ -38,7 +38,12 @@ export default function App() {
           name="BottomTabNavigation"
           component={BottomTabNav}
           options={{ headerShown: false }}
-        ></Stack.Screen>
+        />
+        <Stack.Screen 
+          name="Profile" 
+          component={Profile} 
+          options={{ headerShown: true }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

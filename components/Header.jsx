@@ -1,24 +1,45 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import { Colors } from "../assets/constants/Colors";
+import ProfileImage from "../assets/images/profile.png";
 
-const Header = ({ notificationCount, screen }) => {
+const Header = ({ navigation, notificationCount, page }) => {
   return (
     <SafeAreaView style={{ backgroundColor: Colors.Green500 }}>
       <View style={styles.headerContainer}>
-        <Text style={styles.welcomeText}>
-          {screen === "quizz" ? "Welcome X" : "My profile"}
-        </Text>
+        {page === "home" ? (
+          <View style={styles.greetingContainer}>
+            <Text style={styles.headerText}>Hello</Text>
+            <Text style={{ ...styles.headerText, fontWeight: "900", marginLeft: 4 }}>
+              Vincent
+            </Text>
+          </View>
+        ) : page === "submit" ? (
+          <Text style={styles.headerText}>Submit a new poll</Text>
+        ) : page === "support" ? (
+          <Text style={styles.headerText}>Support us !</Text>
+        ) : (
+          <Text style={styles.headerText}>Unknown Page</Text>
+        )}
         <View style={styles.iconContainer}>
-          <FeatherIcon name="user" size={24} color="white" />
-          <FeatherIcon name="bell" size={24} color="white" />
-          {notificationCount > 0 && (
-            <View style={styles.notificationBadge}>
-              <Text style={styles.notificationText}>{notificationCount}</Text>
-            </View>
-          )}
+         
+          <View style={styles.bellContainer}>
+            <FeatherIcon name="bell" size={20} color="white" />
+            {notificationCount > 0 && (
+              <View style={styles.notificationBadge}>
+                <Text style={styles.notificationText}>{notificationCount}</Text>
+              </View>
+            )}
+          </View>
+          <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
+            <Image
+              alt="Profile Picture"
+              source={ProfileImage}
+              style={styles.profileAvatar}
+            />
+          </TouchableOpacity>
         </View>
       </View>
     </SafeAreaView>
@@ -29,24 +50,39 @@ const styles = StyleSheet.create({
   headerContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "flex-end",
+    alignItems: "center",
     marginHorizontal: 16,
-    paddingVertical: 16,
+    paddingVertical: 8,
   },
-  welcomeText: {
+  greetingContainer: {
+    flexDirection: "row",
+    alignItems: "flex-end",
+  },
+  headerText: {
     fontSize: 18,
     fontWeight: "600",
     color: "white",
   },
   iconContainer: {
-    position: "relative",
     flexDirection: "row",
-    gap: 16,
+    alignItems: "center",
+  },
+  bellContainer: {
+    position: "relative",
+    width: 42,
+    height: 42,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "transparent",
+    marginRight: 16,
+    borderColor: "#ccc",
+    borderRadius: 9999,
+    borderWidth: 1
   },
   notificationBadge: {
     position: "absolute",
-    right: -4,
-    top: -8,
+    right: 0,
+    top: -5,
     backgroundColor: "red",
     borderRadius: 8,
     width: 16,
@@ -58,6 +94,13 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 10,
     fontWeight: "bold",
+  },
+  profileAvatar: {
+    width: 42,
+    height: 42,
+    borderRadius: 9999,
+    borderWidth: 1,
+    borderColor: "#ccc",
   },
 });
 

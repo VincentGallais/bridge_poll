@@ -8,12 +8,11 @@ import {
   Platform,
   StyleSheet,
 } from "react-native";
-import Genres from "../Genre";
+import Tags from "./Tags";
 
 const { width, height } = Dimensions.get("window");
 import StackedCircularAvatar from "../components/StackedCircularAvatar";
 import AwesomeButton from "react-native-really-awesome-button";
-import { LinearGradient } from "react-native-svg";
 
 const SPACING = 5;
 const ITEM_SIZE = Platform.OS === "ios" ? width * 0.81 : width * 0.85;
@@ -52,7 +51,7 @@ const Carousel = ({ movies, scrollX }) => {
 
           const translateY = scrollX.interpolate({
             inputRange,
-            outputRange: [50, 20, 50],
+            outputRange: [40, 10, 40],
             extrapolate: "clamp",
           });
 
@@ -77,11 +76,13 @@ const Carousel = ({ movies, scrollX }) => {
                     }}
                   >
                     <Text style={{ fontSize: 14 }}>{item.author}</Text>
-                    <Text style={{ fontSize: 14 }}>20/02/2024</Text>
-                    <Genres genres={item.genres} />
+                    <Text style={{ fontSize: 14 }}>{item.date}</Text>
+                    <Tags tags={item.tags} />
                   </View>
 
-                  <Text style={{ fontSize: 16, textAlign: "center", marginTop: 16 }}>
+                  <Text
+                    style={{ fontSize: 16, textAlign: "center", marginTop: 16 }}
+                  >
                     {item.description}
                   </Text>
                 </View>
@@ -93,7 +94,7 @@ const Carousel = ({ movies, scrollX }) => {
                 <View
                   style={{
                     flexDirection: "row",
-                    justifyContent: "flex-start",
+                    justifyContent: "space-around",
                     marginHorizontal: 10,
                     marginTop: 16,
                     marginBottom: 24,
@@ -121,7 +122,9 @@ const Carousel = ({ movies, scrollX }) => {
                   >
                     C
                   </AwesomeButton>
-                  <AwesomeButton>Share</AwesomeButton>
+                  <AwesomeButton width={100} height={60}>
+                    Share
+                  </AwesomeButton>
                 </View>
 
                 <View
@@ -132,7 +135,7 @@ const Carousel = ({ movies, scrollX }) => {
                     marginHorizontal: 8,
                   }}
                 >
-                  <StackedCircularAvatar size="small" additionalUsers={5} />
+                  <StackedCircularAvatar size="small" answers={item.answers} />
                   <Text style={{ fontSize: 14 }}>20 commentaires</Text>
                 </View>
               </Animated.View>

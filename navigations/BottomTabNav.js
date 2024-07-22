@@ -1,20 +1,59 @@
 import React from 'react';
 import { Platform, StyleSheet, Text, View } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Support from '../screens/Support';
 import Quizz from '../screens/Quizz';
 import Submit from '../screens/Submit';
-import Profile from '../screens/Profile';
 import { FontAwesome, MaterialCommunityIcons, AntDesign } from '@expo/vector-icons';
 import { Colors } from '../assets/constants/Colors';
+import Header from '../components/Header';
+import HomeRedirect from './HomeRedirect';
 
 const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
 
 const screenOptions = {
   tabBarShowLabel: false,
   headerShown: false,
   tabBarHideOnKeyboard: true,
 };
+
+const SupportStack = ({ navigation }) => (
+  <Stack.Navigator>
+    <Stack.Screen
+      name="SupportScreen"
+      component={Support}
+      options={{
+        header: () => <Header navigation={navigation} notificationCount={5} page="support" />,
+      }}
+    />
+  </Stack.Navigator>
+);
+
+const QuizzStack = ({ navigation }) => (
+  <Stack.Navigator>
+    <Stack.Screen
+      name="QuizzScreen"
+      component={Quizz}
+      options={{
+        header: () => <Header navigation={navigation} notificationCount={5} page="home" />,
+      }}
+    />
+  </Stack.Navigator>
+);
+
+const SubmitStack = ({ navigation }) => (
+  <Stack.Navigator>
+    <Stack.Screen
+      name="SubmitScreen"
+      component={Submit}
+      options={{
+        header: () => <Header navigation={navigation} notificationCount={5} page="submit" />,
+      }}
+    />
+  </Stack.Navigator>
+);
 
 const BottomTabNav = () => {
   return (
@@ -25,8 +64,15 @@ const BottomTabNav = () => {
       }}
     >
       <Tab.Screen
+        name="HomeRedirect"
+        component={HomeRedirect}
+        options={{ 
+          tabBarButton: () => null, // Ne pas afficher ce bouton
+        }}
+      />
+      <Tab.Screen
         name="Support"
-        component={Support}
+        component={SupportStack}
         options={{
           tabBarIcon: ({ focused }) => (
             <View style={styles.iconContainer}>
@@ -44,7 +90,7 @@ const BottomTabNav = () => {
       />
       <Tab.Screen
         name="Quizz"
-        component={Quizz}
+        component={QuizzStack}
         options={{
           tabBarIcon: ({ focused }) => (
             <View
@@ -60,7 +106,7 @@ const BottomTabNav = () => {
       />
       <Tab.Screen
         name="Submit"
-        component={Submit}
+        component={SubmitStack}
         options={{
           tabBarIcon: ({ focused }) => (
             <View style={styles.iconContainer}>
@@ -71,24 +117,6 @@ const BottomTabNav = () => {
               />
               <Text style={[styles.label, { color: focused ? Colors.DarkPurple : Colors.Black }]}>
                 Ajouter
-              </Text>
-            </View>
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Profile"
-        component={Profile}
-        options={{
-          tabBarIcon: ({ focused }) => (
-            <View style={styles.iconContainer}>
-              <FontAwesome
-                name="user"
-                size={24}
-                color={focused ? Colors.DarkPurple : Colors.Black}
-              />
-              <Text style={[styles.label, { color: focused ? Colors.DarkPurple : Colors.Black }]}>
-                Profil
               </Text>
             </View>
           ),

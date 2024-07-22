@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-export default function Genres({ genres }) {
+export default function Tags({ tags }) {
   return (
-    <View style={styles.genres}>
-      {genres.map((genre, i) => {
+    <View style={styles.tags}>
+      {tags.map((tag, i) => {
         return (
-          <View key={genre} style={styles.genre}>
-            <Text style={styles.genreText}>{genre}</Text>
+          <View key={tag} style={styles.tag}>
+            <Text style={styles.tagText}>{tag}</Text>
           </View>
         );
       })}
@@ -16,13 +16,13 @@ export default function Genres({ genres }) {
 }
 
 const styles = StyleSheet.create({
-  genres: {
+  tags: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
     marginVertical: 4,
   },
-  genre: {
+  tag: {
     paddingHorizontal: 6,
     paddingVertical: 2,
     borderWidth: 1,
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     marginRight: 4,
     marginBottom: 4,
   },
-  genreText: {
+  tagText: {
     fontSize: 12, 
     opacity: 0.6
   }
