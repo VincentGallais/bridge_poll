@@ -12,7 +12,9 @@ const Header = ({ navigation, notificationCount, page }) => {
         {page === "home" ? (
           <View style={styles.greetingContainer}>
             <Text style={styles.headerText}>Hello</Text>
-            <Text style={{ ...styles.headerText, fontWeight: "900", marginLeft: 4 }}>
+            <Text
+              style={{ ...styles.headerText, fontWeight: "900", marginLeft: 4 }}
+            >
               Vincent
             </Text>
           </View>
@@ -24,15 +26,19 @@ const Header = ({ navigation, notificationCount, page }) => {
           <Text style={styles.headerText}>Unknown Page</Text>
         )}
         <View style={styles.iconContainer}>
-         
-          <View style={styles.bellContainer}>
-            <FeatherIcon name="bell" size={20} color="white" />
-            {notificationCount > 0 && (
-              <View style={styles.notificationBadge}>
-                <Text style={styles.notificationText}>{notificationCount}</Text>
-              </View>
-            )}
-          </View>
+          <TouchableOpacity onPress={() => navigation.navigate("Notification")}>
+            <View style={styles.bellContainer}>
+              <FeatherIcon name="bell" size={20} color="white" />
+              {notificationCount > 0 && (
+                <View style={styles.notificationBadge}>
+                  <Text style={styles.notificationText}>
+                    {notificationCount}
+                  </Text>
+                </View>
+              )}
+            </View>
+          </TouchableOpacity>
+
           <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
             <Image
               alt="Profile Picture"
@@ -77,7 +83,7 @@ const styles = StyleSheet.create({
     marginRight: 16,
     borderColor: "#ccc",
     borderRadius: 9999,
-    borderWidth: 1
+    borderWidth: 1,
   },
   notificationBadge: {
     position: "absolute",

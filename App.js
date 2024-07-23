@@ -6,7 +6,8 @@ import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "react-native";
 import { Colors } from "./assets/constants/Colors";
-import Profile from './screens/Profile'; // Importez votre composant Profile
+import Profile from './screens/Profile';
+import Notification from './screens/Notification';
 
 SplashScreen.preventAutoHideAsync();
 const Stack = createNativeStackNavigator();
@@ -42,6 +43,11 @@ export default function App() {
         <Stack.Screen 
           name="Profile" 
           component={Profile} 
+          options={{ headerShown: true }}
+        />
+        <Stack.Screen 
+          name="Notification" 
+          component={Notification} 
           options={{ headerShown: true }}
         />
       </Stack.Navigator>

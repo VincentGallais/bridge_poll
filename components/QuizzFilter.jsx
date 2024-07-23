@@ -1,12 +1,19 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Modal, Button } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Modal,
+  Button,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import Icon from "react-native-vector-icons/MaterialIcons";
+import FeatherIcon from "react-native-vector-icons/Feather";
 
 const QuizzFilter = () => {
   const [modalVisible, setModalVisible] = useState(false);
-  const [quizzDate, setQuizzDate] = useState('Yesterday');
-  const [quizzType, setQuizzType] = useState('Lead');
+  const [quizzDate, setQuizzDate] = useState("Yesterday");
+  const [quizzType, setQuizzType] = useState("Lead");
   const [type, setType] = useState({
     Sport: true,
     SUV: true,
@@ -16,10 +23,10 @@ const QuizzFilter = () => {
     Hatchback: false,
   });
   const [capacity, setCapacity] = useState({
-    '2 Person': true,
-    '4 Person': true,
-    '6 Person': false,
-    '8 or More': true,
+    "2 Person": true,
+    "4 Person": true,
+    "6 Person": false,
+    "8 or More": true,
   });
 
   const handleTypeChange = (key) => {
@@ -41,8 +48,8 @@ const QuizzFilter = () => {
   return (
     <SafeAreaView>
       <TouchableOpacity onPress={onFilterPress} style={styles.container}>
-        <Text style={styles.text}>Choose filters</Text>
-        <Icon name="sort" size={24} color="black" />
+        <Text style={styles.text}>Apply filters</Text>
+        <FeatherIcon color="#000" name="sliders" size={21} />
       </TouchableOpacity>
 
       <Modal
@@ -57,29 +64,53 @@ const QuizzFilter = () => {
             <TouchableOpacity
               style={[
                 modalStyles.button,
-                quizzDate === 'Yesterday' && modalStyles.selectedButton,
+                quizzDate === "Yesterday" && modalStyles.selectedButton,
               ]}
-              onPress={() => setQuizzDate('Yesterday')}
+              onPress={() => setQuizzDate("Yesterday")}
             >
-              <Text style={quizzDate === 'Yesterday' ? modalStyles.selectedButtonText : modalStyles.buttonText}>Yesterday</Text>
+              <Text
+                style={
+                  quizzDate === "Yesterday"
+                    ? modalStyles.selectedButtonText
+                    : modalStyles.buttonText
+                }
+              >
+                Yesterday
+              </Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={[
                 modalStyles.button,
-                quizzDate === 'Last Month' && modalStyles.selectedButton,
+                quizzDate === "Last Month" && modalStyles.selectedButton,
               ]}
-              onPress={() => setQuizzDate('Last Month')}
+              onPress={() => setQuizzDate("Last Month")}
             >
-              <Text style={quizzDate === 'Last Month' ? modalStyles.selectedButtonText : modalStyles.buttonText}>Last Month</Text>
+              <Text
+                style={
+                  quizzDate === "Last Month"
+                    ? modalStyles.selectedButtonText
+                    : modalStyles.buttonText
+                }
+              >
+                Last Month
+              </Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={[
                 modalStyles.button,
-                quizzDate === 'Last Year' && modalStyles.selectedButton,
+                quizzDate === "Last Year" && modalStyles.selectedButton,
               ]}
-              onPress={() => setQuizzDate('Last Year')}
+              onPress={() => setQuizzDate("Last Year")}
             >
-              <Text style={quizzDate === 'Last Year' ? modalStyles.selectedButtonText : modalStyles.buttonText}>Last Year</Text>
+              <Text
+                style={
+                  quizzDate === "Last Year"
+                    ? modalStyles.selectedButtonText
+                    : modalStyles.buttonText
+                }
+              >
+                Last Year
+              </Text>
             </TouchableOpacity>
           </View>
 
@@ -88,32 +119,59 @@ const QuizzFilter = () => {
             <TouchableOpacity
               style={[
                 modalStyles.button,
-                quizzType === 'Bid' && modalStyles.selectedButton,
+                quizzType === "Bid" && modalStyles.selectedButton,
               ]}
-              onPress={() => setQuizzType('Bid')}
+              onPress={() => setQuizzType("Bid")}
             >
-              <Text style={quizzType === 'Bid' ? modalStyles.selectedButtonText : modalStyles.buttonText}>Bid</Text>
+              <Text
+                style={
+                  quizzType === "Bid"
+                    ? modalStyles.selectedButtonText
+                    : modalStyles.buttonText
+                }
+              >
+                Bid
+              </Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={[
                 modalStyles.button,
-                quizzType === 'Lead' && modalStyles.selectedButton,
+                quizzType === "Lead" && modalStyles.selectedButton,
               ]}
-              onPress={() => setQuizzType('Lead')}
+              onPress={() => setQuizzType("Lead")}
             >
-              <Text style={quizzType === 'Lead' ? modalStyles.selectedButtonText : modalStyles.buttonText}>Lead</Text>
+              <Text
+                style={
+                  quizzType === "Lead"
+                    ? modalStyles.selectedButtonText
+                    : modalStyles.buttonText
+                }
+              >
+                Lead
+              </Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={[
                 modalStyles.button,
-                quizzType === 'Maniement' && modalStyles.selectedButton,
+                quizzType === "Maniement" && modalStyles.selectedButton,
               ]}
-              onPress={() => setQuizzType('Maniement')}
+              onPress={() => setQuizzType("Maniement")}
             >
-              <Text style={quizzType === 'Maniement' ? modalStyles.selectedButtonText : modalStyles.buttonText}>Maniement</Text>
+              <Text
+                style={
+                  quizzType === "Maniement"
+                    ? modalStyles.selectedButtonText
+                    : modalStyles.buttonText
+                }
+              >
+                Maniement
+              </Text>
             </TouchableOpacity>
           </View>
-          <TouchableOpacity style={modalStyles.closeButton} onPress={closeModal}>
+          <TouchableOpacity
+            style={modalStyles.closeButton}
+            onPress={closeModal}
+          >
             <Text style={modalStyles.closeButtonText}>Close</Text>
           </TouchableOpacity>
         </View>
@@ -143,8 +201,8 @@ const modalStyles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
-    fontWeight: 'bold',
-    textAlign: 'center',
+    fontWeight: "bold",
+    textAlign: "center",
     marginBottom: 20,
   },
   subtitle: {
@@ -153,8 +211,8 @@ const modalStyles = StyleSheet.create({
     marginBottom: 10,
   },
   buttonGroup: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
+    flexDirection: "row",
+    justifyContent: "space-around",
     marginBottom: 20,
   },
   button: {
@@ -162,31 +220,31 @@ const modalStyles = StyleSheet.create({
     paddingHorizontal: 20,
     borderRadius: 20,
     borderWidth: 1,
-    borderColor: 'gray',
+    borderColor: "gray",
   },
   selectedButton: {
-    backgroundColor: 'blue',
+    backgroundColor: "blue",
   },
   buttonText: {
-    color: 'gray',
+    color: "gray",
   },
   selectedButtonText: {
-    color: 'white',
+    color: "white",
   },
   checkboxContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginVertical: 5,
   },
   closeButton: {
-    backgroundColor: 'blue',
+    backgroundColor: "blue",
     paddingVertical: 10,
     borderRadius: 20,
     marginTop: 20,
-    alignItems: 'center',
+    alignItems: "center",
   },
   closeButtonText: {
-    color: 'white',
+    color: "white",
     fontSize: 16,
   },
 });
