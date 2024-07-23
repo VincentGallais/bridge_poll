@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TextInput, Button, Alert, FlatList, TouchableOpacity } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 // import { useAuth } from '../../providers/AuthProvider';
-// import { supabase } from '../../lib/supabase';
+import { supabase } from '../lib/supabase.ts';
 
 export default function Publications() {
   const [question, setQuestion] = useState('');
@@ -10,24 +10,16 @@ export default function Publications() {
   const [error, setError] = useState('');
   const [polls, setPolls] = useState([]);
 
-  // Fetch polls when component mounts
   useEffect(() => {
-    // Fetch polls from your database or API
-    // const fetchPolls = async () => {
-    //   const { data, error } = await supabase.from('polls').select('*');
-    //   if (error) {
-    //     console.error('Error fetching polls:', error);
-    //     return;
-    //   }
-    //   setPolls(data);
-    // };
-    // fetchPolls();
-    
-    // Dummy data for example
-    setPolls([
-      { id: '1', question: 'What is your favorite color?', options: ['Red', 'Blue', 'Green'] },
-      { id: '2', question: 'What is your favorite food?', options: ['Pizza', 'Burger', 'Pasta'] }
-    ]);
+    const fetchPolls = async () => {
+      const { data, error } = await supabase.from('polls').select('*');
+      if (error) {
+        console.error('Error fetching polls:', error);
+        return;
+      }
+      setPolls(data);
+    };
+    fetchPolls();
   }, []);
 
   const createPoll = async () => {
@@ -51,7 +43,7 @@ export default function Publications() {
     //   console.log(error);
     //   return;
     // }
-    // Add created poll to state
+
     setPolls([...polls, { id: (polls.length + 1).toString(), question, options: validOptions }]);
     setQuestion('');
     setOptions(['', '']);

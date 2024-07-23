@@ -11,7 +11,7 @@ import {
 import Tags from "./Tags";
 
 const { width, height } = Dimensions.get("window");
-import StackedCircularAvatar from "../components/StackedCircularAvatar";
+import StackedCircularAvatar from "./StackedCircularAvatar";
 import AwesomeButton from "react-native-really-awesome-button";
 import FeatherIcon from "react-native-vector-icons/Feather";
 
