@@ -3,8 +3,9 @@ import React, { useState } from "react";
 import { Modal, StyleSheet, TouchableOpacity, View, Text } from "react-native";
 
 const FiltersModal = ({ modalVisible, closeModal }) => {
-  const [quizzDate, setQuizzDate] = useState("Yesterday");
+  const [quizzDate, setQuizzDate] = useState("Last Week");
   const [quizzType, setQuizzType] = useState("Lead");
+  const [quizzAfinity, setQuizzAfinity] = useState("Never Seen");
 
   return (
     <Modal
@@ -21,18 +22,18 @@ const FiltersModal = ({ modalVisible, closeModal }) => {
             <TouchableOpacity
               style={[
                 styles.button,
-                quizzDate === "Yesterday" && styles.selectedButton,
+                quizzDate === "Last Week" && styles.selectedButton,
               ]}
-              onPress={() => setQuizzDate("Yesterday")}
+              onPress={() => setQuizzDate("Last Week")}
             >
               <Text
                 style={
-                  quizzDate === "Yesterday"
+                  quizzDate === "Last Week"
                     ? styles.selectedButtonText
                     : styles.buttonText
                 }
               >
-                Yesterday
+                Last Week
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -55,18 +56,18 @@ const FiltersModal = ({ modalVisible, closeModal }) => {
             <TouchableOpacity
               style={[
                 styles.button,
-                quizzDate === "Last Year" && styles.selectedButton,
+                quizzDate === "All" && styles.selectedButton,
               ]}
-              onPress={() => setQuizzDate("Last Year")}
+              onPress={() => setQuizzDate("All")}
             >
               <Text
                 style={
-                  quizzDate === "Last Year"
+                  quizzDate === "All"
                     ? styles.selectedButtonText
                     : styles.buttonText
                 }
               >
-                Last Year
+                All
               </Text>
             </TouchableOpacity>
           </View>
@@ -110,18 +111,74 @@ const FiltersModal = ({ modalVisible, closeModal }) => {
             <TouchableOpacity
               style={[
                 styles.button,
-                quizzType === "Maniement" && styles.selectedButton,
+                quizzType === "Suit Play" && styles.selectedButton,
               ]}
-              onPress={() => setQuizzType("Maniement")}
+              onPress={() => setQuizzType("Suit Play")}
             >
               <Text
                 style={
-                  quizzType === "Maniement"
+                  quizzType === "Suit Play"
                     ? styles.selectedButtonText
                     : styles.buttonText
                 }
               >
-                Maniement
+                Suit Play
+              </Text>
+            </TouchableOpacity>
+            
+          </View>
+
+          <Text style={styles.subtitle}>Quizz Afinity</Text>
+          <View style={styles.buttonGroup}>
+            <TouchableOpacity
+              style={[
+                styles.button,
+                quizzAfinity === "Never Seen" && styles.selectedButton,
+              ]}
+              onPress={() => setQuizzAfinity("Never Seen")}
+            >
+              <Text
+                style={
+                  quizzAfinity === "Never Seen"
+                    ? styles.selectedButtonText
+                    : styles.buttonText
+                }
+              >
+                Never Seen
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[
+                styles.button,
+                quizzAfinity === "Followed" && styles.selectedButton,
+              ]}
+              onPress={() => setQuizzAfinity("Followed")}
+            >
+              <Text
+                style={
+                  quizzAfinity === "Followed"
+                    ? styles.selectedButtonText
+                    : styles.buttonText
+                }
+              >
+                Followed
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[
+                styles.button,
+                quizzAfinity === "All" && styles.selectedButton,
+              ]}
+              onPress={() => setQuizzAfinity("All")}
+            >
+              <Text
+                style={
+                  quizzAfinity === "All"
+                    ? styles.selectedButtonText
+                    : styles.buttonText
+                }
+              >
+                All
               </Text>
             </TouchableOpacity>
           </View>

@@ -1,7 +1,6 @@
 import * as React from "react";
 import { View, Animated, Text, StyleSheet } from "react-native";
 import Carousel from "../components/Carousel";
-import QuizzFilter from "../components/QuizzFilter";
 
 const defaultMovies = [
   {
@@ -77,7 +76,6 @@ const Quizz = () => {
 
   return (
     <View style={styles.container}>
-      <QuizzFilter/>
       <Carousel movies={movies} scrollX={scrollX} />
     </View>
   );

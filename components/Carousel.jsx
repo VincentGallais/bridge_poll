@@ -13,6 +13,7 @@ import Tags from "./Tags";
 const { width, height } = Dimensions.get("window");
 import StackedCircularAvatar from "../components/StackedCircularAvatar";
 import AwesomeButton from "react-native-really-awesome-button";
+import FeatherIcon from "react-native-vector-icons/Feather";
 
 const SPACING = 5;
 const ITEM_SIZE = Platform.OS === "ios" ? width * 0.81 : width * 0.85;
@@ -77,18 +78,30 @@ const Carousel = ({ movies, scrollX }) => {
                   >
                     <Text style={{ fontSize: 14 }}>{item.author}</Text>
                     <Text style={{ fontSize: 14 }}>{item.date}</Text>
-                    <Tags tags={item.tags} />
+                    <FeatherIcon color="#1d1d1d" name="star" size={24} />
+                    <FeatherIcon color="#1d1d1d" name="x" size={24} />
                   </View>
 
-                  <Text
-                    style={{ fontSize: 16, textAlign: "center", marginTop: 16 }}
-                  >
-                    {item.description}
+                  <View style={{ flexDirection: "row", alignItems: "center", gap: 8, justifyContent: 'flex-start', marginLeft: 16, marginVertical: 4 }}>
+                    <Tags tags={item.tags} />
+                    <Text
+                      style={{
+                        fontSize: 16,
+                      }}
+                    >
+                      {item.description}
+                    </Text>
+
+                    
+                  </View>
+
+                  <Text>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis praesentium unde est suscipit velit tenetur?
                   </Text>
                 </View>
                 <Image
                   source={{ uri: item.poster }}
-                  style={{ ...styles.posterImage, height: ITEM_SIZE }}
+                  style={{ ...styles.posterImage, height: ITEM_SIZE * 1 }}
                 />
 
                 <View

@@ -37,7 +37,7 @@ const QuizzStack = ({ navigation }) => (
       name="QuizzScreen"
       component={Quizz}
       options={{
-        header: () => <Header navigation={navigation} notificationCount={5} page="home" />,
+        header: () => <Header navigation={navigation} notificationCount={5} filterCount={2} page="home" />,
       }}
     />
   </Stack.Navigator>
@@ -116,7 +116,7 @@ const BottomTabNav = () => {
                 color={focused ? Colors.DarkPurple : Colors.Black}
               />
               <Text style={[styles.label, { color: focused ? Colors.DarkPurple : Colors.Black }]}>
-                Nouveau
+                Publications
               </Text>
             </View>
           ),

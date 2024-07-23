@@ -7,6 +7,8 @@ Clic sur un quizz l'ouvre en grand (version répondu et non répondu) + Vue quan
 Modale Add Friend
 Modale Edit Profile
 
+Proposer de follow (star) ou skip (croix) un sondage => les follow sont dans la rubrique follow du profil
+
 Mettre un effet sur le footer au changement de page
 Fondu lors d'un changement de page
 Scroll horizontal dans le profil sur les rubriques
@@ -15,8 +17,10 @@ Cliquer sur les têtes pour voir qui a répondu (possibilité d'ajouter en ami)
 Icônes de pays en local pour ne pas fetch une api ?
 Notifications push
 
+Bug quand retour arrière depuis une page du footer
+
 Mettre la photo des amis en priorié sous le sondage
 Faire des contours sur la photo de profil
 Revoir bouton supprimer page notifications
 Traductions en anglais
-Créer des premiers sondages
+Créer des premiers sondages pour alimenter le contenu

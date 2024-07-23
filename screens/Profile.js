@@ -51,7 +51,7 @@ const SECTIONS = [
     ],
   },
   {
-    header: "Mes publications",
+    header: "Quizz suivis",
     icon: "plus",
     items: [],
   }

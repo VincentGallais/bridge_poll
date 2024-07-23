@@ -1,11 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import { Colors } from "../assets/constants/Colors";
 import ProfileImage from "../assets/images/profile.png";
+import FiltersModal from "./FiltersModal";
 
-const Header = ({ navigation, notificationCount, page }) => {
+const Header = ({ navigation, notificationCount, page, filterCount }) => {
+  const [filterModalVisible, setFilterModalVisible] = useState(false);
+
+  const onFilterIconPress = () => {
+    setFilterModalVisible(true);
+  };
+
+  const closeFilterModal = () => {
+    setFilterModalVisible(false);
+  };
+
   return (
     <SafeAreaView style={{ backgroundColor: Colors.Green500 }}>
       <View style={styles.headerContainer}>
@@ -26,11 +37,33 @@ const Header = ({ navigation, notificationCount, page }) => {
           <Text style={styles.headerText}>Unknown Page</Text>
         )}
         <View style={styles.iconContainer}>
+          {page === "home" && (
+            <TouchableOpacity onPress={onFilterIconPress}>
+              <View style={styles.bellContainer}>
+                <FeatherIcon name="sliders" size={20} color="white" />
+                {filterCount > 0 && (
+                  <View
+                    style={{
+                      ...styles.notificationBadge,
+                      backgroundColor: "blue",
+                    }}
+                  >
+                    <Text style={styles.notificationText}>{filterCount}</Text>
+                  </View>
+                )}
+              </View>
+            </TouchableOpacity>
+          )}
           <TouchableOpacity onPress={() => navigation.navigate("Notification")}>
             <View style={styles.bellContainer}>
               <FeatherIcon name="bell" size={20} color="white" />
               {notificationCount > 0 && (
-                <View style={styles.notificationBadge}>
+                <View
+                  style={{
+                    ...styles.notificationBadge,
+                    backgroundColor: "red",
+                  }}
+                >
                   <Text style={styles.notificationText}>
                     {notificationCount}
                   </Text>
@@ -48,6 +81,7 @@ const Header = ({ navigation, notificationCount, page }) => {
           </TouchableOpacity>
         </View>
       </View>
+      <FiltersModal modalVisible={filterModalVisible} closeModal={closeFilterModal} />
     </SafeAreaView>
   );
 };
@@ -89,7 +123,6 @@ const styles = StyleSheet.create({
     position: "absolute",
     right: 0,
     top: -5,
-    backgroundColor: "red",
     borderRadius: 8,
     width: 16,
     height: 16,
