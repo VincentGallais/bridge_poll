@@ -22,7 +22,7 @@ const Profile = () => {
   const [profileImage, setProfileImage] = React.useState(ProfileImage);
   const [userParams, setUserParams] = React.useState({
     country: "France",
-    level: "Expert",
+    bridgeLevelID: "Expert",
     notification: true,
     countryID: "FR",
     friendsNbr: 15,
@@ -72,7 +72,7 @@ const Profile = () => {
           type: "input",
         },
         {
-          id: "level",
+          id: "bridgeLevel",
           label: "Bridge level",
           type: "input",
         },
@@ -105,10 +105,10 @@ const Profile = () => {
     setCountryModalVisible(false);
   };
 
-  const handleLevelSelect = (levelName, levelID) => {
+  const handleLevelSelect = (levelName, bridgeLevelID) => {
     setUserParams((prevForm) => ({
       ...prevForm,
-      level: levelName,
+      bridgeLevelID: bridgeLevelID,
       bridgeLevel: levelName,
     }));
     setLevelModalVisible(false);
@@ -155,8 +155,8 @@ const Profile = () => {
               Bridgeur {userParams.bridgeLevel}
             </Text>
             <View style={{ flexDirection: "row", marginTop: 6, gap: 16 }}>
-              <Text>{userParams.friendsNbr} amis</Text>
-              <Text>{userParams.pollNbr} sondages</Text>
+              <Text style={{fontSize: 15}}>{userParams.friendsNbr} amis</Text>
+              <Text style={{fontSize: 15}}>{userParams.pollNbr} sondages</Text>
             </View>
           </View>
         </View>
@@ -177,7 +177,7 @@ const Profile = () => {
           </TouchableOpacity>
         </View>
 
-        <View style={styles.profileContent}>
+        <View style={{flex: 1}}>
           <View style={styles.profileTabs}>
             {tabs.map(({ headerLabel, icon }, index) => {
               const isActive = tabIndex === index;
@@ -212,77 +212,77 @@ const Profile = () => {
           </View>
 
           <View style={styles.profileContentInner}>
-          {tabIndex === 0 && (
-  <ScrollView contentContainerStyle={styles.scrollViewContent}>
-    {items.map(({ label, type, id }, index) => (
-      <View key={index} style={styles.profileRowWrapper}>
-        {type === "text" ? (
-          <View style={styles.profileRow}>
-            <Text style={styles.profileRowLabel}>{label}</Text>
-          </View>
-        ) : type === "removable" ? (
-          <View style={styles.profileRow}>
-            <TouchableOpacity
-              onPress={() => handleRemoveQuizz(id)}
-              style={styles.removeIconContainer}
-            >
-              <FeatherIcon name="x" color="red" size={20} />
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => console.log("coucou")}
-              style={styles.contentContainer}
-            >
-              <Text style={styles.profileRowLabel}>{label}</Text>
-              <FeatherIcon
-                name="chevron-right"
-                color="#7f7f7f"
-                size={20}
-                style={styles.chevronIcon}
-              />
-            </TouchableOpacity>
-          </View>
-        ) : (
-          <TouchableOpacity
-            onPress={() => {
-              if (id === "country") {
-                setCountryModalVisible(true);
-              } else if (id === "level") {
-                setLevelModalVisible(true);
-              }
-            }}
-          >
-            <View style={styles.profileRow}>
-              <Text style={styles.profileRowLabel}>{label}</Text>
-              <View style={styles.profileRowContent}>
-                {type === "input" && (
-                  <Text style={styles.profileRowValue}>
-                    {userParams[id]}
-                  </Text>
-                )}
-                {type === "toggle" && (
-                  <Switch
-                    trackColor={{ true: "#007bff" }}
-                    value={userParams[id]}
-                    onValueChange={(value) =>
-                      setUserParams({ ...userParams, [id]: value })
-                    }
-                  />
-                )}
-                {["link", "input"].includes(type) && (
-                  <FeatherIcon
-                    name="chevron-right"
-                    color="#7f7f7f"
-                    size={20}
-                  />
-                )}
-              </View>
-            </View>
-          </TouchableOpacity>
-        )}
-      </View>
-    ))}
-  </ScrollView>
-)}
+            {tabIndex === 0 && (
+              <ScrollView contentContainerStyle={styles.scrollViewContent}>
+                {items.map(({ label, type, id }, index) => (
+                  <View key={index} style={styles.profileRowWrapper}>
+                    {type === "text" ? (
+                      <View style={styles.profileRow}>
+                        <Text style={styles.profileRowLabel}>{label}</Text>
+                      </View>
+                    ) : type === "removable" ? (
+                      <View style={styles.profileRow}>
+                        <TouchableOpacity
+                          onPress={() => handleRemoveQuizz(id)}
+                          style={styles.removeIconContainer}
+                        >
+                          <FeatherIcon name="x" color="red" size={20} />
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                          onPress={() => console.log("J'ouvre la donne", id)}
+                          style={styles.contentContainer}
+                        >
+                          <Text style={styles.profileRowLabel}>{label}</Text>
+                          <FeatherIcon
+                            name="chevron-right"
+                            color="#7f7f7f"
+                            size={20}
+                            style={styles.chevronIcon}
+                          />
+                        </TouchableOpacity>
+                      </View>
+                    ) : (
+                      <TouchableOpacity
+                        onPress={() => {
+                          if (id === "country") {
+                            setCountryModalVisible(true);
+                          } else if (id === "bridgeLevel") {
+                            setLevelModalVisible(true);
+                          }
+                        }}
+                      >
+                        <View style={styles.profileRow}>
+                          <Text style={styles.profileRowLabel}>{label}</Text>
+                          <View style={styles.profileRowContent}>
+                            {type === "input" && (
+                              <Text style={styles.profileRowValue}>
+                                {userParams[id]}
+                              </Text>
+                            )}
+                            {type === "toggle" && (
+                              <Switch
+                                trackColor={{ true: "#007bff" }}
+                                value={userParams[id]}
+                                onValueChange={(value) =>
+                                  setUserParams({ ...userParams, [id]: value })
+                                }
+                              />
+                            )}
+                            {["link", "input"].includes(type) && (
+                              <FeatherIcon
+                                name="chevron-right"
+                                color="#7f7f7f"
+                                size={20}
+                              />
+                            )}
+                          </View>
+                        </View>
+                      </TouchableOpacity>
+                    )}
+                  </View>
+                ))}
+              </ScrollView>
+            )}
 
             {tabIndex === 1 &&
               items.map(({ label, type, id }, index) => (
@@ -296,7 +296,7 @@ const Profile = () => {
                       onPress={() => {
                         if (id === "country") {
                           setCountryModalVisible(true);
-                        } else if (id === "level") {
+                        } else if (id === "bridgeLevel") {
                           setLevelModalVisible(true);
                         }
                       }}
@@ -342,13 +342,13 @@ const Profile = () => {
       <CountryPickerModal
         visible={countryModalVisible}
         onClose={() => setCountryModalVisible(false)}
-        selectedCountry={userParams.country}
+        initialSelectedCountry={userParams.countryID}
         onSelect={handleCountrySelect}
       />
       <BridgeLevelPickerModal
         visible={levelModalVisible}
         onClose={() => setLevelModalVisible(false)}
-        selectedLevel={userParams.bridgeLevel}
+        initialSelectedLevel={userParams.bridgeLevelID}
         onSelect={handleLevelSelect}
       />
       <AvatarPickerModal
@@ -363,7 +363,7 @@ const Profile = () => {
 const styles = StyleSheet.create({
   profile: {
     paddingTop: 12,
-    paddingBottom: 24,
+    marginBottom: 70,
     backgroundColor: Colors.White,
     borderTopWidth: 1,
     borderBottomWidth: 1,
@@ -387,13 +387,13 @@ const styles = StyleSheet.create({
     marginLeft: 16,
   },
   profileName: {
-    fontSize: 15,
+    fontSize: 18,
     fontWeight: "600",
     color: "#3e3e3e",
   },
   profileLevel: {
     marginTop: 4,
-    fontSize: 15,
+    fontSize: 16,
     color: "#989898",
   },
   profileAction: {
@@ -409,12 +409,6 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     color: "#fff",
     marginRight: 8,
-  },
-  profileContent: {
-    backgroundColor: "#fff",
-    borderBottomWidth: 1,
-    borderColor: "#e3e3e3",
-    flex: 1,
   },
   profileContentInner: {
     backgroundColor: "#fff",
@@ -439,7 +433,7 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   profileTabText: {
-    fontSize: 13,
+    fontSize: 16,
     fontWeight: "600",
     color: "#6b7280",
     marginLeft: 5,
@@ -453,6 +447,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: 24,
     height: 50,
+    justifyContent: 'center'
   },
   profileRowLabel: {
     fontSize: 17,
@@ -460,7 +455,7 @@ const styles = StyleSheet.create({
     color: "#2c2c2c",
   },
   profileRowValue: {
-    fontSize: 15,
+    fontSize: 17,
     fontWeight: "500",
     color: "#7f7f7f",
     marginRight: 4,
@@ -482,8 +477,8 @@ const styles = StyleSheet.create({
     marginHorizontal: 8,
   },
   countryIcon: {
-    width: 20,
-    height: 20,
+    width: 26,
+    height: 26,
     marginRight: 4,
   },
   profileImageContainer: {
@@ -533,13 +528,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   contentContainer: {
-    flexDirection: 'row',
+    flexDirection: "row",
     flex: 1,
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   chevronIcon: {
-    marginLeft: 'auto',
+    marginLeft: "auto",
   },
 });
 

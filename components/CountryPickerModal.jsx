@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Modal,
   StyleSheet,
@@ -21,12 +21,19 @@ const countries = [
   { id: "DZ", name: "Algeria" },
   { id: "AS", name: "American Samoa" },
   { id: "AD", name: "Andorra" },
-
   // other countries
 ];
 
-const CountryPickerModal = ({ visible, onClose, onSelect }) => {
-  const [value, setValue] = React.useState(null);
+const CountryPickerModal = ({ visible, onClose, onSelect, initialSelectedCountry }) => {
+  const [value, setValue] = useState(() => {
+    const index = countries.findIndex(country => country.id === initialSelectedCountry);
+    return index >= 0 ? index : null;
+  });
+
+  useEffect(() => {
+    const index = countries.findIndex(country => country.id === initialSelectedCountry);
+    setValue(index >= 0 ? index : null);
+  }, [initialSelectedCountry]);
 
   return (
     <Modal

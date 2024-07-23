@@ -1,3 +1,6 @@
+Faire un grand context qui est utilisé par toutes les pages
+Revoir toute la navigation
+
 Page profile :
     Modale Add Friend
     Clic sur "X amis" ou "X sondages" dans la bio me redirige vers la liste de mes amis / de mes sondages
@@ -22,7 +25,7 @@ Notifications :
 Autre :
     Fondu lors d'un changement de page
     Vue lors d'un clic sur un autre user
-    Icônes de pays en local pour ne pas fetch une api ?
+    Icônes de pays en local pour ne pas fetch une api ? Compléter la liste des pays fournis
     Bug quand retour arrière depuis une page du footer
     Faire des contours spéciaux sur la photo de profil (page profil, header, sur quizz submited par l'user)
     Traductions en anglais

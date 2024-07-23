@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Modal,
   StyleSheet,
@@ -18,8 +18,16 @@ const levels = [
   { id: "professional", name: "Professionnel" },
 ];
 
-const BridgeLevelPickerModal = ({ visible, onClose, onSelect }) => {
-  const [value, setValue] = React.useState(null);
+const BridgeLevelPickerModal = ({ visible, onClose, onSelect, initialSelectedLevel }) => {
+  const [value, setValue] = useState(() => {
+    const index = levels.findIndex(level => level.id === initialSelectedLevel);
+    return index >= 0 ? index : null; 
+  });
+
+  useEffect(() => {
+    const index = levels.findIndex(level => level.id === initialSelectedLevel);
+    setValue(index >= 0 ? index : null);
+  }, [initialSelectedLevel]);
 
   return (
     <Modal

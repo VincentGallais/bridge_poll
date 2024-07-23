@@ -13,17 +13,17 @@ import { Swipeable } from "react-native-gesture-handler";
 const initialNotifications = [
   {
     id: 1,
-    name: "Notif 1",
+    name: "Votre ami X vient de publier un sondage",
     date: "Apr 23",
   },
   {
     id: 2,
-    name: "Notif 2",
+    name: "Y nouveaux commentaires sous votre sondage X",
     date: "Apr 25",
   },
   {
     id: 3,
-    name: "Notif 3",
+    name: "Votre sondage X vient d'être publié",
     date: "Apr 22",
   },
   {
@@ -74,11 +74,11 @@ export default function Notification() {
                   </View>
 
                   <View style={styles.cardBody}>
+                    <Text style={styles.cardDates}>{date}</Text>
+
                     <View style={styles.cardHeader}>
                       <Text style={styles.cardTitle}>{name}</Text>
                     </View>
-
-                    <Text style={styles.cardDates}>{date}</Text>
                   </View>
                 </View>
               </TouchableOpacity>
@@ -135,12 +135,14 @@ const styles = StyleSheet.create({
     fontWeight: "500",
     color: "#232425",
     marginRight: "auto",
+    maxWidth: 280,
   },
 
   cardDates: {
     marginTop: 4,
     fontSize: 16,
     color: "#595a63",
+    marginBottom: 6
   },
   deleteButton: {
     backgroundColor: "red",

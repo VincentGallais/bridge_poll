@@ -4,21 +4,14 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Support from '../screens/Support';
 import Quizz from '../screens/Quizz';
-import Submit from '../screens/Submit';
+import Submit from '../screens/Publications';
 import { MaterialCommunityIcons, AntDesign } from '@expo/vector-icons';
 import { Colors } from '../assets/constants/Colors';
 import Header from '../components/Header';
-import HomeRedirect from './HomeRedirect';
 import FeatherIcon from "react-native-vector-icons/Feather";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
-
-const screenOptions = {
-  tabBarShowLabel: false,
-  headerShown: false,
-  tabBarHideOnKeyboard: true,
-};
 
 const SupportStack = ({ navigation }) => (
   <Stack.Navigator>
@@ -59,18 +52,14 @@ const SubmitStack = ({ navigation }) => (
 const BottomTabNav = () => {
   return (
     <Tab.Navigator
+      initialRouteName="Quizz" // Définit Quizz comme écran initial
       screenOptions={{
-        ...screenOptions,
+        tabBarShowLabel: false,
+        headerShown: false,
+        tabBarHideOnKeyboard: true,
         tabBarStyle: styles.tabBarStyle,
       }}
     >
-      <Tab.Screen
-        name="HomeRedirect"
-        component={HomeRedirect}
-        options={{ 
-          tabBarButton: () => null, // Ne pas afficher ce bouton
-        }}
-      />
       <Tab.Screen
         name="Support"
         component={SupportStack}
