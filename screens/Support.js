@@ -112,20 +112,20 @@ export default function Support() {
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity
-            onPress={() => {
-              // handle onPress
-            }}
-          >
-            <View style={styles.btnEmpty}>
-              <Text style={styles.btnEmptyText}>Restore Purchase</Text>
-            </View>
-          </TouchableOpacity>
+          
 
           <Text style={styles.formFooterText}>
             Plan renews automatically. You can manage and cancel your
             subscription in App Store.
           </Text>
+
+          <TouchableOpacity
+            onPress={() => {
+              // handle onPress
+            }}
+          >
+              <Text style={styles.btnEmptyText}>Restore Purchase</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </SafeAreaView>
@@ -167,10 +167,10 @@ const styles = StyleSheet.create({
   },
   form: {
     flexGrow: 1,
-    justifyContent: "space-between",
     paddingHorizontal: 24,
     marginTop: 16,
-    marginBottom: 90,
+    marginBottom: 90, // footer
+    justifyContent: 'space-evenly'
   },
   formFooterText: {
     marginTop: 12,
@@ -251,10 +251,11 @@ const styles = StyleSheet.create({
     marginTop: 12,
   },
   btnEmptyText: {
-    fontSize: 17,
+    fontSize: 14,
     lineHeight: 22,
-    fontWeight: "bold",
     color: "#F82E08",
+    textAlign: 'center',
+    textDecorationLine: 'underline'
   },
   crossedPrice: {
     textDecorationLine: "line-through",

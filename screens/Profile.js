@@ -51,15 +51,10 @@ const SECTIONS = [
     ],
   },
   {
-    header: "Mes sondages",
+    header: "Mes publications",
     icon: "plus",
     items: [],
-  },
-  {
-    header: "Mes réponses",
-    icon: "plus",
-    items: [],
-  },
+  }
 ];
 
 const Profile = () => {

@@ -5,12 +5,12 @@ import {
   ScrollView,
   TouchableOpacity,
   View,
-  Image,
   Text,
 } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome5";
+import { Swipeable } from "react-native-gesture-handler";
 
-const notifications = [
+const initialNotifications = [
   {
     id: 1,
     name: "Notif 1",
@@ -26,60 +26,63 @@ const notifications = [
     name: "Notif 3",
     date: "Apr 22",
   },
+  {
+    id: 4,
+    name: "Notif 4",
+    date: "Apr 27",
+  },
+  {
+    id: 5,
+    name: "Notif 5",
+    date: "Apr 28",
+  },
 ];
 
-export default function Support() {
-  const [saved, setSaved] = useState([]);
+export default function Notification() {
+  const [notifications, setNotifications] = useState(initialNotifications);
 
-  const handleSave = useCallback(
-    (id) => {
-      if (saved.includes(id)) {
-        // remove listing id from the `saved` array
-        setSaved(saved.filter((val) => val !== id));
-      } else {
-        // add listing id to the `saved` array
-        setSaved([...saved, id]);
-      }
-    },
-    [saved]
+  const handleDelete = (id) => {
+    setNotifications(notifications.filter((notif) => notif.id !== id));
+  };
+
+  const renderRightActions = (id) => (
+    <TouchableOpacity
+      style={styles.deleteButton}
+      onPress={() => handleDelete(id)}
+    >
+      <Text style={styles.deleteButtonText}>Delete</Text>
+    </TouchableOpacity>
   );
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#f2f2f2" }}>
       <ScrollView contentContainerStyle={styles.content}>
         {notifications.map(({ id, name, date }, index) => {
-          const isSaved = saved.includes(id);
-
           return (
-            <TouchableOpacity
+            <Swipeable
               key={id}
-              onPress={() => {
-                // handle onPress
-              }}
+              renderRightActions={() => renderRightActions(id)}
             >
-              <View style={styles.card}>
-                <View style={styles.cardLikeWrapper}>
-                  <TouchableOpacity onPress={() => handleSave(id)}>
-                    <View style={styles.cardLike}>
-                      <FontAwesome
-                        color={isSaved ? "#ea266d" : "#222"}
-                        name="heart"
-                        solid={isSaved}
-                        size={20}
-                      />
-                    </View>
-                  </TouchableOpacity>
-                </View>
-
-                <View style={styles.cardBody}>
-                  <View style={styles.cardHeader}>
-                    <Text style={styles.cardTitle}>{name}</Text>
+              <TouchableOpacity
+                onPress={() => {
+                  // handle onPress
+                }}
+              >
+                <View style={styles.card}>
+                  <View style={styles.cardLike}>
+                    <FontAwesome color="#222" name="chevron-right" size={20} />
                   </View>
 
-                  <Text style={styles.cardDates}>{date}</Text>
+                  <View style={styles.cardBody}>
+                    <View style={styles.cardHeader}>
+                      <Text style={styles.cardTitle}>{name}</Text>
+                    </View>
+
+                    <Text style={styles.cardDates}>{date}</Text>
+                  </View>
                 </View>
-              </View>
-            </TouchableOpacity>
+              </TouchableOpacity>
+            </Swipeable>
           );
         })}
       </ScrollView>
@@ -92,7 +95,6 @@ const styles = StyleSheet.create({
     marginTop: 16,
     paddingHorizontal: 16,
   },
-  /** Card */
   card: {
     position: "relative",
     borderRadius: 8,
@@ -107,12 +109,6 @@ const styles = StyleSheet.create({
     shadowRadius: 1.41,
     elevation: 2,
   },
-  cardLikeWrapper: {
-    position: "absolute",
-    zIndex: 1,
-    top: 12,
-    right: 12,
-  },
   cardLike: {
     width: 40,
     height: 40,
@@ -120,6 +116,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+    position: "absolute",
+    zIndex: 1,
+    top: 12,
+    right: 12,
   },
 
   cardBody: {
@@ -141,5 +141,16 @@ const styles = StyleSheet.create({
     marginTop: 4,
     fontSize: 16,
     color: "#595a63",
+  },
+  deleteButton: {
+    backgroundColor: "red",
+    justifyContent: "center",
+    alignItems: "center",
+    width: 80,
+    height: "50%",
+  },
+  deleteButtonText: {
+    color: "white",
+    fontWeight: "bold",
   },
 });

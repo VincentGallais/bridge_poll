@@ -1,15 +1,15 @@
 Modale choix pays : Pays de l'user présélectionné et mise à jour sur la page (et drapeau en haut à côté nom)
 Choix niveau de jeu
-Page notifications
 
 Vue lors d'un clic sur un autre user
-Refaire modale filter
-Clic sur un quizz l'ouvre en grand (version répondu et non répondu)
-Vue quand quizz répondu 
+Clic sur un quizz l'ouvre en grand (version répondu et non répondu) + Vue quand quizz répondu 
+
+Modale Add Friend
+Modale Edit Profile
 
 Mettre un effet sur le footer au changement de page
 Fondu lors d'un changement de page
-Scroll horizontal dans profil sur les rubriques
+Scroll horizontal dans le profil sur les rubriques
 Cliquer sur le nom de l'auteur pour voir son profil dans une modale
 Cliquer sur les têtes pour voir qui a répondu (possibilité d'ajouter en ami)
 Icônes de pays en local pour ne pas fetch une api ?
@@ -17,6 +17,6 @@ Notifications push
 
 Mettre la photo des amis en priorié sous le sondage
 Faire des contours sur la photo de profil
-
+Revoir bouton supprimer page notifications
 Traductions en anglais
 Créer des premiers sondages
