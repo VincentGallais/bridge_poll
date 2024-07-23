@@ -5,27 +5,20 @@ import {
   SafeAreaView,
   TouchableOpacity,
   ScrollView,
-  Image,
   View,
   Text,
 } from "react-native";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import FontAwesome from "react-native-vector-icons/FontAwesome5";
 
-const countries = [
-  { id: "US", name: "United States" },
-  { id: "GB", name: "United Kingdom" },
-  { id: "FR", name: "France" },
-  { id: "AL", name: "Albania" },
-  { id: "AF", name: "Afghanistan" },
-  { id: "DZ", name: "Algeria" },
-  { id: "AS", name: "American Samoa" },
-  { id: "AD", name: "Andorra" },
-
-  // other countries
+const levels = [
+  { id: "beginner", name: "Débutant" },
+  { id: "intermediate", name: "Intermédiaire" },
+  { id: "expert", name: "Expert" },
+  { id: "professional", name: "Professionnel" },
 ];
 
-const CountryPickerModal = ({ visible, onClose, onSelect }) => {
+const BridgeLevelPickerModal = ({ visible, onClose, onSelect }) => {
   const [value, setValue] = React.useState(null);
 
   return (
@@ -38,14 +31,14 @@ const CountryPickerModal = ({ visible, onClose, onSelect }) => {
       <SafeAreaView style={styles.safeAreaView}>
         <View style={styles.modalContainer}>
           <View style={styles.header}>
-            <Text style={styles.headerTitle}>Choisissez un pays</Text>
+            <Text style={styles.headerTitle}>Choisissez un niveau</Text>
             <TouchableOpacity onPress={onClose} style={styles.headerClose}>
               <FeatherIcon color="#1d1d1d" name="x" size={24} />
             </TouchableOpacity>
           </View>
 
           <ScrollView contentContainerStyle={styles.content}>
-            {countries.map(({ id, name }, index) => {
+            {levels.map(({ id, name }, index) => {
               const isActive = value === index;
               return (
                 <TouchableOpacity
@@ -57,14 +50,11 @@ const CountryPickerModal = ({ visible, onClose, onSelect }) => {
                   }}
                   style={styles.radioWrapper}
                 >
-                  <Image
-                    alt={`Flag of ${name}`}
-                    style={styles.radioImage}
-                    source={{ uri: `https://flagsapi.com/${id}/flat/64.png` }}
-                  />
-
                   <View
-                    style={[styles.radio, index === 0 && { borderTopWidth: 0 }]}
+                    style={[
+                      styles.radio,
+                      index === 0 && { borderTopWidth: 0 },
+                    ]}
                   >
                     <Text style={styles.radioLabel}>{name}</Text>
                     <View
@@ -146,11 +136,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-start",
   },
-  radioImage: {
-    width: 30,
-    height: 30,
-    marginRight: 12,
-  },
   radioLabel: {
     fontSize: 17,
     fontWeight: "600",
@@ -173,4 +158,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CountryPickerModal;
+export default BridgeLevelPickerModal;

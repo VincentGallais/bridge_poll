@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import ImagePicker from "react-native-image-picker";
 
-const PhotoModal = ({ visible, onClose, setProfileImage }) => {
+const AvatarPickerModal = ({ visible, onClose, setProfileImage }) => {
   const handleImagePicker = (source) => {
     const options = {
       title: "Select Photo",
@@ -127,4 +127,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PhotoModal;
+export default AvatarPickerModal;

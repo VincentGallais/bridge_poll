@@ -5,10 +5,11 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Support from '../screens/Support';
 import Quizz from '../screens/Quizz';
 import Submit from '../screens/Submit';
-import { FontAwesome, MaterialCommunityIcons, AntDesign } from '@expo/vector-icons';
+import { MaterialCommunityIcons, AntDesign } from '@expo/vector-icons';
 import { Colors } from '../assets/constants/Colors';
 import Header from '../components/Header';
 import HomeRedirect from './HomeRedirect';
+import FeatherIcon from "react-native-vector-icons/Feather";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -110,8 +111,8 @@ const BottomTabNav = () => {
         options={{
           tabBarIcon: ({ focused }) => (
             <View style={styles.iconContainer}>
-              <FontAwesome
-                name="plus"
+              <FeatherIcon
+                name="edit-3"
                 size={24}
                 color={focused ? Colors.DarkPurple : Colors.Black}
               />
