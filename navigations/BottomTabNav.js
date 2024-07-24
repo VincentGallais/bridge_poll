@@ -6,7 +6,7 @@ import Support from '../screens/Support';
 import Quizz from '../screens/Quizz';
 import Submit from '../screens/Publications';
 import { MaterialCommunityIcons, AntDesign } from '@expo/vector-icons';
-import { Colors } from '../assets/constants/Colors';
+import { Colors } from '../assets/constants/Colorss';
 import Header from '../components/Header';
 import FeatherIcon from "react-native-vector-icons/Feather";
 

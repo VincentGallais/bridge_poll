@@ -1,33 +1,34 @@
-Faire un grand context qui est utilisé par toutes les pages
-Revoir toute la navigation
-
 Page profile :
     Modale Add Friend
-    Clic sur "X amis" ou "X sondages" dans la bio me redirige vers la liste de mes amis / de mes sondages
+    Clic sur "X amis" ou "X sondages" dans ma bio me redirige vers la liste de mes amis / de mes sondages
     Continuer le développement de la AvatarPickerModale
-    Remplir avec les quizz suivis
+    Remplir la rubrique quizz suivis (revoir interface)
 
 Page quizz :
+    Meilleure gestion de la hauteur (marginH et centrage ?)
     Proposer de follow (star) ou skip (croix) un sondage => les follow sont dans la rubrique follow du profil
-    Clic sur un quizz l'ouvre en grand (version répondu et non répondu) + Vue quand quizz répondu 
+    -> Clic sur un quizz l'ouvre en grand (version répondu et non répondu) + vue quand quizz répondu 
     Cliquer sur le nom de l'auteur pour voir son profil dans une modale
-    Cliquer sur les têtes pour voir qui a répondu (possibilité d'ajouter en ami)
-    Mettre la photo des amis en priorié sous le sondage
+    Cliquer sur les têtes pour voir qui a répondu (possibilité d'ajouter en ami & mettre la photo des amis en priorié sous le sondage)
     Quizz avec background dorés pour joueurs spéciaux
 
 Footer :
-    Mettre un effet sur le footer au changement de page
+    Revoir logo & mettre un effet au changement de page
 
 Notifications :
     Revoir bouton supprimer lors du slide
     Notifications push
 
+Page soutenir :
+    Faire le paiement & le restore purchase
+
 Autre :
+    -> Faire un grand context qui est utilisé par toutes les pages
     Fondu lors d'un changement de page
     Vue lors d'un clic sur un autre user
     Icônes de pays en local pour ne pas fetch une api ? Compléter la liste des pays fournis
-    Bug quand retour arrière depuis une page du footer
     Faire des contours spéciaux sur la photo de profil (page profil, header, sur quizz submited par l'user)
-    Traductions en anglais
+    Traductions en anglais de l'application
     Créer des premiers sondages pour alimenter le contenu
     Faire header spéciaux pour pages profile, notification, ajout ami ...
+    Back qui revient sur soutenir par défaut

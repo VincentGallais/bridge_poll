@@ -9,13 +9,13 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import ProfileImage from "../assets/images/profile.png";
+import ProfileImage from "../../assets/images/profile.png";
 import FeatherIcon from "react-native-vector-icons/Feather";
-import CountryPickerModal from "../components/CountryPickerModal";
-import BridgeLevelPickerModal from "../components/BridgeLevelPickerModal";
-import { Colors } from "../assets/constants/Colors";
+import CountryPickerModal from "../../components/CountryPickerModal";
+import BridgeLevelPickerModal from "../../components/BridgeLevelPickerModal";
+import { Colors } from "../../assets/constants/Colorss";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import AvatarPickerModal from "../components/AvatarPickerModal";
+import AvatarPickerModal from "../../components/AvatarPickerModal";
 
 const Profile = () => {
   const [photoModalVisible, setPhotoModalVisible] = React.useState(false);

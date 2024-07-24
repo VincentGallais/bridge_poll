@@ -1,11 +1,9 @@
-import Profile from "./Profile"
-import Quizz from "./Quizz"
-import Support from "./Support"
-import Submit from "./Publications"
+export {default as ForgotPassword} from './auth/ForgotPassword';
 
-export {
-    Profile,
-    Quizz,
-    Support,
-    Submit
-}
+export {default as Profile} from './home/Profile';
+
+export {default as Login} from './auth/Login';
+
+export {default as Register} from './auth/Register';
+
+export {default as Home} from './home/Home';

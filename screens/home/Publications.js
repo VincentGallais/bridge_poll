@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TextInput, Button, Alert, FlatList, TouchableOpacity } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 // import { useAuth } from '../../providers/AuthProvider';
-import { supabase } from '../lib/supabase.ts';
+import { supabase } from '../../lib/supabase.ts';
 
 export default function Publications() {
   const [question, setQuestion] = useState('');

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { View, Animated, Text, StyleSheet } from "react-native";
-import Carousel from "../components/Carousel";
+import Carousel from "../../components/Carousel";
 
 const defaultMovies = [
   {
