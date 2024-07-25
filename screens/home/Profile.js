@@ -13,7 +13,7 @@ import { IMGS } from '../../assets/constants';
 import FeatherIcon from "react-native-vector-icons/Feather";
 import CountryPickerModal from "../../components/CountryPickerModal";
 import BridgeLevelPickerModal from "../../components/BridgeLevelPickerModal";
-import { Colors } from "../../assets/constants/colors";
+import { COLORS } from '../../assets/constants';
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import AvatarPickerModal from "../../components/AvatarPickerModal";
 import { supabase } from "../../lib/supabase";
@@ -118,7 +118,7 @@ const Profile = () => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.White }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.White }}>
 
     <Text style={styles.modalButtonText}>User id: {user?.id}</Text>
 
@@ -384,7 +384,7 @@ const styles = StyleSheet.create({
   profile: {
     paddingTop: 12,
     marginBottom: 70,
-    backgroundColor: Colors.White,
+    backgroundColor: COLORS.White,
     borderTopWidth: 1,
     borderBottomWidth: 1,
     borderColor: "#e3e3e3",

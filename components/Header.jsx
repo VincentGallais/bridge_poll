@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import FeatherIcon from "react-native-vector-icons/Feather";
-import { Colors } from "../assets/constants/colors";
 import ProfileImage from "../assets/images/profile.png";
 import FiltersModal from "./FiltersModal";
+import { COLORS } from '../assets/constants';
 
 const Header = ({ navigation, notificationCount, page, filterCount }) => {
   const [filterModalVisible, setFilterModalVisible] = useState(false);
@@ -18,7 +18,7 @@ const Header = ({ navigation, notificationCount, page, filterCount }) => {
   };
 
   return (
-    <SafeAreaView style={{ backgroundColor: Colors.Green500 }}>
+    <SafeAreaView style={{ backgroundColor: COLORS.Green500 }}>
       <View style={styles.headerContainer}>
         {page === "home" ? (
           <View style={styles.greetingContainer}>

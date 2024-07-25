@@ -11,3 +11,6 @@ export {default as Support} from './home/Support';
 export {default as Notifications} from './home/Notifications';
 
 export {default as Profile} from './home/Profile';
+
+export {default as WelcomeScreen} from './auth/WelcomeScreen';
+

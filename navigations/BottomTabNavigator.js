@@ -5,14 +5,13 @@ import { StyleSheet, Platform, Text, View } from "react-native";
 import { ROUTES } from "../assets/constants";
 import { Quizz, Support, Notifications, Profile } from "../screens";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import CustomTabBar from "../components/CustomTabBar";
-import { Colors } from "../assets/constants/colors";
 import { AntDesign } from "@expo/vector-icons";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import Header from "../components/Header";
 import Publications from "../screens/home/Publications";
 import { useAuth } from "../providers/authProvider";
 import { useNavigation } from "@react-navigation/native";
+import { COLORS } from '../assets/constants';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -23,7 +22,7 @@ function BottomTabNavigator() {
 
   useEffect(() => {
     if (!user) {
-      navigation.navigate(ROUTES.LOGIN);
+      navigation.navigate(ROUTES.WELCOMESCREEN);
     }
   }, [user]);
 
@@ -31,7 +30,6 @@ function BottomTabNavigator() {
     <Tab.Navigator
       backBehavior={"initialRoute"}
       initialRouteName={ROUTES.QUIZZ_TAB}
-      tabBar={(props) => <CustomTabBar {...props} />}
       screenOptions={({ route }) => ({
         header: () => {
           switch (route.name) {
@@ -80,12 +78,12 @@ function BottomTabNavigator() {
               <AntDesign
                 name="heart"
                 size={24}
-                color={focused ? Colors.DarkPurple : "#111"}
+                color={focused ? COLORS.DarkPurple : "#111"}
               />
               <Text
                 style={[
                   styles.label,
-                  { color: focused ? Colors.DarkPurple : "#111" },
+                  { color: focused ? COLORS.DarkPurple : "#111" },
                 ]}
               >
                 Soutenir
@@ -102,7 +100,7 @@ function BottomTabNavigator() {
             <View
               style={[
                 styles.navigation__footer__home,
-                { backgroundColor: focused ? Colors.DarkPurple : Colors.Black },
+                { backgroundColor: focused ? COLORS.DarkPurple : COLORS.Black },
               ]}
             >
               <MaterialCommunityIcons name="cards" size={32} color="white" />
@@ -119,12 +117,12 @@ function BottomTabNavigator() {
               <FeatherIcon
                 name="edit-3"
                 size={24}
-                color={focused ? Colors.DarkPurple : Colors.Black}
+                color={focused ? COLORS.DarkPurple : COLORS.Black}
               />
               <Text
                 style={[
                   styles.label,
-                  { color: focused ? Colors.DarkPurple : Colors.Black },
+                  { color: focused ? COLORS.DarkPurple : COLORS.Black },
                 ]}
               >
                 Publications
@@ -185,7 +183,7 @@ const styles = StyleSheet.create({
     left: 0,
     elevation: 0,
     height: 60,
-    backgroundColor: Colors.Neutral100,
+    backgroundColor: COLORS.Neutral100,
   },
   label: {
     fontSize: 12,

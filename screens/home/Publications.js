@@ -6,6 +6,7 @@ import {
   TextInput,
   Button,
   FlatList,
+  Alert,
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { supabase } from "../../lib/supabase";
@@ -41,23 +42,25 @@ export default function Publications() {
       return;
     }
 
-    // const { data, error } = await supabase
-    //   .from('polls')
-    //   .insert([{ question, options: validOptions }])
-    //   .select();
-    // if (error) {
-    //   Alert.alert('Failed to create the poll');
-    //   console.log(error);
-    //   return;
-    // }
+    const { data, error } = await supabase
+      .from('polls')
+      .insert([{ question, options: validOptions }])
+      .select();
+    if (error) {
+      Alert.alert('Failed to create the poll');
+      console.log(error);
+      return;
+    }
 
-    setPolls([
-      ...polls,
-      { id: (polls.length + 1).toString(), question, options: validOptions },
-    ]);
-    setQuestion("");
-    setOptions(["", ""]);
-    console.warn("Create");
+    else{
+      setPolls([
+        ...polls,
+        { id: (polls.length + 1).toString(), question, options: validOptions },
+      ]);
+      setQuestion("");
+      setOptions(["", ""]);
+      console.warn("Poll successfully created");
+    }
   };
 
   return (

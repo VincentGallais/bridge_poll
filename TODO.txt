@@ -5,8 +5,8 @@ Page profile :
     Remplir la rubrique quizz suivis (revoir interface)
 
 Page quizz :
-    -> Meilleure gestion de la hauteur (marginH et centrage ?)
-    -> Clic sur un quizz l'ouvre en grand (version répondu et non répondu) + vue quand quizz répondu 
+    Meilleure gestion de la hauteur (marginH et centrage ?)
+    Clic sur un quizz l'ouvre en grand (version répondu et non répondu) + vue quand quizz répondu 
     Proposer de follow (star) ou skip (croix) un sondage => les follow sont dans la rubrique follow du profil
     Cliquer sur le nom de l'auteur pour voir son profil dans une modale
     Cliquer sur les têtes pour voir qui a répondu (possibilité d'ajouter en ami & mettre la photo des amis en priorié sous le sondage)
@@ -24,10 +24,13 @@ Page soutenir :
 
 Autre :
     Revenir à la page de connexion si user se déconnecte
-    -> Fondu lors d'un changement de page
+    Fondu lors d'un changement de page
     Vue lors d'un clic sur un autre user
     Icônes de pays en local pour ne pas fetch une api ? Compléter la liste des pays fournis
     Faire des contours spéciaux sur la photo de profil (page profil, header, sur quizz submited par l'user)
     Traductions en anglais de l'application
     Créer des premiers sondages pour alimenter le contenu
     Faire header spéciaux pour pages profile, notification, ajout ami ...
+    -> Créer table sur info user et intégrer dans le context et vue profile
+    Revoir la police choisie
+    Faire des illustrations pour welcome, login, register, change password, forgotten password
