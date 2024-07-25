@@ -3,7 +3,8 @@ Page profile :
     -> View Add Friend à créer
     Clic sur "X amis" ou "X sondages" dans ma bio me redirige vers la liste de mes amis / de mes sondages
     Continuer le développement de la AvatarPickerModale
-    -> Remplir la rubrique quizz suivis (revoir interface)
+    Faire interface des quizz suivis qui redirige
+    -> Mettre à jour la bdd à chaque modification dans profile
 
 Page quizz :
     Meilleure gestion de la hauteur (marginH et centrage ?)
@@ -33,7 +34,6 @@ Publications :
     Améliorer esthétique et faire gui pour sélectionner cartes et enchères
 
 Autre :
-    Revenir à la page de connexion si user se déconnecte
     Fondu lors d'un changement de page
     Vue lors d'un clic sur un autre user
     Icônes de pays en local pour ne pas fetch une api ? Compléter la liste des pays fournis
@@ -43,4 +43,4 @@ Autre :
     Faire header spéciaux pour pages profile, notification, ajout ami ...
     Revoir la police choisie
     Faire des illustrations pour welcome, login, register, change password, forgotten password
-    -> Compléter authProvider pour qu'il gère tous les types attendus dans userData
+    Revoir la bdd (table liante friends et poll sur laquelle on compte le nombre d'associations plutôt que de créer les attributs followed_polls, published_polls, friends)

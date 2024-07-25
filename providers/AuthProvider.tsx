@@ -4,15 +4,26 @@ import {
   useContext,
   useEffect,
   useState,
-} from 'react';
-import { supabase } from '../lib/supabase';
-import { Session, User } from '@supabase/supabase-js';
+} from "react";
+import { supabase } from "../lib/supabase";
+import { Session, User } from "@supabase/supabase-js";
 
 type AuthContextType = {
   session: Session | null;
   user: User | null;
   isAuthenticated: boolean;
-  userData: { bridge_level: string; country: string; role: string } | null;
+  userData: {
+    bridge_level: string;
+    country: string;
+    role: string;
+    firstname: string;
+    lastname: string;
+    isAdmin: boolean;
+    friends: Int16Array;
+    followed_polls: Int16Array;
+    published_polls: Int16Array;
+    notifications: boolean;
+  } | null;
 };
 
 const AuthContext = createContext<AuthContextType>({
@@ -24,11 +35,26 @@ const AuthContext = createContext<AuthContextType>({
 
 export default function AuthProvider({ children }: PropsWithChildren) {
   const [session, setSession] = useState<Session | null>(null);
-  const [userData, setUserData] = useState<{ bridge_level: string; country: string; role: string } | null>(null);
+  const [userData, setUserData] = useState<{
+    bridge_level: string;
+    country: string;
+    role: string;
+    firstname: string;
+    lastname: string;
+    isAdmin: boolean;
+    friends: Int16Array;
+    followed_polls: Int16Array;
+    published_polls: Int16Array;
+    notifications_allowed: boolean;
+  } | null>(null);
 
   useEffect(() => {
     const fetchUserData = async (userId: string) => {
-      const { data, error } = await supabase.from("userInformations").select("*").eq("user_id", userId).single();
+      const { data, error } = await supabase
+        .from("userInformations")
+        .select("*")
+        .eq("user_id", userId)
+        .single();
       if (error) {
         console.error("Error fetching user data:", error);
         return;
@@ -36,7 +62,10 @@ export default function AuthProvider({ children }: PropsWithChildren) {
       setUserData(data);
     };
 
-    const handleAuthChange = async (_event: string, session: Session | null) => {
+    const handleAuthChange = async (
+      _event: string,
+      session: Session | null
+    ) => {
       setSession(session);
       if (session?.user) {
         await fetchUserData(session.user.id);

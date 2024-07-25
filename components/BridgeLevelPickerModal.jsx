@@ -12,10 +12,10 @@ import FeatherIcon from "react-native-vector-icons/Feather";
 import FontAwesome from "react-native-vector-icons/FontAwesome5";
 
 const levels = [
-  { id: "beginner" },
-  { id: "intermediate" },
-  { id: "expert" },
-  { id: "professional" },
+  { id: "BEGINNER" },
+  { id: "INTERMEDIATE" },
+  { id: "EXPERT" },
+  { id: "PROFESSIONAL" },
 ];
 
 const BridgeLevelPickerModal = ({

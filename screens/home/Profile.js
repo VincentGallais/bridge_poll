@@ -23,24 +23,15 @@ const Profile = () => {
   const { user, userData } = useAuth();
   const [photoModalVisible, setPhotoModalVisible] = React.useState(false);
   const [profileImage, setProfileImage] = React.useState(IMGS.profile);
+  const [userParams, setUserParams] = useState(userData);
 
-  const [userParams, setUserParams] = useState([userData]);
-  console.log(userParams)
-
-  // const [userParams, setUserParams] = React.useState({
-  //   isAdmin: true,
-  //   firstname: "Vincent",
-  //   lastname: "Gallais",
-  //   country: "FR",
-  //   bridge_level: "expert",
-  //   notification: [],
-  //   friends: [1],
-  //   published_polls: [1],
-  //   followed_polls: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
-  //   notifications: true,
-  // });
-
-  // console.log(userParams);
+  const handleToggleSwitch = (id) => {
+    setUserParams((prevParams) => ({
+      ...prevParams,
+      [id]: !prevParams[id],
+    }));
+    console.log(`${id} Modification`);
+  };
 
   const handleRemoveQuizz = (id) => {
     setUserParams((prevParams) => ({
@@ -49,6 +40,26 @@ const Profile = () => {
         (quizzId) => quizzId !== id
       ),
     }));
+    console.log("Followed Quizz Modification");
+  };
+
+  const handleCountrySelect = (country) => {
+    setUserParams((prevForm) => ({
+      ...prevForm,
+      country: country,
+    }));
+    setCountryModalVisible(false);
+    console.log("Country Modification");
+  };
+
+  const handleLevelSelect = (bridge_level) => {
+    console.log(bridge_level);
+    setUserParams((prevForm) => ({
+      ...prevForm,
+      bridge_level: bridge_level,
+    }));
+    setLevelModalVisible(false);
+    console.log("Bridge Level Modification");
   };
 
   const [tabIndex, setTabIndex] = React.useState(0);
@@ -85,7 +96,7 @@ const Profile = () => {
           type: "input",
         },
         {
-          id: "notifications",
+          id: "notifications_allowed",
           label: "Notifications",
           type: "toggle",
         },
@@ -104,27 +115,8 @@ const Profile = () => {
     };
   }, [tabIndex, userParams]);
 
-  const handleCountrySelect = (country) => {
-    setUserParams((prevForm) => ({
-      ...prevForm,
-      country: country,
-    }));
-    setCountryModalVisible(false);
-  };
-
-  const handleLevelSelect = (bridge_level) => {
-    console.log(bridge_level);
-    setUserParams((prevForm) => ({
-      ...prevForm,
-      bridge_level: bridge_level,
-    }));
-    setLevelModalVisible(false);
-  };
-
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.White }}>
-      <Text style={styles.modalButtonText}>User id: {user?.id}</Text>
-
       <View style={styles.profile}>
         <View style={styles.profileHeader}>
           <View style={styles.profileImageContainer}>
@@ -261,7 +253,7 @@ const Profile = () => {
                           <FeatherIcon name="x" color="red" size={20} />
                         </TouchableOpacity>
                         <TouchableOpacity
-                          onPress={() => console.log("J'ouvre la donne", id)}
+                          onPress={() => console.log("Ouverture sondage", id)}
                           style={styles.contentContainer}
                         >
                           <Text style={styles.profileRowLabel}>{label}</Text>
@@ -348,9 +340,7 @@ const Profile = () => {
                             <Switch
                               trackColor={{ true: "#007bff" }}
                               value={userParams[id]}
-                              onValueChange={(value) =>
-                                setUserParams({ ...userParams, [id]: value })
-                              }
+                              onValueChange={() => handleToggleSwitch(id)}
                             />
                           )}
 
