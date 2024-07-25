@@ -29,6 +29,18 @@ export default function Publications() {
     fetchPolls();
   }, []);
 
+  useEffect(() => {
+    const fetchPolls = async () => {
+      const { data, error } = await supabase.from("polls").select("*");
+      if (error) {
+        console.error("Error fetching polls:", error);
+        return;
+      }
+      setPolls(data);
+    };
+    fetchPolls();
+  }, []);
+
   const createPoll = async () => {
     setError("");
     if (!question) {
