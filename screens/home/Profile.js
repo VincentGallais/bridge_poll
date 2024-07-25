@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Image,
   SafeAreaView,
@@ -36,6 +36,26 @@ const Profile = () => {
     pollNbr: 30,
     followedQuizzListId: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
   });
+
+  const [userData, setUserData] = useState([]);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const { data, error } = await supabase
+        .from("userInformations")
+        .select("*")
+        .eq("user_id", user.id);
+  
+      if (error) {
+        console.error("Error fetching userData:", error);
+        return;
+      }
+      setUserData(data);
+    };
+    fetchUserData();
+  }, []);
+
+  console.log(userData)
 
   const handleRemoveQuizz = (id) => {
     setUserParams((prevParams) => ({
