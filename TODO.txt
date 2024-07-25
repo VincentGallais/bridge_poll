@@ -1,9 +1,9 @@
 Page profile :
     Attendre fetching avant d'ouvrir (est-ce qu'on peut faire le fetching sur une autre page ?)
-    View Add Friend à créer
+    -> View Add Friend à créer
     Clic sur "X amis" ou "X sondages" dans ma bio me redirige vers la liste de mes amis / de mes sondages
     Continuer le développement de la AvatarPickerModale
-    Remplir la rubrique quizz suivis (revoir interface)
+    -> Remplir la rubrique quizz suivis (revoir interface)
 
 Page quizz :
     Meilleure gestion de la hauteur (marginH et centrage ?)
@@ -19,6 +19,7 @@ Footer :
 Notifications :
     Revoir bouton supprimer lors du slide
     Faire marcher les notifications push
+    Faire table notifications
 
 Page soutenir :
     Faire le paiement & le restore purchase
@@ -40,6 +41,6 @@ Autre :
     Traductions en anglais de l'application
     Créer des premiers sondages pour alimenter le contenu
     Faire header spéciaux pour pages profile, notification, ajout ami ...
-    -> Créer table sur info user et intégrer dans le context et vue profile
     Revoir la police choisie
     Faire des illustrations pour welcome, login, register, change password, forgotten password
+    -> Compléter authProvider pour qu'il gère tous les types attendus dans userData

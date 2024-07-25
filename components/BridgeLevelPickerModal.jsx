@@ -12,20 +12,29 @@ import FeatherIcon from "react-native-vector-icons/Feather";
 import FontAwesome from "react-native-vector-icons/FontAwesome5";
 
 const levels = [
-  { id: "beginner", name: "Débutant" },
-  { id: "intermediate", name: "Intermédiaire" },
-  { id: "expert", name: "Expert" },
-  { id: "professional", name: "Professionnel" },
+  { id: "beginner" },
+  { id: "intermediate" },
+  { id: "expert" },
+  { id: "professional" },
 ];
 
-const BridgeLevelPickerModal = ({ visible, onClose, onSelect, initialSelectedLevel }) => {
+const BridgeLevelPickerModal = ({
+  visible,
+  onClose,
+  onSelect,
+  initialSelectedLevel,
+}) => {
   const [value, setValue] = useState(() => {
-    const index = levels.findIndex(level => level.id === initialSelectedLevel);
-    return index >= 0 ? index : null; 
+    const index = levels.findIndex(
+      (level) => level.id === initialSelectedLevel
+    );
+    return index >= 0 ? index : null;
   });
 
   useEffect(() => {
-    const index = levels.findIndex(level => level.id === initialSelectedLevel);
+    const index = levels.findIndex(
+      (level) => level.id === initialSelectedLevel
+    );
     setValue(index >= 0 ? index : null);
   }, [initialSelectedLevel]);
 
@@ -46,25 +55,23 @@ const BridgeLevelPickerModal = ({ visible, onClose, onSelect, initialSelectedLev
           </View>
 
           <ScrollView contentContainerStyle={styles.content}>
-            {levels.map(({ id, name }, index) => {
+            {levels.map(({ id }, index) => {
               const isActive = value === index;
               return (
                 <TouchableOpacity
                   key={id}
                   onPress={() => {
                     setValue(index);
-                    onSelect(name, id);
+                    onSelect(id);
                     onClose();
                   }}
                   style={styles.radioWrapper}
                 >
                   <View
-                    style={[
-                      styles.radio,
-                      index === 0 && { borderTopWidth: 0 },
-                    ]}
+                    style={[styles.radio, index === 0 && { borderTopWidth: 0 }]}
                   >
-                    <Text style={styles.radioLabel}>{name}</Text>
+                    {/*Todo : Faire la traduction */}
+                    <Text style={styles.radioLabel}>{id}</Text>
                     <View
                       style={[
                         styles.radioCheck,
@@ -104,10 +111,10 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingVertical: 8
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingVertical: 8,
   },
   headerClose: {
     paddingHorizontal: 20,
@@ -116,7 +123,7 @@ const styles = StyleSheet.create({
     fontSize: 28,
     fontWeight: "600",
     color: "#1d1d1d",
-    paddingLeft: 12
+    paddingLeft: 12,
   },
   content: {
     marginTop: 12,

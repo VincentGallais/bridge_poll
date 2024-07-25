@@ -13,25 +13,33 @@ import FeatherIcon from "react-native-vector-icons/Feather";
 import FontAwesome from "react-native-vector-icons/FontAwesome5";
 
 const countries = [
-  { id: "US", name: "United States" },
-  { id: "GB", name: "United Kingdom" },
-  { id: "FR", name: "France" },
-  { id: "AL", name: "Albania" },
-  { id: "AF", name: "Afghanistan" },
-  { id: "DZ", name: "Algeria" },
-  { id: "AS", name: "American Samoa" },
-  { id: "AD", name: "Andorra" },
-  // other countries
+  { id: "US" },
+  { id: "GB" },
+  { id: "FR" },
+  { id: "AL" },
+  { id: "AF" },
+  { id: "DZ" },
+  { id: "AS" },
+  { id: "AD" },
 ];
 
-const CountryPickerModal = ({ visible, onClose, onSelect, initialSelectedCountry }) => {
+const CountryPickerModal = ({
+  visible,
+  onClose,
+  onSelect,
+  initialSelectedCountry,
+}) => {
   const [value, setValue] = useState(() => {
-    const index = countries.findIndex(country => country.id === initialSelectedCountry);
+    const index = countries.findIndex(
+      (country) => country.id === initialSelectedCountry
+    );
     return index >= 0 ? index : null;
   });
 
   useEffect(() => {
-    const index = countries.findIndex(country => country.id === initialSelectedCountry);
+    const index = countries.findIndex(
+      (country) => country.id === initialSelectedCountry
+    );
     setValue(index >= 0 ? index : null);
   }, [initialSelectedCountry]);
 
@@ -52,20 +60,20 @@ const CountryPickerModal = ({ visible, onClose, onSelect, initialSelectedCountry
           </View>
 
           <ScrollView contentContainerStyle={styles.content}>
-            {countries.map(({ id, name }, index) => {
+            {countries.map(({ id }, index) => {
               const isActive = value === index;
               return (
                 <TouchableOpacity
                   key={id}
                   onPress={() => {
                     setValue(index);
-                    onSelect(name, id);
+                    onSelect(id);
                     onClose();
                   }}
                   style={styles.radioWrapper}
                 >
                   <Image
-                    alt={`Flag of ${name}`}
+                    alt={`Flag of ${id}`}
                     style={styles.radioImage}
                     source={{ uri: `https://flagsapi.com/${id}/flat/64.png` }}
                   />
@@ -73,7 +81,8 @@ const CountryPickerModal = ({ visible, onClose, onSelect, initialSelectedCountry
                   <View
                     style={[styles.radio, index === 0 && { borderTopWidth: 0 }]}
                   >
-                    <Text style={styles.radioLabel}>{name}</Text>
+                    {/*Todo : Faire la traduction */}
+                    <Text style={styles.radioLabel}>{id}</Text>
                     <View
                       style={[
                         styles.radioCheck,
@@ -113,10 +122,10 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingVertical: 8
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingVertical: 8,
   },
   headerClose: {
     paddingHorizontal: 20,
@@ -125,7 +134,7 @@ const styles = StyleSheet.create({
     fontSize: 28,
     fontWeight: "600",
     color: "#1d1d1d",
-    paddingLeft: 12
+    paddingLeft: 12,
   },
   content: {
     marginTop: 12,

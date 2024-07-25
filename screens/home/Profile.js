@@ -9,55 +9,43 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { IMGS } from '../../assets/constants';
+import { IMGS } from "../../assets/constants";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import CountryPickerModal from "../../components/CountryPickerModal";
 import BridgeLevelPickerModal from "../../components/BridgeLevelPickerModal";
-import { COLORS } from '../../assets/constants';
+import { COLORS } from "../../assets/constants";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import AvatarPickerModal from "../../components/AvatarPickerModal";
 import { supabase } from "../../lib/supabase";
 import { useAuth } from "../../providers/AuthProvider";
 
 const Profile = () => {
-  const { user } = useAuth();
+  const { user, userData } = useAuth();
   const [photoModalVisible, setPhotoModalVisible] = React.useState(false);
   const [profileImage, setProfileImage] = React.useState(IMGS.profile);
-  const [userData, setUserData] = useState([]);
-  const [userParams, setUserParams] = React.useState({
-    isAdmin: true,
-    firstName: "Vincent",
-    lastName: "Gallais",
-    country: "France",
-    countryID: "FR",
-    bridgeLevel: "Expert",
-    bridgeLevelID: "expert",
-    notification: true,
-    friendsNbr: 15,
-    pollNbr: 30,
-    followedQuizzListId: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
-  });
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      const { data, error } = await supabase
-        .from("userInformations")
-        .select("*")
-        .eq("user_id", user.id);
-  
-      if (error) {
-        console.error("Error fetching userData:", error);
-        return;
-      }
-      setUserData(data);
-    };
-    fetchUserData();
-  }, []);
+  const [userParams, setUserParams] = useState([userData]);
+  console.log(userParams)
+
+  // const [userParams, setUserParams] = React.useState({
+  //   isAdmin: true,
+  //   firstname: "Vincent",
+  //   lastname: "Gallais",
+  //   country: "FR",
+  //   bridge_level: "expert",
+  //   notification: [],
+  //   friends: [1],
+  //   published_polls: [1],
+  //   followed_polls: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+  //   notifications: true,
+  // });
+
+  // console.log(userParams);
 
   const handleRemoveQuizz = (id) => {
     setUserParams((prevParams) => ({
       ...prevParams,
-      followedQuizzListId: prevParams.followedQuizzListId.filter(
+      followed_polls: prevParams.followed_polls.filter(
         (quizzId) => quizzId !== id
       ),
     }));
@@ -73,9 +61,9 @@ const Profile = () => {
       headerLabel: "Quizz suivis",
       icon: "plus",
       items:
-        userParams.followedQuizzListId.length === 0
+        userParams.followed_polls.length === 0
           ? [{ id: "no_quizz", label: "Aucun quizz suivi", type: "text" }]
-          : userParams.followedQuizzListId.map((id) => ({
+          : userParams.followed_polls.map((id) => ({
               id,
               label: `Quizz ${id}`,
               type: "removable",
@@ -92,12 +80,12 @@ const Profile = () => {
           type: "input",
         },
         {
-          id: "bridgeLevel",
+          id: "bridge_level",
           label: "Bridge level",
           type: "input",
         },
         {
-          id: "notification",
+          id: "notifications",
           label: "Notifications",
           type: "toggle",
         },
@@ -116,28 +104,26 @@ const Profile = () => {
     };
   }, [tabIndex, userParams]);
 
-  const handleCountrySelect = (countryName, countryID) => {
+  const handleCountrySelect = (country) => {
     setUserParams((prevForm) => ({
       ...prevForm,
-      country: countryName,
-      countryID: countryID,
+      country: country,
     }));
     setCountryModalVisible(false);
   };
 
-  const handleLevelSelect = (levelName, bridgeLevelID) => {
+  const handleLevelSelect = (bridge_level) => {
+    console.log(bridge_level);
     setUserParams((prevForm) => ({
       ...prevForm,
-      bridgeLevelID: bridgeLevelID,
-      bridgeLevel: levelName,
+      bridge_level: bridge_level,
     }));
     setLevelModalVisible(false);
   };
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.White }}>
-
-    <Text style={styles.modalButtonText}>User id: {user?.id}</Text>
+      <Text style={styles.modalButtonText}>User id: {user?.id}</Text>
 
       <View style={styles.profile}>
         <View style={styles.profileHeader}>
@@ -167,19 +153,28 @@ const Profile = () => {
               <Image
                 style={styles.countryIcon}
                 source={{
-                  uri: `https://flagsapi.com/${userParams.countryID}/flat/64.png`,
+                  uri: `https://flagsapi.com/${userParams.country}/flat/64.png`,
                 }}
               />
               <Text style={styles.profileName}>
-                {userParams.firstName} {userParams.lastName}
+                {userParams.firstname} {userParams.lastname}
               </Text>
             </View>
+            {/* TODO : Convertir id en texte lisible */}
             <Text style={styles.profileLevel}>
-              Bridgeur {userParams.bridgeLevel}
+              Bridgeur {userParams.bridge_level}
             </Text>
             <View style={{ flexDirection: "row", marginTop: 6, gap: 16 }}>
-              <Text style={{fontSize: 15}}>{userParams.friendsNbr} amis</Text>
-              <Text style={{fontSize: 15}}>{userParams.pollNbr} sondages</Text>
+              <Text style={{ fontSize: 15 }}>
+                {userParams.friends.length < 2
+                  ? `${userParams.friends.length} ami`
+                  : `${userParams.friends.length} amis`}
+              </Text>
+              <Text style={{ fontSize: 15 }}>
+                {userParams.published_polls.length < 2
+                  ? `${userParams.published_polls.length} sondage`
+                  : `${userParams.published_polls.length} sondages`}
+              </Text>
             </View>
           </View>
         </View>
@@ -201,7 +196,7 @@ const Profile = () => {
 
           <TouchableOpacity
             onPress={() => {
-              supabase.auth.signOut()
+              supabase.auth.signOut();
             }}
             style={styles.profileActionButton}
           >
@@ -214,7 +209,7 @@ const Profile = () => {
           </TouchableOpacity>
         </View>
 
-        <View style={{flex: 1}}>
+        <View style={{ flex: 1 }}>
           <View style={styles.profileTabs}>
             {tabs.map(({ headerLabel, icon }, index) => {
               const isActive = tabIndex === index;
@@ -283,7 +278,7 @@ const Profile = () => {
                         onPress={() => {
                           if (id === "country") {
                             setCountryModalVisible(true);
-                          } else if (id === "bridgeLevel") {
+                          } else if (id === "bridge_level") {
                             setLevelModalVisible(true);
                           }
                         }}
@@ -333,7 +328,7 @@ const Profile = () => {
                       onPress={() => {
                         if (id === "country") {
                           setCountryModalVisible(true);
-                        } else if (id === "bridgeLevel") {
+                        } else if (id === "bridge_level") {
                           setLevelModalVisible(true);
                         }
                       }}
@@ -341,6 +336,7 @@ const Profile = () => {
                       <View style={styles.profileRow}>
                         <Text style={styles.profileRowLabel}>{label}</Text>
 
+                        {/* Todo : Faire la traduction ici si country ou bridge_level */}
                         <View style={styles.profileRowContent}>
                           {type === "input" && (
                             <Text style={styles.profileRowValue}>
@@ -379,13 +375,13 @@ const Profile = () => {
       <CountryPickerModal
         visible={countryModalVisible}
         onClose={() => setCountryModalVisible(false)}
-        initialSelectedCountry={userParams.countryID}
+        initialSelectedCountry={userParams.country}
         onSelect={handleCountrySelect}
       />
       <BridgeLevelPickerModal
         visible={levelModalVisible}
         onClose={() => setLevelModalVisible(false)}
-        initialSelectedLevel={userParams.bridgeLevelID}
+        initialSelectedLevel={userParams.bridge_level}
         onSelect={handleLevelSelect}
       />
       <AvatarPickerModal
@@ -484,7 +480,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: 24,
     height: 50,
-    justifyContent: 'center'
+    justifyContent: "center",
   },
   profileRowLabel: {
     fontSize: 17,
