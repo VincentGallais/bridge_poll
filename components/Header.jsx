@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import FeatherIcon from "react-native-vector-icons/Feather";
-import { Colors } from "../assets/constants/Colorss";
+import { Colors } from "../assets/constants/colors";
 import ProfileImage from "../assets/images/profile.png";
 import FiltersModal from "./FiltersModal";
 

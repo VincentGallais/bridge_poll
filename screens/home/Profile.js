@@ -9,28 +9,28 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import ProfileImage from "../../assets/images/profile.png";
+import IMGS from '../../assets/constants/imgs';
 import FeatherIcon from "react-native-vector-icons/Feather";
 import CountryPickerModal from "../../components/CountryPickerModal";
 import BridgeLevelPickerModal from "../../components/BridgeLevelPickerModal";
-import { Colors } from "../../assets/constants/Colorss";
+import { Colors } from "../../assets/constants/colors";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import AvatarPickerModal from "../../components/AvatarPickerModal";
 
 const Profile = () => {
   const [photoModalVisible, setPhotoModalVisible] = React.useState(false);
-  const [profileImage, setProfileImage] = React.useState(ProfileImage);
+  const [profileImage, setProfileImage] = React.useState(IMGS.profile);
   const [userParams, setUserParams] = React.useState({
-    country: "France",
-    bridgeLevelID: "Expert",
-    notification: true,
-    countryID: "FR",
-    friendsNbr: 15,
-    pollNbr: 30,
-    bridgeLevel: "Expert",
+    isAdmin: true,
     firstName: "Vincent",
     lastName: "Gallais",
-    isAdmin: true,
+    country: "France",
+    countryID: "FR",
+    bridgeLevel: "Expert",
+    bridgeLevelID: "expert",
+    notification: true,
+    friendsNbr: 15,
+    pollNbr: 30,
     followedQuizzListId: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
   });
 

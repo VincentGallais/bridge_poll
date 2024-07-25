@@ -6,7 +6,7 @@ import { ROUTES } from '../assets/constants';
 import { Quizz, Support, Notifications, Profile } from '../screens'; // Assurez-vous du bon chemin
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import CustomTabBar from '../components/CustomTabBar';
-import { Colors } from '../assets/constants/Colorss';
+import { Colors } from '../assets/constants/colors';
 import { AntDesign } from '@expo/vector-icons';
 import FeatherIcon from "react-native-vector-icons/Feather";
 import Header from '../components/Header';
