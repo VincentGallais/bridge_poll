@@ -17,7 +17,7 @@ import { COLORS } from '../../assets/constants';
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import AvatarPickerModal from "../../components/AvatarPickerModal";
 import { supabase } from "../../lib/supabase";
-import { useAuth } from "../../providers/authProvider";
+import { useAuth } from "../../providers/AuthProvider";
 
 const Profile = () => {
   const { user } = useAuth();

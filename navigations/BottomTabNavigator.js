@@ -3,13 +3,13 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StyleSheet, Platform, Text, View } from "react-native";
 import { ROUTES } from "../assets/constants";
-import { Quizz, Support, Notifications, Profile } from "../screens";
+import { Quizz, Support, Notifications, Profile } from "../screens/Index";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { AntDesign } from "@expo/vector-icons";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import Header from "../components/Header";
 import Publications from "../screens/home/Publications";
-import { useAuth } from "../providers/authProvider";
+import { useAuth } from "../providers/AuthProvider";
 import { useNavigation } from "@react-navigation/native";
 import { COLORS } from '../assets/constants';
 

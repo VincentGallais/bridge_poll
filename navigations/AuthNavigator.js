@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import { Login, ForgotPassword, Register, WelcomeScreen } from "../screens";
+import { Login, ForgotPassword, Register, WelcomeScreen } from "../screens/Index";
 import { ROUTES } from "../assets/constants";
 import BottomTabNavigator from "./BottomTabNavigator";
-import {AuthProvider} from "../providers/authProvider";
+import { AuthProvider } from "../providers/AuthProvider";
 import { useNavigation } from "@react-navigation/native";
 
 const Stack = createStackNavigator();

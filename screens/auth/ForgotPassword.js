@@ -1,14 +1,15 @@
-import {StyleSheet, Text, View} from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
-import {useRoute} from '@react-navigation/native';
+import { useRoute } from '@react-navigation/native';
 
 const ForgotPassword = () => {
   const route = useRoute();
-  
+  const userId = route.params?.userId;
+
   return (
     <View style={styles.container}>
-      <Text>ForgotPassword</Text>
-      <Text>Params: {route.params.userId}</Text>
+      <Text>Forgot Password</Text>
+      <Text>Params: {userId ? userId : 'No User ID Provided'}</Text>
     </View>
   );
 };

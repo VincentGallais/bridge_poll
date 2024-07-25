@@ -2,13 +2,13 @@ export default {
   LOGIN: 'Login',
   WELCOMESCREEN: 'WelcomeScreen',
   REGISTER: 'Register',
-  FORGOT_PASSWORD: 'Forgot Password',
+  FORGOT_PASSWORD: 'ForgotPassword',
 
   QUIZZ: 'Quizz',
   QUIZZ_TAB: 'Quizz Tab',
 
   PUBLICATIONS: 'Publications',
-  PUBLICATIONS_TAB: 'Publications Tab',
+  PUBLICATIONS_TAB: 'PublicationsTab',
 
   SUPPORT: 'Support',
 
