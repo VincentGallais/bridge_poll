@@ -24,11 +24,18 @@ import {
     const [session, setSession] = useState<Session | null>(null);
   
     useEffect(() => {
+      supabase.auth.getSession().then(async ({ data: { session } }) => {
+        setSession(session);
+        if (!session) {
+          supabase.auth.signInAnonymously();
+        }
+      });
+  
       supabase.auth.onAuthStateChange((_event, session) => {
         setSession(session);
       });
     }, []);
-
+  
     return (
       <AuthContext.Provider
         value={{

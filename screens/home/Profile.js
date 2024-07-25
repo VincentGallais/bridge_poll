@@ -23,6 +23,7 @@ const Profile = () => {
   const { user } = useAuth();
   const [photoModalVisible, setPhotoModalVisible] = React.useState(false);
   const [profileImage, setProfileImage] = React.useState(IMGS.profile);
+  const [userData, setUserData] = useState([]);
   const [userParams, setUserParams] = React.useState({
     isAdmin: true,
     firstName: "Vincent",
@@ -36,8 +37,6 @@ const Profile = () => {
     pollNbr: 30,
     followedQuizzListId: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
   });
-
-  const [userData, setUserData] = useState([]);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -54,8 +53,6 @@ const Profile = () => {
     };
     fetchUserData();
   }, []);
-
-  console.log(userData)
 
   const handleRemoveQuizz = (id) => {
     setUserParams((prevParams) => ({

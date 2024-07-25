@@ -3,7 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { Login, ForgotPassword, Register, WelcomeScreen } from "../screens";
 import { ROUTES } from "../assets/constants";
 import BottomTabNavigator from "./BottomTabNavigator";
-import AuthProvider, { useAuth } from "../providers/authProvider";
+import {AuthProvider} from "../providers/authProvider";
 import { useNavigation } from "@react-navigation/native";
 
 const Stack = createStackNavigator();
