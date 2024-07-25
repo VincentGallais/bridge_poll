@@ -16,8 +16,7 @@ type AuthContextType = {
     bridge_level: string;
     country: string;
     role: string;
-    firstname: string;
-    lastname: string;
+    pseudo: string;
     isAdmin: boolean;
     friends: Int16Array;
     followed_polls: Int16Array;
@@ -40,8 +39,7 @@ export default function AuthProvider({ children }: PropsWithChildren) {
     bridge_level: string;
     country: string;
     role: string;
-    firstname: string;
-    lastname: string;
+    pseudo: string;
     isAdmin: boolean;
     friends: Int16Array;
     followed_polls: Int16Array;

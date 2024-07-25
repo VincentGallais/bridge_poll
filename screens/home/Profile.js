@@ -149,7 +149,7 @@ const Profile = () => {
                 }}
               />
               <Text style={styles.profileName}>
-                {userParams?.firstname} {userParams?.lastname}
+                {userParams?.pseudo}
               </Text>
             </View>
             {/* TODO : Convertir id en texte lisible */}

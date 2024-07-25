@@ -1,9 +1,10 @@
 Page profile :
+    -> Table de correspondance level/country & key
     -> View Add Friend à créer
     -> Clic sur "X amis" ou "X sondages" dans ma bio me redirige vers la liste de mes amis / de mes sondages
-    Continuer le développement de la AvatarPickerModale
-    Faire interface des quizz suivis qui redirige
+    -> Continuer le développement de la AvatarPickerModale
     -> Mettre à jour la bdd à chaque modification dans profile
+    Faire interface des quizz suivis qui redirige
 
 Page quizz :
     Meilleure gestion de la hauteur (marginH et centrage ?)
@@ -23,6 +24,7 @@ Page soutenir :
     Faire le paiement & le restore purchase
 
 Login / Register :
+    Créer ligne userInformations avec pseudo et compagnie
     Vue mot de passe oublié
     Faire les pages de manière esthétique : https://www.youtube.com/watch?v=RhF4iUCiwSs
 

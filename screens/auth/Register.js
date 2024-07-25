@@ -29,7 +29,9 @@ const Stack = createNativeStackNavigator();
 
 export default function Register({ navigation }) {
   const [email, setEmail] = useState("");
+  const [pseudo, setPseudo] = useState("");
   const [password, setPassword] = useState("");
+  const [country, setCountry] = useState("");
   const [loading, setLoading] = useState(false);
 
   async function signUpWithEmail() {
@@ -39,22 +41,18 @@ export default function Register({ navigation }) {
       error,
     } = await supabase.auth.signUp({ email, password });
 
-    if (error){
+    if (error) {
       console.log(error.name, error.code);
-      if (error.code === 'anonymous_provider_disabled'){
+      if (error.code === "anonymous_provider_disabled") {
         Alert.alert("Veuillez fournir un email");
-      }
-      else if (error.code === 'validation_failed'){
+      } else if (error.code === "validation_failed") {
         Alert.alert("Veuillez fournir un email et un mot de passe valides");
-      }
-      else if (error.code === 'weak_password'){
+      } else if (error.code === "weak_password") {
         Alert.alert("Veuillez fournir un mot de passe d'au moins 6 caractères");
-      }
-      else if (error.code === 'user_already_exists'){
+      } else if (error.code === "user_already_exists") {
         Alert.alert("Cet email est déjà utilisé");
-      }
-      else Alert.alert(error.message);
-    } 
+      } else Alert.alert(error.message);
+    }
     setLoading(false);
   }
 
@@ -80,14 +78,37 @@ export default function Register({ navigation }) {
           style={styles.input}
         />
       </View>
-      <View style={{marginVertical: 16, marginHorizontal: 16}}>
-        <Button
-          title="Sign up"
-          disabled={loading}
-          onPress={signUpWithEmail}
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-between",
+          width: "100%",
+          gap: 14,
+        }}
+      >
+        <View style={{ ...styles.verticallySpaced, flex: 1 }}>
+          <TextInput
+            onChangeText={(text) => setPseudo(text.trim())}
+            value={pseudo}
+            placeholder="Pseudo"
+            autoCapitalize="none"
+            style={styles.input}
+          />
+        </View>
+        <View style={{ ...styles.verticallySpaced, flex: 1 }}>
+          <TextInput
+          onChangeText={(text) => setCountry(text.trim())}
+          value={country}
+          placeholder="Country"
+          autoCapitalize="none"
+          style={styles.input}
         />
+        </View>
       </View>
-      <View style={{alignItems: 'center'}}>
+      <View style={{ marginVertical: 16, marginHorizontal: 16 }}>
+        <Button title="Sign up" disabled={loading} onPress={signUpWithEmail} />
+      </View>
+      <View style={{ alignItems: "center" }}>
         <TouchableOpacity
           disabled={loading}
           onPress={() => navigation.navigate(ROUTES.LOGIN)}
@@ -97,7 +118,7 @@ export default function Register({ navigation }) {
       </View>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {

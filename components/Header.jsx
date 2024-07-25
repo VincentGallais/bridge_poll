@@ -28,7 +28,7 @@ const Header = ({ navigation, page }) => {
             <Text
               style={{ ...styles.headerText, fontWeight: "900", marginLeft: 4 }}
             >
-              Vincent
+              {userData?.pseudo}
             </Text>
           </View>
         ) : page === "publications" ? (
