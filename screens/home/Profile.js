@@ -16,8 +16,11 @@ import BridgeLevelPickerModal from "../../components/BridgeLevelPickerModal";
 import { Colors } from "../../assets/constants/colors";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import AvatarPickerModal from "../../components/AvatarPickerModal";
+import { supabase } from "../../lib/supabase";
+import { useAuth } from "../../providers/authProvider";
 
 const Profile = () => {
+  const { user } = useAuth();
   const [photoModalVisible, setPhotoModalVisible] = React.useState(false);
   const [profileImage, setProfileImage] = React.useState(IMGS.profile);
   const [userParams, setUserParams] = React.useState({
@@ -116,6 +119,9 @@ const Profile = () => {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.White }}>
+
+    <Text style={styles.modalButtonText}>User id: {user?.id}</Text>
+
       <View style={styles.profile}>
         <View style={styles.profileHeader}>
           <View style={styles.profileImageContainer}>
@@ -172,6 +178,20 @@ const Profile = () => {
               style={{ ...styles.profileAction, backgroundColor: "#28a745" }}
             >
               <Text style={styles.profileActionText}>Ajouter un ami</Text>
+              <FeatherIcon name="user-plus" color="#fff" size={16} />
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => {
+              supabase.auth.signOut()
+            }}
+            style={styles.profileActionButton}
+          >
+            <View
+              style={{ ...styles.profileAction, backgroundColor: "orange" }}
+            >
+              <Text style={styles.profileActionText}>Se déconnecter</Text>
               <FeatherIcon name="user-plus" color="#fff" size={16} />
             </View>
           </TouchableOpacity>

@@ -8,15 +8,14 @@ import {
   FlatList,
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
-import { useAuth } from "../../providers/authProvider";
-import { supabase } from "../../lib/supabase.ts";
+import { supabase } from "../../lib/supabase";
 
 export default function Publications() {
   const [question, setQuestion] = useState("");
   const [options, setOptions] = useState(["", ""]);
   const [error, setError] = useState("");
   const [polls, setPolls] = useState([]);
-  const { user } = useAuth();
+  
 
   useEffect(() => {
     const fetchPolls = async () => {
@@ -99,16 +98,10 @@ export default function Publications() {
         </View>
       ))}
       <Button title="Add option" onPress={() => setOptions([...options, ""])} />
-
       <Button title="Create Poll" onPress={createPoll} />
       {error ? <Text style={styles.errorText}>{error}</Text> : null}
 
-      <View style={{ marginTop: 50 }}>
-        <Text>User id: {user?.id}</Text>
-
-        <Button title="Sign out" onPress={() => supabase.auth.signOut()} />
-      </View>
-      <Text style={styles.header}>Submited Polls</Text>
+      <Text style={styles.header}>Submited Polls :</Text>
       <FlatList
         data={polls}
         keyExtractor={(item) => item.id}

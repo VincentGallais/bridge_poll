@@ -1,41 +1,57 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { Login, ForgotPassword, Register } from "../screens";
 import { ROUTES } from "../assets/constants";
 import BottomTabNavigator from "./BottomTabNavigator";
-import AuthProvider from "../providers/authProvider";
+import AuthProvider, { useAuth } from "../providers/authProvider";
+import { useNavigation } from "@react-navigation/native";
 
 const Stack = createStackNavigator();
 
 function AuthNavigator() {
   return (
     <AuthProvider>
-      <Stack.Navigator screenOptions={{}} initialRouteName={ROUTES.LOGIN}>
-        <Stack.Screen
-          name={ROUTES.FORGOT_PASSWORD}
-          component={ForgotPassword}
-          options={({ route }) => ({
-            headerTintColor: "#fff",
-            headerBackTitleVisible: false,
-            headerStyle: {
-              backgroundColor: "orange",
-            },
-            title: route.params.userId,
-          })}
-        />
-        <Stack.Screen
-          name={ROUTES.LOGIN}
-          component={Login}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen name={ROUTES.REGISTER} component={Register} />
-        <Stack.Screen
-          name={ROUTES.QUIZZ}
-          component={BottomTabNavigator}
-          options={{ headerShown: false }}
-        />
-      </Stack.Navigator>
+      <AuthNavigatorInner />
     </AuthProvider>
+  );
+}
+
+function AuthNavigatorInner() {
+  const { user } = useAuth();
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    if (user) {
+      navigation.navigate(ROUTES.QUIZZ);
+    }
+  }, [user]);
+
+  return (
+    <Stack.Navigator screenOptions={{}} initialRouteName={ROUTES.LOGIN}>
+      <Stack.Screen
+        name={ROUTES.FORGOT_PASSWORD}
+        component={ForgotPassword}
+        options={({ route }) => ({
+          headerTintColor: "#fff",
+          headerBackTitleVisible: false,
+          headerStyle: {
+            backgroundColor: "orange",
+          },
+          title: route.params.userId,
+        })}
+      />
+      <Stack.Screen
+        name={ROUTES.LOGIN}
+        component={Login}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen name={ROUTES.REGISTER} component={Register} />
+      <Stack.Screen
+        name={ROUTES.QUIZZ}
+        component={BottomTabNavigator}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
   );
 }
 

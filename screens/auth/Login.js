@@ -237,7 +237,7 @@ export default function Auth() {
       <Text style={{ fontWeight: '500' }}>Sign in or Create an account</Text>
       <View style={[styles.verticallySpaced, styles.mt20]}>
         <TextInput
-          onChangeText={(text) => setEmail(text)}
+          onChangeText={(text) => setEmail(text.trim())}
           value={email}
           placeholder="email@address.com"
           autoCapitalize={'none'}
@@ -246,7 +246,7 @@ export default function Auth() {
       </View>
       <View style={styles.verticallySpaced}>
         <TextInput
-          onChangeText={(text) => setPassword(text)}
+          onChangeText={(text) => setPassword(text.trim())}
           value={password}
           secureTextEntry={true}
           placeholder="Password"

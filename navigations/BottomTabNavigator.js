@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StyleSheet, Platform, Text, View } from "react-native";
@@ -10,18 +10,22 @@ import { Colors } from "../assets/constants/colors";
 import { AntDesign } from "@expo/vector-icons";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import Header from "../components/Header";
-import { useNavigation } from "@react-navigation/native";
 import Publications from "../screens/home/Publications";
 import { useAuth } from "../providers/authProvider";
+import { useNavigation } from "@react-navigation/native";
+
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
 function BottomTabNavigator() {
   const navigation = useNavigation();
   const { user } = useAuth();
-  if (!user){
-    console.log('no user')
-  }
+
+  useEffect(() => {
+    if (!user) {
+      navigation.navigate(ROUTES.LOGIN);
+    }
+  }, [user]);
 
   return (
     <Tab.Navigator
@@ -135,27 +139,27 @@ function BottomTabNavigator() {
 
 function AppNavigator() {
   return (
-      <Stack.Navigator
-        screenOptions={{
-          animation: "fade_from_bottom",
-        }}
-      >
-        <Stack.Screen
-          name="Main"
-          component={BottomTabNavigator}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="Profile"
-          component={Profile}
-          options={{ headerShown: true, title: "Profil" }}
-        />
-        <Stack.Screen
-          name="Notification"
-          component={Notifications}
-          options={{ headerShown: true, title: "Notification" }}
-        />
-      </Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        animation: "fade_from_bottom",
+      }}
+    >
+      <Stack.Screen
+        name="Main"
+        component={BottomTabNavigator}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Profile"
+        component={Profile}
+        options={{ headerShown: true, title: "Profil" }}
+      />
+      <Stack.Screen
+        name="Notification"
+        component={Notifications}
+        options={{ headerShown: true, title: "Notification" }}
+      />
+    </Stack.Navigator>
   );
 }
 
