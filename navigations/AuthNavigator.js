@@ -2,13 +2,11 @@ import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {Login, ForgotPassword, Register} from '../screens';
 import {ROUTES} from '../assets/constants';
-import DrawerNavigator from './DrawerNavigator';
+import BottomTabNavigator from './BottomTabNavigator';
 
 const Stack = createStackNavigator();
-// Navigator, Screen, Group
 
 function AuthNavigator() {
-  console.log(Stack);
   return (
     <Stack.Navigator screenOptions={{}} initialRouteName={ROUTES.LOGIN}>
       <Stack.Screen
@@ -31,8 +29,8 @@ function AuthNavigator() {
       />
       <Stack.Screen name={ROUTES.REGISTER} component={Register} />
       <Stack.Screen
-        name={ROUTES.HOME}
-        component={DrawerNavigator}
+        name={ROUTES.QUIZZ}
+        component={BottomTabNavigator}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

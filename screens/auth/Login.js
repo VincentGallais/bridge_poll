@@ -29,7 +29,7 @@ const Login = props => {
           <View style={styles.loginBtnWrapper}>
               {/******************** LOGIN BUTTON *********************/}
               <TouchableOpacity
-                onPress={() => navigation.navigate(ROUTES.HOME)}
+                onPress={() => navigation.navigate(ROUTES.QUIZZ)}
                 activeOpacity={0.7}
                 style={styles.loginBtn}>
                 <Text style={styles.loginText}>Log In</Text>

@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, SafeAreaView, TouchableOpacity} from 'react-native';
-import {ROUTES} from '../../constants';
+import {ROUTES} from '../../assets/constants';
 
 const Settings = ({navigation}) => {
   return (
@@ -34,7 +34,7 @@ export default Settings;
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: COLORS.primary,
+    backgroundColor: 'red',
     padding: 17,
     margin: 10,
     borderRadius: 5,

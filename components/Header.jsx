@@ -29,7 +29,7 @@ const Header = ({ navigation, notificationCount, page, filterCount }) => {
               Vincent
             </Text>
           </View>
-        ) : page === "submit" ? (
+        ) : page === "publications" ? (
           <Text style={styles.headerText}>Submit a new poll</Text>
         ) : page === "support" ? (
           <Text style={styles.headerText}>Support us !</Text>
