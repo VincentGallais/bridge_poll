@@ -19,7 +19,7 @@ const Login = props => {
       <View style={styles.container}>
         <View style={styles.wFull}>
           <View style={styles.row}>
-            <Text style={styles.brandName}>Olors</Text>
+            <Text style={styles.brandName}>Bridge Poll</Text>
           </View>
 
           <Text style={styles.loginContinueTxt}>Login in to continue</Text>
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
     height: 55,
   },
   loginText: {
-    color: '#FFFFFF',
+    color: 'red',
     fontSize: 16,
     fontWeight: '400',
   },
