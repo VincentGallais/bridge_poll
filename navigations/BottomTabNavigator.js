@@ -20,7 +20,7 @@ function BottomTabNavigator() {
   const navigation = useNavigation();
   return (
     <Tab.Navigator
-      backBehavior={"history"}
+      backBehavior={"initialRoute"}
       initialRouteName={ROUTES.QUIZZ_TAB}
       tabBar={(props) => <CustomTabBar {...props} />}
       screenOptions={({ route }) => ({

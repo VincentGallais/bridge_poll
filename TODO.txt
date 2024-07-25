@@ -32,4 +32,3 @@ Autre :
     Traductions en anglais de l'application
     Créer des premiers sondages pour alimenter le contenu
     Faire header spéciaux pour pages profile, notification, ajout ami ...
-    Back qui revient sur tab1 par défaut
