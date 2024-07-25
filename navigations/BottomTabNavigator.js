@@ -12,12 +12,17 @@ import FeatherIcon from "react-native-vector-icons/Feather";
 import Header from "../components/Header";
 import { useNavigation } from "@react-navigation/native";
 import Publications from "../screens/home/Publications";
-
+import { useAuth } from "../providers/authProvider";
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
 function BottomTabNavigator() {
   const navigation = useNavigation();
+  const { user } = useAuth();
+  if (!user){
+    console.log('no user')
+  }
+
   return (
     <Tab.Navigator
       backBehavior={"initialRoute"}
@@ -130,27 +135,27 @@ function BottomTabNavigator() {
 
 function AppNavigator() {
   return (
-    <Stack.Navigator
-      screenOptions={{
-        animation: "fade_from_bottom",
-      }}
-    >
-      <Stack.Screen
-        name="Main"
-        component={BottomTabNavigator}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Profile"
-        component={Profile}
-        options={{ headerShown: true, title: "Profil" }}
-      />
-      <Stack.Screen
-        name="Notification"
-        component={Notifications}
-        options={{ headerShown: true, title: "Notification" }}
-      />
-    </Stack.Navigator>
+      <Stack.Navigator
+        screenOptions={{
+          animation: "fade_from_bottom",
+        }}
+      >
+        <Stack.Screen
+          name="Main"
+          component={BottomTabNavigator}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Profile"
+          component={Profile}
+          options={{ headerShown: true, title: "Profil" }}
+        />
+        <Stack.Screen
+          name="Notification"
+          component={Notifications}
+          options={{ headerShown: true, title: "Notification" }}
+        />
+      </Stack.Navigator>
   );
 }
 

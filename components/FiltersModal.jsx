@@ -11,7 +11,7 @@ const FiltersModal = ({ modalVisible, closeModal }) => {
     <Modal
       visible={modalVisible}
       transparent={true}
-      animationType="slide"
+      animationType="fade"
       onRequestClose={closeModal}
     >
       <View style={styles.overlay}>

@@ -7,7 +7,6 @@ Page profile :
 Page quizz :
     -> Meilleure gestion de la hauteur (marginH et centrage ?)
     -> Clic sur un quizz l'ouvre en grand (version répondu et non répondu) + vue quand quizz répondu 
-    -> Animation modale filter à supprimer
     Proposer de follow (star) ou skip (croix) un sondage => les follow sont dans la rubrique follow du profil
     Cliquer sur le nom de l'auteur pour voir son profil dans une modale
     Cliquer sur les têtes pour voir qui a répondu (possibilité d'ajouter en ami & mettre la photo des amis en priorié sous le sondage)
@@ -24,7 +23,7 @@ Page soutenir :
     Faire le paiement & le restore purchase
 
 Autre :
-    -> Faire un grand context qui est utilisé par toutes les pages avec data de l'user
+    Revenir à la page de connexion si user se déconnecte
     -> Fondu lors d'un changement de page
     Vue lors d'un clic sur un autre user
     Icônes de pays en local pour ne pas fetch une api ? Compléter la liste des pays fournis
