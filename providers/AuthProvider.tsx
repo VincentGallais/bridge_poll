@@ -22,7 +22,8 @@ type AuthContextType = {
     friends: Int16Array;
     followed_polls: Int16Array;
     published_polls: Int16Array;
-    notifications: boolean;
+    notifications_allowed: boolean;
+    notifications: Int16Array;
   } | null;
 };
 
@@ -46,10 +47,12 @@ export default function AuthProvider({ children }: PropsWithChildren) {
     followed_polls: Int16Array;
     published_polls: Int16Array;
     notifications_allowed: boolean;
+    notifications: Int16Array;
   } | null>(null);
 
   useEffect(() => {
     const fetchUserData = async (userId: string) => {
+      console.log('Fetching user datas')
       const { data, error } = await supabase
         .from("userInformations")
         .select("*")

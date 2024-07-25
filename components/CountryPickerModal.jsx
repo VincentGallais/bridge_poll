@@ -11,17 +11,7 @@ import {
 } from "react-native";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import FontAwesome from "react-native-vector-icons/FontAwesome5";
-
-const countries = [
-  { id: "US" },
-  { id: "GB" },
-  { id: "FR" },
-  { id: "AL" },
-  { id: "AF" },
-  { id: "DZ" },
-  { id: "AS" },
-  { id: "AD" },
-];
+import { COUNTRIES } from "../assets/constants";
 
 const CountryPickerModal = ({
   visible,
@@ -30,14 +20,14 @@ const CountryPickerModal = ({
   initialSelectedCountry,
 }) => {
   const [value, setValue] = useState(() => {
-    const index = countries.findIndex(
+    const index = COUNTRIES.findIndex(
       (country) => country.id === initialSelectedCountry
     );
     return index >= 0 ? index : null;
   });
 
   useEffect(() => {
-    const index = countries.findIndex(
+    const index = COUNTRIES.findIndex(
       (country) => country.id === initialSelectedCountry
     );
     setValue(index >= 0 ? index : null);
@@ -60,7 +50,7 @@ const CountryPickerModal = ({
           </View>
 
           <ScrollView contentContainerStyle={styles.content}>
-            {countries.map(({ id }, index) => {
+            {COUNTRIES.map(({ id }, index) => {
               const isActive = value === index;
               return (
                 <TouchableOpacity

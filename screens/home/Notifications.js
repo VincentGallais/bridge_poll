@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   SafeAreaView,
@@ -9,37 +9,43 @@ import {
 } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome5";
 import { Swipeable } from "react-native-gesture-handler";
+import { useAuth } from "../../providers/AuthProvider";
 
-const initialNotifications = [
-  {
-    id: 1,
-    name: "Votre ami X vient de publier un sondage",
-    date: "Apr 23",
-  },
-  {
-    id: 2,
-    name: "Y nouveaux commentaires sous votre sondage X",
-    date: "Apr 25",
-  },
-  {
-    id: 3,
-    name: "Votre sondage X vient d'être publié",
-    date: "Apr 22",
-  },
-  {
-    id: 4,
-    name: "Notif 4",
-    date: "Apr 27",
-  },
-  {
-    id: 5,
-    name: "Notif 5",
-    date: "Apr 28",
-  },
-];
+// Fonction pour générer une date aléatoire dans un format spécifique
+const generateRandomDate = () => {
+  const start = new Date(2023, 0, 1);
+  const end = new Date(2023, 11, 31);
+  const randomDate = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+  
+  const options = { month: 'short', day: 'numeric' };
+  return randomDate.toLocaleDateString('en-US', options);
+};
+
+// Fonction pour générer un texte aléatoire pour les notifications
+const generateRandomText = () => {
+  const texts = [
+    "Votre ami X vient de publier un sondage",
+    "Y nouveaux commentaires sous votre sondage X",
+    "Votre sondage X vient d'être publié",
+    "Nouvelle activité sur votre profil",
+    "Vous avez reçu un message",
+  ];
+  return texts[Math.floor(Math.random() * texts.length)];
+};
 
 export default function Notification() {
-  const [notifications, setNotifications] = useState(initialNotifications);
+  const { userData } = useAuth();
+  const [notifications, setNotifications] = useState([]);
+
+  useEffect(() => {
+    // Génère les notifications à partir des IDs dans userData.notifications
+    const generatedNotifications = userData.notifications.map((id) => ({
+      id,
+      name: generateRandomText(),
+      date: generateRandomDate(),
+    }));
+    setNotifications(generatedNotifications);
+  }, [userData.notifications]);
 
   const handleDelete = (id) => {
     setNotifications(notifications.filter((notif) => notif.id !== id));
@@ -57,7 +63,7 @@ export default function Notification() {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#f2f2f2" }}>
       <ScrollView contentContainerStyle={styles.content}>
-        {notifications.map(({ id, name, date }, index) => {
+        {notifications.map(({ id, name, date }) => {
           return (
             <Swipeable
               key={id}
@@ -121,7 +127,6 @@ const styles = StyleSheet.create({
     top: 12,
     right: 12,
   },
-
   cardBody: {
     padding: 12,
   },
@@ -137,12 +142,11 @@ const styles = StyleSheet.create({
     marginRight: "auto",
     maxWidth: 280,
   },
-
   cardDates: {
     marginTop: 4,
     fontSize: 16,
     color: "#595a63",
-    marginBottom: 6
+    marginBottom: 6,
   },
   deleteButton: {
     backgroundColor: "red",

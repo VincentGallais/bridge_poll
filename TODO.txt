@@ -1,7 +1,6 @@
 Page profile :
-    Attendre fetching avant d'ouvrir (est-ce qu'on peut faire le fetching sur une autre page ?)
     -> View Add Friend à créer
-    Clic sur "X amis" ou "X sondages" dans ma bio me redirige vers la liste de mes amis / de mes sondages
+    -> Clic sur "X amis" ou "X sondages" dans ma bio me redirige vers la liste de mes amis / de mes sondages
     Continuer le développement de la AvatarPickerModale
     Faire interface des quizz suivis qui redirige
     -> Mettre à jour la bdd à chaque modification dans profile
@@ -10,17 +9,15 @@ Page quizz :
     Meilleure gestion de la hauteur (marginH et centrage ?)
     Clic sur un quizz l'ouvre en grand (version répondu et non répondu) + vue quand quizz répondu 
     Proposer de follow (star) ou skip (croix) un sondage => les follow sont dans la rubrique follow du profil
+    Faire le fetching en pensant aux filtes
     Cliquer sur le nom de l'auteur pour voir son profil dans une modale
     Cliquer sur les têtes pour voir qui a répondu (possibilité d'ajouter en ami & mettre la photo des amis en priorié sous le sondage)
     Quizz avec background dorés pour joueurs spéciaux
 
-Footer :
-    Revoir logo & mettre un effet au changement de page
-
 Notifications :
-    Revoir bouton supprimer lors du slide
+    Revoir bouton supprimer lors du slide (et update bdd)
     Faire marcher les notifications push
-    Faire table notifications
+    Faire table notifications en BDD
 
 Page soutenir :
     Faire le paiement & le restore purchase
@@ -34,13 +31,13 @@ Publications :
     Améliorer esthétique et faire gui pour sélectionner cartes et enchères
 
 Autre :
-    Fondu lors d'un changement de page
+    Stocker image user en bdd (mettre par défault image facebook)
+    Fondu lors d'un changement de page (+ améliorer esthétique footer)
     Vue lors d'un clic sur un autre user
-    Icônes de pays en local pour ne pas fetch une api ? Compléter la liste des pays fournis
-    Faire des contours spéciaux sur la photo de profil (page profil, header, sur quizz submited par l'user)
+    Compléter la liste des pays fournis
     Traductions en anglais de l'application
     Créer des premiers sondages pour alimenter le contenu
     Faire header spéciaux pour pages profile, notification, ajout ami ...
     Revoir la police choisie
     Faire des illustrations pour welcome, login, register, change password, forgotten password
-    Revoir la bdd (table liante friends et poll sur laquelle on compte le nombre d'associations plutôt que de créer les attributs followed_polls, published_polls, friends)
+    Revoir la bdd (table liante friends et poll sur laquelle on compte le nombre d'associations plutôt que de créer les attributs followed_polls, published_polls, friends, notifications, skiped_polls)

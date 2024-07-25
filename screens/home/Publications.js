@@ -16,6 +16,7 @@ export default function Publications() {
   const [options, setOptions] = useState(["", ""]);
   const [error, setError] = useState("");
   const [polls, setPolls] = useState([]);
+  
 
   useEffect(() => {
     const fetchPolls = async () => {
@@ -24,17 +25,8 @@ export default function Publications() {
         console.error("Error fetching polls:", error);
         return;
       }
-      setPolls(data);
-    };
-    fetchPolls();
-  }, []);
-
-  useEffect(() => {
-    const fetchPolls = async () => {
-      const { data, error } = await supabase.from("polls").select("*");
-      if (error) {
-        console.error("Error fetching polls:", error);
-        return;
+      else{
+        console.log('Sucessfully Fetching Polls')
       }
       setPolls(data);
     };
@@ -54,14 +46,16 @@ export default function Publications() {
     }
 
     const { data, error } = await supabase
-      .from("polls")
+      .from('polls')
       .insert([{ question, options: validOptions }])
       .select();
     if (error) {
-      Alert.alert("Failed to create the poll");
+      Alert.alert('Failed to create the poll');
       console.log(error);
       return;
-    } else {
+    }
+
+    else{
       setPolls([
         ...polls,
         { id: (polls.length + 1).toString(), question, options: validOptions },

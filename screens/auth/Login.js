@@ -41,8 +41,9 @@ export default function Login({ navigation }) {
     if (error){
       Alert.alert("Identifiants incorrects");
     } 
-    else navigation.navigate(ROUTES.QUIZZ);
-
+    else {
+      navigation.navigate(ROUTES.QUIZZ);
+    }
     setLoading(false);
   }
 

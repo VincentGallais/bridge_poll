@@ -37,8 +37,6 @@ function BottomTabNavigator() {
               return (
                 <Header
                   navigation={navigation}
-                  notificationCount={5}
-                  filterCount={2}
                   page="home"
                 />
               );
@@ -46,7 +44,6 @@ function BottomTabNavigator() {
               return (
                 <Header
                   navigation={navigation}
-                  notificationCount={5}
                   page="support"
                 />
               );
@@ -54,7 +51,6 @@ function BottomTabNavigator() {
               return (
                 <Header
                   navigation={navigation}
-                  notificationCount={5}
                   page="publications"
                 />
               );

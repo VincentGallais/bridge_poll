@@ -5,9 +5,11 @@ import FeatherIcon from "react-native-vector-icons/Feather";
 import ProfileImage from "../assets/images/profile.png";
 import FiltersModal from "./FiltersModal";
 import { COLORS } from '../assets/constants';
-
-const Header = ({ navigation, notificationCount, page, filterCount }) => {
+import { useAuth } from "../providers/AuthProvider";
+  
+const Header = ({ navigation, page }) => {
   const [filterModalVisible, setFilterModalVisible] = useState(false);
+  const { userData } = useAuth();
 
   const onFilterIconPress = () => {
     setFilterModalVisible(true);
@@ -41,14 +43,14 @@ const Header = ({ navigation, notificationCount, page, filterCount }) => {
             <TouchableOpacity onPress={onFilterIconPress}>
               <View style={styles.bellContainer}>
                 <FeatherIcon name="sliders" size={20} color="white" />
-                {filterCount > 0 && (
+                {2 > 0 && (
                   <View
                     style={{
                       ...styles.notificationBadge,
                       backgroundColor: "blue",
                     }}
                   >
-                    <Text style={styles.notificationText}>{filterCount}</Text>
+                    <Text style={styles.notificationText}>{2}</Text>
                   </View>
                 )}
               </View>
@@ -57,7 +59,7 @@ const Header = ({ navigation, notificationCount, page, filterCount }) => {
           <TouchableOpacity onPress={() => navigation.navigate("Notification")}>
             <View style={styles.bellContainer}>
               <FeatherIcon name="bell" size={20} color="white" />
-              {notificationCount > 0 && (
+              {userData?.notifications?.length > 0 && (
                 <View
                   style={{
                     ...styles.notificationBadge,
@@ -65,7 +67,7 @@ const Header = ({ navigation, notificationCount, page, filterCount }) => {
                   }}
                 >
                   <Text style={styles.notificationText}>
-                    {notificationCount}
+                    {userData?.notifications?.length}
                   </Text>
                 </View>
               )}
@@ -76,7 +78,10 @@ const Header = ({ navigation, notificationCount, page, filterCount }) => {
             <Image
               alt="Profile Picture"
               source={ProfileImage}
-              style={styles.profileAvatar}
+              style={{
+                ...styles.profileAvatar,
+                borderColor: userData?.isAdmin ? "orange" : "#ccc",
+              }}
             />
           </TouchableOpacity>
         </View>
@@ -138,7 +143,7 @@ const styles = StyleSheet.create({
     width: 42,
     height: 42,
     borderRadius: 9999,
-    borderWidth: 1,
+    borderWidth: 2,
     borderColor: "#ccc",
   },
 });

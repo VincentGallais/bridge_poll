@@ -20,7 +20,7 @@ import { supabase } from "../../lib/supabase";
 import { useAuth } from "../../providers/AuthProvider";
 
 const Profile = () => {
-  const { user, userData } = useAuth();
+  const { userData } = useAuth();
   const [photoModalVisible, setPhotoModalVisible] = React.useState(false);
   const [profileImage, setProfileImage] = React.useState(IMGS.profile);
   const [userParams, setUserParams] = useState(userData);
@@ -72,9 +72,9 @@ const Profile = () => {
       headerLabel: "Quizz suivis",
       icon: "plus",
       items:
-        userParams.followed_polls.length === 0
+        userParams?.followed_polls?.length === 0
           ? [{ id: "no_quizz", label: "Aucun quizz suivi", type: "text" }]
-          : userParams.followed_polls.map((id) => ({
+          : userParams?.followed_polls?.map((id) => ({
               id,
               label: `Quizz ${id}`,
               type: "removable",
@@ -125,7 +125,7 @@ const Profile = () => {
               source={profileImage}
               style={{
                 ...styles.profileAvatar,
-                borderColor: userParams.isAdmin ? "orange" : "#ccc",
+                borderColor: userParams?.isAdmin ? "orange" : "#ccc",
               }}
             />
 
@@ -145,27 +145,27 @@ const Profile = () => {
               <Image
                 style={styles.countryIcon}
                 source={{
-                  uri: `https://flagsapi.com/${userParams.country}/flat/64.png`,
+                  uri: `https://flagsapi.com/${userParams?.country}/flat/64.png`,
                 }}
               />
               <Text style={styles.profileName}>
-                {userParams.firstname} {userParams.lastname}
+                {userParams?.firstname} {userParams?.lastname}
               </Text>
             </View>
             {/* TODO : Convertir id en texte lisible */}
             <Text style={styles.profileLevel}>
-              Bridgeur {userParams.bridge_level}
+              Bridgeur {userParams?.bridge_level}
             </Text>
             <View style={{ flexDirection: "row", marginTop: 6, gap: 16 }}>
               <Text style={{ fontSize: 15 }}>
-                {userParams.friends.length < 2
-                  ? `${userParams.friends.length} ami`
-                  : `${userParams.friends.length} amis`}
+                {userParams?.friends?.length < 2
+                  ? `${userParams?.friends?.length} ami`
+                  : `${userParams?.friends?.length} amis`}
               </Text>
               <Text style={{ fontSize: 15 }}>
-                {userParams.published_polls.length < 2
-                  ? `${userParams.published_polls.length} sondage`
-                  : `${userParams.published_polls.length} sondages`}
+                {userParams?.published_polls?.length < 2
+                  ? `${userParams?.published_polls?.length} sondage`
+                  : `${userParams?.published_polls?.length} sondages`}
               </Text>
             </View>
           </View>
@@ -365,13 +365,13 @@ const Profile = () => {
       <CountryPickerModal
         visible={countryModalVisible}
         onClose={() => setCountryModalVisible(false)}
-        initialSelectedCountry={userParams.country}
+        initialSelectedCountry={userParams?.country}
         onSelect={handleCountrySelect}
       />
       <BridgeLevelPickerModal
         visible={levelModalVisible}
         onClose={() => setLevelModalVisible(false)}
-        initialSelectedLevel={userParams.bridge_level}
+        initialSelectedLevel={userParams?.bridge_level}
         onSelect={handleLevelSelect}
       />
       <AvatarPickerModal

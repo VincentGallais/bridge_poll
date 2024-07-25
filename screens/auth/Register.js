@@ -55,7 +55,6 @@ export default function Register({ navigation }) {
       }
       else Alert.alert(error.message);
     } 
-
     setLoading(false);
   }
 

@@ -10,13 +10,7 @@ import {
 } from "react-native";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import FontAwesome from "react-native-vector-icons/FontAwesome5";
-
-const levels = [
-  { id: "BEGINNER" },
-  { id: "INTERMEDIATE" },
-  { id: "EXPERT" },
-  { id: "PROFESSIONAL" },
-];
+import { BRIDGE_LEVELS } from "../assets/constants";
 
 const BridgeLevelPickerModal = ({
   visible,
@@ -25,14 +19,14 @@ const BridgeLevelPickerModal = ({
   initialSelectedLevel,
 }) => {
   const [value, setValue] = useState(() => {
-    const index = levels.findIndex(
+    const index = BRIDGE_LEVELS.findIndex(
       (level) => level.id === initialSelectedLevel
     );
     return index >= 0 ? index : null;
   });
 
   useEffect(() => {
-    const index = levels.findIndex(
+    const index = BRIDGE_LEVELS.findIndex(
       (level) => level.id === initialSelectedLevel
     );
     setValue(index >= 0 ? index : null);
@@ -55,7 +49,7 @@ const BridgeLevelPickerModal = ({
           </View>
 
           <ScrollView contentContainerStyle={styles.content}>
-            {levels.map(({ id }, index) => {
+            {BRIDGE_LEVELS.map(({ id }, index) => {
               const isActive = value === index;
               return (
                 <TouchableOpacity
