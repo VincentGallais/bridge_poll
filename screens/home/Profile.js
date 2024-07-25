@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import IMGS from '../../assets/constants/imgs';
+import { IMGS } from '../../assets/constants';
 import FeatherIcon from "react-native-vector-icons/Feather";
 import CountryPickerModal from "../../components/CountryPickerModal";
 import BridgeLevelPickerModal from "../../components/BridgeLevelPickerModal";

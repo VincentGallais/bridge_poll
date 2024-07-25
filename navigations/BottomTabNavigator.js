@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StyleSheet, Platform, Text, View } from 'react-native';
 import { ROUTES } from '../assets/constants';
-import { Quizz, Support, Notifications, Profile } from '../screens'; // Assurez-vous du bon chemin
+import { Quizz, Support, Notifications, Profile } from '../screens';
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import CustomTabBar from '../components/CustomTabBar';
 import { Colors } from '../assets/constants/colors';
@@ -100,7 +100,11 @@ function BottomTabNavigator() {
 
 function AppNavigator() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        animation: 'fade_from_bottom',
+      }}
+    >
       <Stack.Screen
         name="Main"
         component={BottomTabNavigator}

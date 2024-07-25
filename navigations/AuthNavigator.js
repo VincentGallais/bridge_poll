@@ -14,7 +14,6 @@ function AuthNavigator() {
         component={ForgotPassword}
         options={({route}) => ({
           headerTintColor: '#fff',
-          // headerBackTitle: 'Back',
           headerBackTitleVisible: false,
           headerStyle: {
             backgroundColor: 'orange',
