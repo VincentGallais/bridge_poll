@@ -24,7 +24,10 @@ Page soutenir :
     Faire le paiement & le restore purchase
 
 Login / Register :
-    Créer ligne userInformations avec pseudo et compagnie
+    Créer ligne userInformations avec pseudo et country fournis au register
+    Modale pick country au register
+    Checker pseudo pas déjà utilisé
+    Login se fait avec email ou pseudo
     Vue mot de passe oublié
     Faire les pages de manière esthétique : https://www.youtube.com/watch?v=RhF4iUCiwSs
 
