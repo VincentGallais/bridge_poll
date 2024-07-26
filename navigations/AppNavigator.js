@@ -26,11 +26,12 @@ function AppNavigator() {
   return (
     <Stack.Navigator
       screenOptions={{
-        animation: "fade_from_bottom",
+        animation: "fade",
       }}
       initialRouteName={ROUTES.QUIZZ}
     >
       <Stack.Screen
+        navigation={navigation}
         name={ROUTES.QUIZZ}
         component={Quizz}
         options={screenOptionsWithHeader(ROUTES.QUIZZ)}

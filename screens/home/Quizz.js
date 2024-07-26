@@ -1,8 +1,7 @@
-import * as React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   View,
   Animated,
-  Text,
   StyleSheet,
   Alert,
   TouchableOpacity,
@@ -11,6 +10,9 @@ import Carousel from "../../components/Carousel";
 import Loading from "../../components/Loading";
 import { BackHandler } from "react-native";
 import FeatherIcon from "react-native-vector-icons/Feather";
+import { useIsFocused } from "@react-navigation/native";
+import { ROUTES } from "../../assets/constants";
+import FiltersModal from "../../components/FiltersModal";
 
 const defaultMovies = [
   {
@@ -18,6 +20,7 @@ const defaultMovies = [
     author: "Vincent",
     date: "20/02/2024",
     answers: 2,
+    comments: 200,
     poster: "https://via.placeholder.com/300x450",
     backdrop: "https://via.placeholder.com/1200x800",
     tags: ["Enchère"],
@@ -28,6 +31,7 @@ const defaultMovies = [
     author: "Clara",
     date: "20/02/2024",
     answers: 150,
+    comments: 1,
     poster: "https://via.placeholder.com/300x450",
     backdrop: "https://via.placeholder.com/1200x800",
     tags: ["Entame"],
@@ -38,6 +42,7 @@ const defaultMovies = [
     author: "Vincent",
     date: "20/02/2024",
     answers: 25,
+    comments: 2,
     poster: "https://via.placeholder.com/300x450",
     backdrop: "https://via.placeholder.com/1200x800",
     tags: ["Enchère"],
@@ -48,57 +53,91 @@ const defaultMovies = [
     author: "Vincent",
     date: "20/02/2024",
     answers: 15,
+    comments: 7,
     poster: "https://via.placeholder.com/300x450",
     backdrop: "https://via.placeholder.com/1200x800",
     tags: ["Entame"],
     description: "Quelle est votre entame ?",
   },
+  {
+    key: "5",
+    author: "BRIDGE_POLL",
+    date: "99/99/9999",
+    answers: 15,
+    comments: 5,
+    poster: "https://via.placeholder.com/300x450",
+    backdrop: "https://via.placeholder.com/1200x800",
+    tags: ["Help Us"],
+    description: "Submit to premium subscription",
+  },
   // Add more default movies as needed
 ];
 
-const Quizz = () => {
-  React.useEffect(() => {
+const Quizz = ({ navigation }) => {
+  const isFocused = useIsFocused();
+
+  // Modale de filtre sur les quizz
+  const [filterOptions, setFilterOptions] = useState({
+    quizzDate: "Last Week",
+    quizzType: "Lead",
+    quizzAfinity: "Never Seen",
+  });
+  const [filterModalVisible, setFilterModalVisible] = useState(false);
+  const openFilterModal = () => setFilterModalVisible(true);
+  const closeFilterModal = () => setFilterModalVisible(false);
+  const handleFilterChange = (type, value) => {
+    setFilterOptions((prevOptions) => ({
+      ...prevOptions,
+      [type]: value,
+    }));
+  };
+
+  useEffect(() => {
     const backAction = () => {
-      Alert.alert(
-        "Quitter l'application",
-        "Voulez-vous vraiment quitter l'application?",
-        [
-          {
-            text: "Non",
-            onPress: () => null,
-            style: "cancel",
-          },
-          {
-            text: "Oui",
-            onPress: () => BackHandler.exitApp(),
-          },
-        ],
-        { cancelable: false }
-      );
-      return true;
+      if (isFocused) {
+        Alert.alert(
+          "Quitter l'application",
+          "Voulez-vous vraiment quitter l'application?",
+          [
+            {
+              text: "Non",
+              onPress: () => null,
+              style: "cancel",
+            },
+            {
+              text: "Oui",
+              onPress: () => BackHandler.exitApp(),
+            },
+          ],
+          { cancelable: false }
+        );
+        return true;
+      } else {
+        navigation.navigate(ROUTES.QUIZZ);
+        return true;
+      }
     };
 
     const backHandler = BackHandler.addEventListener(
       "hardwareBackPress",
       backAction
     );
-
     return () => backHandler.remove();
-  }, []);
+  }, [isFocused, navigation]);
 
-  const [movies, setMovies] = React.useState([]);
-  const scrollX = React.useRef(new Animated.Value(0)).current;
+  const [movies, setMovies] = useState([]);
+  const scrollX = useRef(new Animated.Value(0)).current;
 
-  React.useEffect(() => {
-    const fetchData = async () => {
-      setMovies([
-        { key: "empty-left" },
-        ...defaultMovies,
-        { key: "empty-right" },
-      ]);
-    };
-
+  useEffect(() => {
     if (movies.length === 0) {
+      const fetchData = async () => {
+        setMovies([
+          { key: "empty-left" },
+          ...defaultMovies,
+          { key: "empty-right" },
+        ]);
+      };
+
       fetchData();
     }
   }, [movies]);
@@ -109,22 +148,25 @@ const Quizz = () => {
 
   return (
     <View style={styles.container}>
+      <FiltersModal
+        modalVisible={filterModalVisible}
+        closeModal={closeFilterModal}
+        filterOptions={filterOptions}
+        onFilterChange={handleFilterChange}
+      />
+
       <Carousel movies={movies} scrollX={scrollX} />
 
       <TouchableOpacity
-        style={{...styles.floatingButton, right: 16}}
-        onPress={() => {
-          /* Action pour le bouton "plus" */
-        }}
+        style={{ ...styles.floatingButton, right: 16 }}
+        onPress={() => navigation.navigate(ROUTES.PUBLICATIONS)}
       >
         <FeatherIcon name="plus" size={20} color="white" />
       </TouchableOpacity>
 
       <TouchableOpacity
-        style={{...styles.floatingButton, left: 16}}
-        onPress={() => {
-          /* Action pour le bouton "filter" */
-        }}
+        style={{ ...styles.floatingButton, left: 16 }}
+        onPress={openFilterModal}
       >
         <FeatherIcon name="sliders" size={20} color="white" />
       </TouchableOpacity>

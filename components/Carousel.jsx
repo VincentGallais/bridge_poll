@@ -16,7 +16,7 @@ import AwesomeButton from "react-native-really-awesome-button";
 import FeatherIcon from "react-native-vector-icons/Feather";
 
 const SPACING = 5;
-const ITEM_SIZE = Platform.OS === "ios" ? width * 0.81 : width * 0.85;
+const ITEM_SIZE = Platform.OS === "ios" ? width * 0.87 : width * 0.9;
 const EMPTY_ITEM_SIZE = (width - ITEM_SIZE) / 2;
 const BACKGROUND_IMG_HEIGHT = height * 0.65;
 
@@ -52,7 +52,7 @@ const Carousel = ({ movies, scrollX }) => {
 
           const translateY = scrollX.interpolate({
             inputRange,
-            outputRange: [40, 10, 40],
+            outputRange: [60, 30, 60],
             extrapolate: "clamp",
           });
 
@@ -101,7 +101,7 @@ const Carousel = ({ movies, scrollX }) => {
                 </View>
                 <Image
                   source={{ uri: item.poster }}
-                  style={{ ...styles.posterImage, height: ITEM_SIZE * 1 }}
+                  style={{ ...styles.posterImage, height: ITEM_SIZE * 1.1 }}
                 />
 
                 <View
@@ -148,8 +148,10 @@ const Carousel = ({ movies, scrollX }) => {
                     marginHorizontal: 8,
                   }}
                 >
-                  <StackedCircularAvatar size="small" answers={item.answers} />
-                  <Text style={{ fontSize: 14 }}>20 commentaires</Text>
+                  <StackedCircularAvatar size="small" answers={item?.answers} />
+                  <Text style={{ fontSize: 14 }}>{item?.comments < 2
+                  ? `${item?.comments} commentaire`
+                  : `${item?.comments} commentaires`}</Text>
                 </View>
               </Animated.View>
             </View>

@@ -1,9 +1,8 @@
 Boutons flotant AddPoll & FilterPoll
 
 Page profile :
-    On ne parle plus de friends mais de followers
-    Ajouter search user (pour ajouter friends)
-    Clic sur "X amis" ou "X sondages" dans ma bio me redirige vers la liste de mes amis / de mes sondages
+    Ajouter search user (pour follow d'autres joueurs)
+    Clic sur "X followers" ou "X sondages" dans ma bio me redirige vers la liste de mes followers / sondages
     Mettre à jour la bdd à chaque modification dans profile
     Faire interface des quizz suivis qui redirige
 
@@ -38,12 +37,10 @@ Publications :
 
 Autre :
     -> Rajouter champ isPremium en BDD
-    Stocker image user en bdd (mettre par défault image facebook)
-    Fondu lors d'un changement de page (+ améliorer esthétique footer)
+    Stocker image user en bdd
     Compléter la liste des pays fournis
     Traductions en anglais de l'application
     Créer des premiers sondages pour alimenter le contenu
-    Faire header spéciaux pour pages profile, notification, ajout ami ...
     Revoir la police choisie
     Faire des illustrations pour welcome, login, register, change password, forgotten password
     Revoir la bdd (table liante friends et poll sur laquelle on compte le nombre d'associations plutôt que de créer les attributs followed_polls, published_polls, friends, notifications, skiped_polls)

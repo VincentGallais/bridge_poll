@@ -5,7 +5,7 @@ import { getUserImageSrc } from '../services/imageService'
 
 const Avatar = ({
     uri, 
-    size=20, 
+    size=40, 
     rounded=theme.radius.md,
     style={}
 }) => {

@@ -1,11 +1,31 @@
-// CountryPickerModal.jsx
-import React, { useState } from "react";
+import React from "react";
 import { Modal, StyleSheet, TouchableOpacity, View, Text } from "react-native";
 
-const FiltersModal = ({ modalVisible, closeModal }) => {
-  const [quizzDate, setQuizzDate] = useState("Last Week");
-  const [quizzType, setQuizzType] = useState("Lead");
-  const [quizzAfinity, setQuizzAfinity] = useState("Never Seen");
+const FiltersModal = ({ modalVisible, closeModal, filterOptions = {}, onFilterChange }) => {
+
+  // Render buttons
+  const renderButton = (type, options) => (
+    options.map(option => (
+      <TouchableOpacity
+        key={option}
+        style={[
+          styles.button,
+          filterOptions[type] === option && styles.selectedButton,
+        ]}
+        onPress={() => onFilterChange(type, option)}
+      >
+        <Text
+          style={
+            filterOptions[type] === option
+              ? styles.selectedButtonText
+              : styles.buttonText
+          }
+        >
+          {option}
+        </Text>
+      </TouchableOpacity>
+    ))
+  );
 
   return (
     <Modal
@@ -17,171 +37,22 @@ const FiltersModal = ({ modalVisible, closeModal }) => {
       <View style={styles.overlay}>
         <View style={styles.modalContainer}>
           <Text style={styles.title}>Filtering Quizz</Text>
+
           <Text style={styles.subtitle}>Quizz Date</Text>
           <View style={styles.buttonGroup}>
-            <TouchableOpacity
-              style={[
-                styles.button,
-                quizzDate === "Last Week" && styles.selectedButton,
-              ]}
-              onPress={() => setQuizzDate("Last Week")}
-            >
-              <Text
-                style={
-                  quizzDate === "Last Week"
-                    ? styles.selectedButtonText
-                    : styles.buttonText
-                }
-              >
-                Last Week
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[
-                styles.button,
-                quizzDate === "Last Month" && styles.selectedButton,
-              ]}
-              onPress={() => setQuizzDate("Last Month")}
-            >
-              <Text
-                style={
-                  quizzDate === "Last Month"
-                    ? styles.selectedButtonText
-                    : styles.buttonText
-                }
-              >
-                Last Month
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[
-                styles.button,
-                quizzDate === "All" && styles.selectedButton,
-              ]}
-              onPress={() => setQuizzDate("All")}
-            >
-              <Text
-                style={
-                  quizzDate === "All"
-                    ? styles.selectedButtonText
-                    : styles.buttonText
-                }
-              >
-                All
-              </Text>
-            </TouchableOpacity>
+            {renderButton("quizzDate", ["Last Week", "Last Month", "All"])}
           </View>
 
           <Text style={styles.subtitle}>Quizz Type</Text>
           <View style={styles.buttonGroup}>
-            <TouchableOpacity
-              style={[
-                styles.button,
-                quizzType === "Bid" && styles.selectedButton,
-              ]}
-              onPress={() => setQuizzType("Bid")}
-            >
-              <Text
-                style={
-                  quizzType === "Bid"
-                    ? styles.selectedButtonText
-                    : styles.buttonText
-                }
-              >
-                Bid
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[
-                styles.button,
-                quizzType === "Lead" && styles.selectedButton,
-              ]}
-              onPress={() => setQuizzType("Lead")}
-            >
-              <Text
-                style={
-                  quizzType === "Lead"
-                    ? styles.selectedButtonText
-                    : styles.buttonText
-                }
-              >
-                Lead
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[
-                styles.button,
-                quizzType === "Suit Play" && styles.selectedButton,
-              ]}
-              onPress={() => setQuizzType("Suit Play")}
-            >
-              <Text
-                style={
-                  quizzType === "Suit Play"
-                    ? styles.selectedButtonText
-                    : styles.buttonText
-                }
-              >
-                Suit Play
-              </Text>
-            </TouchableOpacity>
-            
+            {renderButton("quizzType", ["Bid", "Lead", "Suit Play"])}
           </View>
 
           <Text style={styles.subtitle}>Quizz Afinity</Text>
           <View style={styles.buttonGroup}>
-            <TouchableOpacity
-              style={[
-                styles.button,
-                quizzAfinity === "Never Seen" && styles.selectedButton,
-              ]}
-              onPress={() => setQuizzAfinity("Never Seen")}
-            >
-              <Text
-                style={
-                  quizzAfinity === "Never Seen"
-                    ? styles.selectedButtonText
-                    : styles.buttonText
-                }
-              >
-                Never Seen
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[
-                styles.button,
-                quizzAfinity === "Followed" && styles.selectedButton,
-              ]}
-              onPress={() => setQuizzAfinity("Followed")}
-            >
-              <Text
-                style={
-                  quizzAfinity === "Followed"
-                    ? styles.selectedButtonText
-                    : styles.buttonText
-                }
-              >
-                Followed
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[
-                styles.button,
-                quizzAfinity === "All" && styles.selectedButton,
-              ]}
-              onPress={() => setQuizzAfinity("All")}
-            >
-              <Text
-                style={
-                  quizzAfinity === "All"
-                    ? styles.selectedButtonText
-                    : styles.buttonText
-                }
-              >
-                All
-              </Text>
-            </TouchableOpacity>
+            {renderButton("quizzAfinity", ["Never Seen", "Followed", "All"])}
           </View>
+
           <TouchableOpacity style={styles.closeButton} onPress={closeModal}>
             <Text style={styles.closeButtonText}>Close</Text>
           </TouchableOpacity>
@@ -218,9 +89,9 @@ const styles = StyleSheet.create({
   },
   buttonGroup: {
     flexDirection: "row",
-    justifyContent: "flex-start",
-    marginBottom: 8,
+    flexWrap: "wrap",
     gap: 8,
+    marginBottom: 8,
   },
   button: {
     paddingVertical: 10,

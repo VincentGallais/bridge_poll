@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import FeatherIcon from "react-native-vector-icons/Feather";
@@ -6,11 +6,18 @@ import ProfileImage from "../assets/images/profile.png";
 import FiltersModal from "./FiltersModal";
 import { COLORS, ROUTES } from "../assets/constants"; // Assurez-vous d'importer ROUTES
 import { useAuth } from "../providers/AuthProvider";
-import Avatar from '../components/Avatar'
+import Avatar from "../components/Avatar";
+import { theme } from "../assets/constants/theme";
+import Loading from "../components/Loading";
 
 const Header = ({ navigation, page }) => {
   const [filterModalVisible, setFilterModalVisible] = useState(false);
+  const [loading, setLoading] = useState(true);
   const { userData } = useAuth();
+
+  useEffect(() => {
+    if (userData) setLoading(false);
+  }, [userData]);
 
   const onFilterIconPress = () => {
     setFilterModalVisible(true);
@@ -22,65 +29,50 @@ const Header = ({ navigation, page }) => {
 
   return (
     <SafeAreaView style={{ backgroundColor: COLORS.Green500 }}>
-      <View style={styles.headerContainer}>
-        <View style={styles.iconContainer}>
-          {page === "home" && (
-            <TouchableOpacity onPress={onFilterIconPress}>
+      {loading ? (
+        <Loading />
+      ) : (
+        <View style={styles.headerContainer}>
+          <Text style={styles.headerText}>
+            Welcome to {page} {userData?.pseudo}
+          </Text>
+          <View style={styles.iconContainer}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate(ROUTES.NOTIFICATIONS)}
+            >
               <View style={styles.bellContainer}>
-                <FeatherIcon name="sliders" size={20} color="white" />
-                {2 > 0 && (
+                <FeatherIcon name="bell" size={20} color="white" />
+                {userData?.notifications?.length > 0 && (
                   <View
                     style={{
                       ...styles.notificationBadge,
-                      backgroundColor: "blue",
+                      backgroundColor: "red",
                     }}
                   >
-                    <Text style={styles.notificationText}>{2}</Text>
+                    <Text style={styles.notificationText}>
+                      {userData?.notifications?.length}
+                    </Text>
                   </View>
                 )}
               </View>
             </TouchableOpacity>
-          )}
-          <TouchableOpacity
-            onPress={() => navigation.navigate(ROUTES.NOTIFICATIONS)}
-          >
-            <View style={styles.bellContainer}>
-              <FeatherIcon name="bell" size={20} color="white" />
-              {userData?.notifications?.length > 0 && (
-                <View
-                  style={{
-                    ...styles.notificationBadge,
-                    backgroundColor: "red",
-                  }}
-                >
-                  <Text style={styles.notificationText}>
-                    {userData?.notifications?.length}
-                  </Text>
-                </View>
-              )}
-            </View>
-          </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => navigation.navigate(ROUTES.PROFILE)}>
-
-            <Avatar 
-                uri={userData?.image} 
-                size={hp(4.3)}
+            <TouchableOpacity
+              onPress={() => navigation.navigate(ROUTES.PROFILE)}
+            >
+              <Avatar
+                uri={userData?.image}
+                size={40}
                 rounded={theme.radius.sm}
-                style={{borderWidth: 2}}
+                style={{
+                  borderWidth: 2,
+                  borderColor: userData?.isAdmin ? "orange" : "#ccc",
+                }}
               />
-
-            <Image
-              alt="Profile Picture"
-              source={ProfileImage}
-              style={{
-                ...styles.profileAvatar,
-                borderColor: userData?.isAdmin ? "orange" : "#ccc",
-              }}
-            />
-          </TouchableOpacity>
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
+      )}
       <FiltersModal
         modalVisible={filterModalVisible}
         closeModal={closeFilterModal}
@@ -97,10 +89,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     paddingVertical: 8,
   },
-  greetingContainer: {
-    flexDirection: "row",
-    alignItems: "flex-end",
-  },
   headerText: {
     fontSize: 18,
     fontWeight: "600",
@@ -109,7 +97,7 @@ const styles = StyleSheet.create({
   iconContainer: {
     flex: 1,
     flexDirection: "row",
-    justifyContent: "flex-end"
+    justifyContent: "flex-end",
   },
   bellContainer: {
     position: "relative",
@@ -137,13 +125,6 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 10,
     fontWeight: "bold",
-  },
-  profileAvatar: {
-    width: 42,
-    height: 42,
-    borderRadius: 9999,
-    borderWidth: 2,
-    borderColor: "#ccc",
   },
 });
 

@@ -148,9 +148,7 @@ const Profile = () => {
                   uri: `https://flagsapi.com/${userParams?.country}/flat/64.png`,
                 }}
               />
-              <Text style={styles.profileName}>
-                {userParams?.pseudo}
-              </Text>
+              <Text style={styles.profileName}>{userParams?.pseudo}</Text>
             </View>
             {/* TODO : Convertir id en texte lisible */}
             <Text style={styles.profileLevel}>
@@ -159,8 +157,8 @@ const Profile = () => {
             <View style={{ flexDirection: "row", marginTop: 6, gap: 16 }}>
               <Text style={{ fontSize: 15 }}>
                 {userParams?.friends?.length < 2
-                  ? `${userParams?.friends?.length} ami`
-                  : `${userParams?.friends?.length} amis`}
+                  ? `${userParams?.friends?.length} follower`
+                  : `${userParams?.friends?.length} followers`}
               </Text>
               <Text style={{ fontSize: 15 }}>
                 {userParams?.published_polls?.length < 2
@@ -181,7 +179,7 @@ const Profile = () => {
             <View
               style={{ ...styles.profileAction, backgroundColor: "#28a745" }}
             >
-              <Text style={styles.profileActionText}>Ajouter un ami</Text>
+              <Text style={styles.profileActionText}>Chercher un joueur</Text>
               <FeatherIcon name="user-plus" color="#fff" size={16} />
             </View>
           </TouchableOpacity>
@@ -421,7 +419,6 @@ const styles = StyleSheet.create({
   },
   profileAction: {
     paddingVertical: 10,
-    paddingHorizontal: 10,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
@@ -491,7 +488,6 @@ const styles = StyleSheet.create({
   },
   profileActionsContainer: {
     flexDirection: "row",
-    justifyContent: "space-between",
     marginTop: 16,
     paddingHorizontal: 16,
   },

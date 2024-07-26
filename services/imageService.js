@@ -38,7 +38,7 @@ export const getUserImageSrc = (imagePath)=>{
     if(imagePath){
         return getSupabaseFileUrl(imagePath);
     }else{
-        return require('../assets/images/default_profile.png');
+        return require('../assets/images/default-user.png');
     }
 }
 
