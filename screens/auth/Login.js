@@ -1,22 +1,22 @@
-import React, { useState } from "react";
 import {
-  Alert,
-  StyleSheet,
   View,
-  AppState,
-  Button,
-  TextInput,
   Text,
-  TouchableOpacity,
+  StyleSheet,
+  Pressable,
+  Alert,
+  AppState,
+  ScrollView,
 } from "react-native";
+import React, { useRef, useState } from "react";
+import ScreenWrapper from "../../components/ScreenWrapper";
+import { theme } from "../../assets/constants/theme";
+import BackButton from "../../components/BackButton";
+import Button from "../../components/Button";
 import { supabase } from "../../lib/supabase";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import Icon from "../../assets/icons";
+import Input from "../../components/Input";
 import { ROUTES } from "../../assets/constants";
 
-// Tells Supabase Auth to continuously refresh the session automatically if
-// the app is in the foreground. When this is added, you will continue to receive
-// `onAuthStateChange` events with the `TOKEN_REFRESHED` or `SIGNED_OUT` event
-// if the user's session is terminated. This should only be registered once.
 AppState.addEventListener("change", (state) => {
   if (state === "active") {
     supabase.auth.startAutoRefresh();
@@ -25,101 +25,128 @@ AppState.addEventListener("change", (state) => {
   }
 });
 
-const Stack = createNativeStackNavigator();
-
-export default function Login({ navigation }) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+const Login = ({ navigation }) => {
+  const emailRef = useRef("");
+  const passwordRef = useRef("");
   const [loading, setLoading] = useState(false);
 
-  async function signInWithEmail() {
+  const onSubmit = async () => {
+    if (!emailRef.current || !passwordRef.current) {
+      Alert.alert("Login", "Please fill all the fields!");
+      return;
+    }
+
+    let email = emailRef.current.trim();
+    let password = passwordRef.current.trim();
+
     setLoading(true);
     const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
+      email: email,
+      password: password,
     });
-    if (error){
-      Alert.alert("Identifiants incorrects");
-    } 
-    else {
-      navigation.navigate(ROUTES.QUIZZ);
-    }
+
+    if (error) Alert.alert("Login", error.message, email, password);
     setLoading(false);
-  }
+
+    // setLoading(true);
+  };
 
   return (
-    <View style={styles.container}>
-      <Stack.Screen options={{ title: "Login" }} />
-      <Text style={{ fontWeight: "500" }}>Sign in</Text>
-      <View style={[styles.verticallySpaced, styles.mt20]}>
-        <TextInput
-          onChangeText={(text) => setEmail(text.trim())}
-          value={email}
-          placeholder="email@address.com"
-          autoCapitalize={"none"}
-          style={styles.input}
-        />
-      </View>
-      <View style={styles.verticallySpaced}>
-        <TextInput
-          onChangeText={(text) => setPassword(text.trim())}
-          value={password}
-          secureTextEntry={true}
-          placeholder="Password"
-          autoCapitalize={"none"}
-          style={styles.input}
-        />
-      </View>
-      <View style={{ marginVertical: 16, marginHorizontal: 16 }}>
-        <Button
-          title="Sign in"
-          disabled={loading}
-          onPress={() => signInWithEmail()}
-        />
-      </View>
+    <ScreenWrapper bg={"white"}>
+      <ScrollView>
+        <View style={styles.container}>
+          {/* back button */}
+          <View>
+            <BackButton router={navigation} route={ROUTES.WELCOMESCREEN} />
+          </View>
 
-      <View style={{ alignItems: "center", marginVertical: 8 }}>
-        <TouchableOpacity
-          disabled={loading}
-          onPress={() => navigation.navigate(ROUTES.REGISTER)}
-        >
-          <Text style={styles.signInText}>Sign Up</Text>
-        </TouchableOpacity>
-      </View>
+          {/* welcome */}
+          <View>
+            <Text style={styles.welcomeText}>Hey, </Text>
+            <Text style={styles.welcomeText}>Welcome Back </Text>
+          </View>
 
-      <View style={{ alignItems: "center", marginVertical: 8 }}>
-        <TouchableOpacity
-          disabled={loading}
-          onPress={() =>
-            navigation.navigate(ROUTES.FORGOT_PASSWORD, {
-              userId: "X0001",
-            })
-          }
-        >
-          <Text style={styles.signInText}>Forgot Password</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+          {/* form */}
+          <View style={styles.form}>
+            <Input
+              icon={<Icon name="mail" size={26} strokeWidth={1.6} />}
+              placeholder="Enter your email"
+              placeholderTextColor={theme.colors.textLight}
+              onChangeText={(value) => (emailRef.current = value)}
+            />
+            <Input
+              icon={<Icon name="lock" size={26} strokeWidth={1.6} />}
+              secureTextEntry
+              placeholder="Enter your password"
+              placeholderTextColor={theme.colors.textLight}
+              onChangeText={(value) => (passwordRef.current = value)}
+            />
+            <Pressable
+              onPress={() =>
+                navigation.navigate(ROUTES.FORGOT_PASSWORD, {
+                  userId: "X0001",
+                })
+              }
+            >
+              <Text style={styles.forgotPassword}>Forgot Password?</Text>
+            </Pressable>
+
+            {/* button */}
+            <Button title="Login" loading={loading} onPress={onSubmit} />
+          </View>
+
+          <View style={styles.footer}>
+            <Text style={styles.footerText}>Don't have an account?</Text>
+            <Pressable onPress={() => navigation.navigate(ROUTES.REGISTER)}>
+              <Text
+                style={[
+                  styles.footerText,
+                  {
+                    color: theme.colors.primaryDark,
+                    fontWeight: theme.fonts.semibold,
+                  },
+                ]}
+              >
+                Sign up
+              </Text>
+            </Pressable>
+          </View>
+        </View>
+      </ScrollView>
+    </ScreenWrapper>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 80,
-    padding: 12,
+    gap: 45,
+    paddingHorizontal: 20,
   },
-  verticallySpaced: {
-    paddingTop: 4,
-    paddingBottom: 4,
-    alignSelf: "stretch",
+  welcomeText: {
+    fontSize: 30,
+    fontWeight: theme.fonts.bold,
+    color: theme.colors.text,
   },
-  mt20: {
-    marginTop: 20,
+  form: {
+    gap: 25,
   },
-  input: {
-    backgroundColor: "white",
-    padding: 10,
-    borderRadius: 5,
+  forgotPassword: {
+    textAlign: "right",
+    fontWeight: theme.fonts.semibold,
+    color: theme.colors.text,
+  },
+  footer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 5,
+  },
+  footerText: {
+    textAlign: "center",
+    color: theme.colors.text,
+    fontSize: 16,
   },
 });
+
+export default Login;

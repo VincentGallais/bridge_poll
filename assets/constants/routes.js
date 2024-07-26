@@ -4,6 +4,8 @@ export default {
   REGISTER: 'Register',
   FORGOT_PASSWORD: 'ForgotPassword',
 
+  HOME: 'Home',
+
   QUIZZ: 'Quizz',
   QUIZZ_TAB: 'Quizz Tab',
 

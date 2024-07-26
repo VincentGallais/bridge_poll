@@ -1,6 +1,16 @@
 import * as React from "react";
-import { View, Animated, Text, StyleSheet } from "react-native";
+import {
+  View,
+  Animated,
+  Text,
+  StyleSheet,
+  Alert,
+  TouchableOpacity,
+} from "react-native";
 import Carousel from "../../components/Carousel";
+import Loading from "../../components/Loading";
+import { BackHandler } from "react-native";
+import FeatherIcon from "react-native-vector-icons/Feather";
 
 const defaultMovies = [
   {
@@ -46,13 +56,36 @@ const defaultMovies = [
   // Add more default movies as needed
 ];
 
-const Loading = () => (
-  <View style={styles.loadingContainer}>
-    <Text style={styles.paragraph}>Loading...</Text>
-  </View>
-);
-
 const Quizz = () => {
+  React.useEffect(() => {
+    const backAction = () => {
+      Alert.alert(
+        "Quitter l'application",
+        "Voulez-vous vraiment quitter l'application?",
+        [
+          {
+            text: "Non",
+            onPress: () => null,
+            style: "cancel",
+          },
+          {
+            text: "Oui",
+            onPress: () => BackHandler.exitApp(),
+          },
+        ],
+        { cancelable: false }
+      );
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction
+    );
+
+    return () => backHandler.remove();
+  }, []);
+
   const [movies, setMovies] = React.useState([]);
   const scrollX = React.useRef(new Animated.Value(0)).current;
 
@@ -77,6 +110,24 @@ const Quizz = () => {
   return (
     <View style={styles.container}>
       <Carousel movies={movies} scrollX={scrollX} />
+
+      <TouchableOpacity
+        style={{...styles.floatingButton, right: 16}}
+        onPress={() => {
+          /* Action pour le bouton "plus" */
+        }}
+      >
+        <FeatherIcon name="plus" size={20} color="white" />
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={{...styles.floatingButton, left: 16}}
+        onPress={() => {
+          /* Action pour le bouton "filter" */
+        }}
+      >
+        <FeatherIcon name="sliders" size={20} color="white" />
+      </TouchableOpacity>
     </View>
   );
 };
@@ -97,5 +148,20 @@ export const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     textAlign: "center",
+  },
+  floatingButton: {
+    position: "absolute",
+    bottom: 20,
+    backgroundColor: "#6200ee",
+    borderRadius: 50,
+    width: 60,
+    height: 60,
+    alignItems: "center",
+    justifyContent: "center",
+    elevation: 8, // For Android shadow
+    shadowColor: "#000", // For iOS shadow
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
   },
 });

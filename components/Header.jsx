@@ -4,9 +4,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import ProfileImage from "../assets/images/profile.png";
 import FiltersModal from "./FiltersModal";
-import { COLORS } from '../assets/constants';
+import { COLORS, ROUTES } from "../assets/constants"; // Assurez-vous d'importer ROUTES
 import { useAuth } from "../providers/AuthProvider";
-  
+import Avatar from '../components/Avatar'
+
 const Header = ({ navigation, page }) => {
   const [filterModalVisible, setFilterModalVisible] = useState(false);
   const { userData } = useAuth();
@@ -22,22 +23,6 @@ const Header = ({ navigation, page }) => {
   return (
     <SafeAreaView style={{ backgroundColor: COLORS.Green500 }}>
       <View style={styles.headerContainer}>
-        {page === "home" ? (
-          <View style={styles.greetingContainer}>
-            <Text style={styles.headerText}>Hello</Text>
-            <Text
-              style={{ ...styles.headerText, fontWeight: "900", marginLeft: 4 }}
-            >
-              {userData?.pseudo}
-            </Text>
-          </View>
-        ) : page === "publications" ? (
-          <Text style={styles.headerText}>Submit a new poll</Text>
-        ) : page === "support" ? (
-          <Text style={styles.headerText}>Support us !</Text>
-        ) : (
-          <Text style={styles.headerText}>Unknown Page</Text>
-        )}
         <View style={styles.iconContainer}>
           {page === "home" && (
             <TouchableOpacity onPress={onFilterIconPress}>
@@ -56,7 +41,9 @@ const Header = ({ navigation, page }) => {
               </View>
             </TouchableOpacity>
           )}
-          <TouchableOpacity onPress={() => navigation.navigate("Notification")}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate(ROUTES.NOTIFICATIONS)}
+          >
             <View style={styles.bellContainer}>
               <FeatherIcon name="bell" size={20} color="white" />
               {userData?.notifications?.length > 0 && (
@@ -74,7 +61,15 @@ const Header = ({ navigation, page }) => {
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
+          <TouchableOpacity onPress={() => navigation.navigate(ROUTES.PROFILE)}>
+
+            <Avatar 
+                uri={userData?.image} 
+                size={hp(4.3)}
+                rounded={theme.radius.sm}
+                style={{borderWidth: 2}}
+              />
+
             <Image
               alt="Profile Picture"
               source={ProfileImage}
@@ -86,7 +81,10 @@ const Header = ({ navigation, page }) => {
           </TouchableOpacity>
         </View>
       </View>
-      <FiltersModal modalVisible={filterModalVisible} closeModal={closeFilterModal} />
+      <FiltersModal
+        modalVisible={filterModalVisible}
+        closeModal={closeFilterModal}
+      />
     </SafeAreaView>
   );
 };
@@ -109,8 +107,9 @@ const styles = StyleSheet.create({
     color: "white",
   },
   iconContainer: {
+    flex: 1,
     flexDirection: "row",
-    alignItems: "center",
+    justifyContent: "flex-end"
   },
   bellContainer: {
     position: "relative",

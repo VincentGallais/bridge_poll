@@ -1,79 +1,103 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { View, Text, StyleSheet, Image, Pressable } from "react-native";
 import React from "react";
-
-import { IMGS, COLORS } from "../../assets/constants";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { useNavigation } from "@react-navigation/native";
+import ScreenWrapper from "../../components/ScreenWrapper";
+import { hp, wp } from "../../helpers/common";
+import { theme } from "../../assets/constants/theme";
+import Button from "../../components/Button";
 import { ROUTES } from "../../assets/constants";
+import { useNavigation } from "@react-navigation/native";
+import { IMGS, COLORS } from "../../assets/constants";
 
-export default function WelcomeScreen() {
+const WelcomePage = () => {
   const navigation = useNavigation();
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.Green500 }}>
-      <View style={{ flex: 1, justifyContent: "space-around" }}>
-        <Text
-          style={{
-            color: COLORS.White,
-            textAlign: "center",
-            fontWeight: "bold",
-            fontSize: 32,
-          }}
-        >
-          Welcome to Bridge Poll!
-        </Text>
+    <ScreenWrapper bg={"white"}>
+      <View style={styles.container}>
+        {/* welcome image */}
+        <Image
+          style={styles.welcomeImage}
+          resizeMode="contain"
+          source={IMGS.welcomeScreenIllustration}
+        />
 
-        <View style={{ flexDirection: "row", justifyContent: "center" }}>
-          <Image
-            alt="Welcome Screen Illustration"
-            source={IMGS.welcomeScreenIllustration}
-            style={styles.illustration}
-          />
+        {/* title */}
+        <View style={{ gap: 20 }}>
+          <Text style={styles.title}>Bridge Poll !</Text>
+          <Text style={styles.punchline}>
+            Where every question finds an answers and every bid tells a story.
+          </Text>
         </View>
 
-        <View style={{ marginHorizontal: 24 }}>
-          <TouchableOpacity onPress={() => navigation.navigate(ROUTES.REGISTER)} style={styles.signUpButtonContainer}>
-            <Text style={styles.buttonFont}>Sign Up</Text>
-          </TouchableOpacity>
-
-          <View
-            style={{
-              flexDirection: "row",
-              marginTop: 16,
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Text style={{ fontSize: 14, marginRight: 6 }}>
-              Already have an acount?
-            </Text>
-            <TouchableOpacity
-              onPress={() => navigation.navigate(ROUTES.LOGIN)}
-            >
-              <Text style={{ fontSize: 16, color: COLORS.White }}>Log In</Text>
-            </TouchableOpacity>
+        <View style={styles.footer}>
+          <Button
+            title="Getting Started"
+            buttonStyle={{ marginHorizontal: 20 }}
+            onPress={() => navigation.navigate(ROUTES.REGISTER)}
+          />
+          <View style={styles.bottomTextContainer}>
+            <Text style={styles.loginText}>Already have an account!</Text>
+            <Pressable onPress={() => navigation.navigate(ROUTES.LOGIN)}>
+              <Text
+                style={[
+                  styles.loginText,
+                  {
+                    color: theme.colors.primaryDark,
+                    fontWeight: theme.fonts.semibold,
+                  },
+                ]}
+              >
+                Login
+              </Text>
+            </Pressable>
           </View>
         </View>
       </View>
-    </SafeAreaView>
+    </ScreenWrapper>
   );
-}
+};
 
 const styles = StyleSheet.create({
-  illustration: {
-    width: 350,
-    height: 350,
-    resizeMode: "contain",
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "space-around",
+    backgroundColor: "white",
+    paddingHorizontal: 20,
   },
-  signUpButtonContainer: {
-    paddingHorizontal: 8,
-    backgroundColor: COLORS.Red500,
-    paddingVertical: 8,
-    borderRadius: 10,
+  welcomeImage: {
+    height: 300,
+    width: 300,
+    alignSelf: "center",
   },
-  buttonFont: {
+  title: {
+    color: theme.colors.text,
+    fontSize: 30,
     textAlign: "center",
-    fontSize: 20,
-    fontWeight: "bold",
+    fontWeight: theme.fonts.extraBold,
+  },
+  punchline: {
+    textAlign: "center",
+    fontSize: 16,
+    maxWidth: 300,
+    color: theme.colors.text,
+  },
+  footer: {
+    gap: 30,
+    width: "100%",
+  },
+
+  bottomTextContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 5,
+  },
+  loginText: {
+    textAlign: "center",
+    color: theme.colors.text,
+    fontSize: 16,
   },
 });
+
+export default WelcomePage;
