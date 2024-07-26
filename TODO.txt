@@ -1,17 +1,20 @@
+Prendre projet Nomi, créer cards support user
+Boutons flotant AddPoll & FilterPoll
+
 Page profile :
-    -> Table de correspondance level/country & key
     -> View Add Friend à créer
     -> Clic sur "X amis" ou "X sondages" dans ma bio me redirige vers la liste de mes amis / de mes sondages
     -> Continuer le développement de la AvatarPickerModale
     -> Mettre à jour la bdd à chaque modification dans profile
+    -> Slide horizontal entre Quizz Suivi et Préférences
     Faire interface des quizz suivis qui redirige
 
 Page quizz :
     Meilleure gestion de la hauteur (marginH et centrage ?)
     Clic sur un quizz l'ouvre en grand (version répondu et non répondu) + vue quand quizz répondu 
-    Proposer de follow (star) ou skip (croix) un sondage => les follow sont dans la rubrique follow du profil
-    Faire le fetching en pensant aux filtes
-    Cliquer sur le nom de l'auteur pour voir son profil dans une modale
+    Proposer de follow (star) ou skip (croix) un sondage
+    Faire le fetching des quizz en pensant aux filtes
+    Cliquer sur le nom de l'auteur pour voir son profil
     Cliquer sur les têtes pour voir qui a répondu (possibilité d'ajouter en ami & mettre la photo des amis en priorié sous le sondage)
     Quizz avec background dorés pour joueurs spéciaux
 
@@ -24,21 +27,21 @@ Page soutenir :
     Faire le paiement & le restore purchase
 
 Login / Register :
-    Créer ligne userInformations avec pseudo et country fournis au register
-    Modale pick country au register
+    Créer ligne userInformations avec pseudo et country lors du register
+    -> Modale pick country au register
     Checker pseudo pas déjà utilisé
     Login se fait avec email ou pseudo
     Vue mot de passe oublié
-    Faire les pages de manière esthétique : https://www.youtube.com/watch?v=RhF4iUCiwSs
+    Faire les pages de manière esthétique : https://www.youtube.com/watch?v=RhF4iUCiwSs / https://www.youtube.com/watch?v=eYByUtXQbEo
 
 Publications : 
     Mettre dans une scroll View
     Améliorer esthétique et faire gui pour sélectionner cartes et enchères
 
 Autre :
+    -> Rajouter champ isPremium en BDD
     Stocker image user en bdd (mettre par défault image facebook)
     Fondu lors d'un changement de page (+ améliorer esthétique footer)
-    Vue lors d'un clic sur un autre user
     Compléter la liste des pays fournis
     Traductions en anglais de l'application
     Créer des premiers sondages pour alimenter le contenu
@@ -46,3 +49,4 @@ Autre :
     Revoir la police choisie
     Faire des illustrations pour welcome, login, register, change password, forgotten password
     Revoir la bdd (table liante friends et poll sur laquelle on compte le nombre d'associations plutôt que de créer les attributs followed_polls, published_polls, friends, notifications, skiped_polls)
+    Chargement userData terminé avant d'ouvrir vue notifications ou profil

@@ -154,7 +154,7 @@ const Profile = () => {
             </View>
             {/* TODO : Convertir id en texte lisible */}
             <Text style={styles.profileLevel}>
-              Bridgeur {userParams?.bridge_level}
+              bridge_level_{userParams?.bridge_level}
             </Text>
             <View style={{ flexDirection: "row", marginTop: 6, gap: 16 }}>
               <Text style={{ fontSize: 15 }}>
