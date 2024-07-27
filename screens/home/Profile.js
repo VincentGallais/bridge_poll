@@ -1,47 +1,30 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
-  Image,
   SafeAreaView,
-  ScrollView,
   StyleSheet,
-  Switch,
   Text,
   TouchableOpacity,
   View,
+  Image,
 } from "react-native";
-import { IMGS } from "../../assets/constants";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import CountryPickerModal from "../../components/CountryPickerModal";
 import BridgeLevelPickerModal from "../../components/BridgeLevelPickerModal";
 import { COLORS } from "../../assets/constants";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import AvatarPickerModal from "../../components/AvatarPickerModal";
 import { supabase } from "../../lib/supabase";
 import { useAuth } from "../../providers/AuthProvider";
+import Avatar from "../../components/Avatar";
+import Icon from "../../assets/icons";
+import { theme } from "../../assets/constants/theme";
 
 const Profile = () => {
   const { userData } = useAuth();
-  const [photoModalVisible, setPhotoModalVisible] = React.useState(false);
-  const [profileImage, setProfileImage] = React.useState(IMGS.profile);
+  const [photoModalVisible, setPhotoModalVisible] = useState(false);
+  const [profileImage, setProfileImage] = useState(null);
   const [userParams, setUserParams] = useState(userData);
-
-  const handleToggleSwitch = (id) => {
-    setUserParams((prevParams) => ({
-      ...prevParams,
-      [id]: !prevParams[id],
-    }));
-    console.log(`${id} Modification`);
-  };
-
-  const handleRemoveQuizz = (id) => {
-    setUserParams((prevParams) => ({
-      ...prevParams,
-      followed_polls: prevParams.followed_polls.filter(
-        (quizzId) => quizzId !== id
-      ),
-    }));
-    console.log("Followed Quizz Modification");
-  };
+  const [countryModalVisible, setCountryModalVisible] = useState(false);
+  const [levelModalVisible, setLevelModalVisible] = useState(false);
 
   const handleCountrySelect = (country) => {
     setUserParams((prevForm) => ({
@@ -53,7 +36,6 @@ const Profile = () => {
   };
 
   const handleLevelSelect = (bridge_level) => {
-    console.log(bridge_level);
     setUserParams((prevForm) => ({
       ...prevForm,
       bridge_level: bridge_level,
@@ -62,98 +44,39 @@ const Profile = () => {
     console.log("Bridge Level Modification");
   };
 
-  const [tabIndex, setTabIndex] = React.useState(0);
-  const [countryModalVisible, setCountryModalVisible] = React.useState(false);
-  const [levelModalVisible, setLevelModalVisible] = React.useState(false);
-
-  const SECTIONS = [
-    {
-      header: "followed_quizz",
-      headerLabel: "Quizz suivis",
-      icon: "plus",
-      items:
-        userParams?.followed_polls?.length === 0
-          ? [{ id: "no_quizz", label: "Aucun quizz suivi", type: "text" }]
-          : userParams?.followed_polls?.map((id) => ({
-              id,
-              label: `Quizz ${id}`,
-              type: "removable",
-            })),
-    },
-    {
-      header: "preferences",
-      headerLabel: "Préférences",
-      icon: "settings",
-      items: [
-        {
-          id: "country",
-          label: "Country",
-          type: "input",
-        },
-        {
-          id: "bridge_level",
-          label: "Bridge level",
-          type: "input",
-        },
-        {
-          id: "notifications_allowed",
-          label: "Notifications",
-          type: "toggle",
-        },
-      ],
-    },
-  ];
-
-  const { tabs, items } = React.useMemo(() => {
-    return {
-      tabs: SECTIONS.map(({ headerLabel, header, icon }) => ({
-        headerLabel,
-        header,
-        icon,
-      })),
-      items: SECTIONS[tabIndex].items,
-    };
-  }, [tabIndex, userParams]);
-
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.White }}>
       <View style={styles.profile}>
         <View style={styles.profileHeader}>
           <View style={styles.profileImageContainer}>
-            <Image
-              alt="Profile Picture"
-              source={profileImage}
-              style={{
-                ...styles.profileAvatar,
-                borderColor: userParams?.isAdmin ? "orange" : "#ccc",
-              }}
-            />
-
-            <TouchableOpacity
-              style={styles.cameraIconContainer}
-              onPress={() => setPhotoModalVisible(true)}
-            >
-              <MaterialCommunityIcons
-                name="camera-outline"
-                size={24}
-                color="orange"
-              />
-            </TouchableOpacity>
+            <View style={styles.avatarContainer}>
+              <Avatar uri={profileImage} size={100} rounded={32} />
+              <TouchableOpacity
+                style={styles.editIcon}
+                onPress={() => setPhotoModalVisible(true)}
+              >
+                <Icon name="camera" strokeWidth={2.5} size={20} />
+              </TouchableOpacity>
+            </View>
           </View>
           <View style={styles.profileBody}>
-            <View style={{ flexDirection: "row" }}>
-              <Image
-                style={styles.countryIcon}
-                source={{
-                  uri: `https://flagsapi.com/${userParams?.country}/flat/64.png`,
-                }}
-              />
-              <Text style={styles.profileName}>{userParams?.pseudo}</Text>
-            </View>
-            {/* TODO : Convertir id en texte lisible */}
-            <Text style={styles.profileLevel}>
-              bridge_level_{userParams?.bridge_level}
-            </Text>
+            <TouchableOpacity onPress={() => setCountryModalVisible(true)}>
+              <View style={{ flexDirection: "row" }}>
+                <Image
+                  style={styles.countryIcon}
+                  source={{
+                    uri: `https://flagsapi.com/${userParams?.country}/flat/64.png`,
+                  }}
+                />
+                <Text style={styles.profileName}>{userParams?.pseudo}</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => setLevelModalVisible(true)}>
+              <Text style={styles.profileLevel}>
+                bridge_level_{userParams?.bridge_level}
+              </Text>
+            </TouchableOpacity>
+
             <View style={{ flexDirection: "row", marginTop: 6, gap: 16 }}>
               <Text style={{ fontSize: 15 }}>
                 {userParams?.friends?.length < 2
@@ -197,165 +120,6 @@ const Profile = () => {
               <FeatherIcon name="user-plus" color="#fff" size={16} />
             </View>
           </TouchableOpacity>
-        </View>
-
-        <View style={{ flex: 1 }}>
-          <View style={styles.profileTabs}>
-            {tabs.map(({ headerLabel, icon }, index) => {
-              const isActive = tabIndex === index;
-              return (
-                <View
-                  key={index}
-                  style={[
-                    styles.profileTabWrapper,
-                    isActive && { borderColor: "#6366f1" },
-                  ]}
-                >
-                  <TouchableOpacity onPress={() => setTabIndex(index)}>
-                    <View style={styles.profileTab}>
-                      <FeatherIcon
-                        name={icon}
-                        size={16}
-                        color={isActive ? "#6366f1" : "#6b7280"}
-                      />
-                      <Text
-                        style={[
-                          styles.profileTabText,
-                          { color: isActive ? "#6366f1" : "#6b7280" },
-                        ]}
-                      >
-                        {headerLabel}
-                      </Text>
-                    </View>
-                  </TouchableOpacity>
-                </View>
-              );
-            })}
-          </View>
-
-          <View style={styles.profileContentInner}>
-            {tabIndex === 0 && (
-              <ScrollView contentContainerStyle={styles.scrollViewContent}>
-                {items.map(({ label, type, id }, index) => (
-                  <View key={index} style={styles.profileRowWrapper}>
-                    {type === "text" ? (
-                      <View style={styles.profileRow}>
-                        <Text style={styles.profileRowLabel}>{label}</Text>
-                      </View>
-                    ) : type === "removable" ? (
-                      <View style={styles.profileRow}>
-                        <TouchableOpacity
-                          onPress={() => handleRemoveQuizz(id)}
-                          style={styles.removeIconContainer}
-                        >
-                          <FeatherIcon name="x" color="red" size={20} />
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                          onPress={() => console.log("Ouverture sondage", id)}
-                          style={styles.contentContainer}
-                        >
-                          <Text style={styles.profileRowLabel}>{label}</Text>
-                          <FeatherIcon
-                            name="chevron-right"
-                            color="#7f7f7f"
-                            size={20}
-                            style={styles.chevronIcon}
-                          />
-                        </TouchableOpacity>
-                      </View>
-                    ) : (
-                      <TouchableOpacity
-                        onPress={() => {
-                          if (id === "country") {
-                            setCountryModalVisible(true);
-                          } else if (id === "bridge_level") {
-                            setLevelModalVisible(true);
-                          }
-                        }}
-                      >
-                        <View style={styles.profileRow}>
-                          <Text style={styles.profileRowLabel}>{label}</Text>
-                          <View style={styles.profileRowContent}>
-                            {type === "input" && (
-                              <Text style={styles.profileRowValue}>
-                                {userParams[id]}
-                              </Text>
-                            )}
-                            {type === "toggle" && (
-                              <Switch
-                                trackColor={{ true: "#007bff" }}
-                                value={userParams[id]}
-                                onValueChange={(value) =>
-                                  setUserParams({ ...userParams, [id]: value })
-                                }
-                              />
-                            )}
-                            {["link", "input"].includes(type) && (
-                              <FeatherIcon
-                                name="chevron-right"
-                                color="#7f7f7f"
-                                size={20}
-                              />
-                            )}
-                          </View>
-                        </View>
-                      </TouchableOpacity>
-                    )}
-                  </View>
-                ))}
-              </ScrollView>
-            )}
-
-            {tabIndex === 1 &&
-              items.map(({ label, type, id }, index) => (
-                <View key={index} style={styles.profileRowWrapper}>
-                  {type === "text" ? (
-                    <View style={styles.profileRow}>
-                      <Text style={styles.profileRowLabel}>{label}</Text>
-                    </View>
-                  ) : (
-                    <TouchableOpacity
-                      onPress={() => {
-                        if (id === "country") {
-                          setCountryModalVisible(true);
-                        } else if (id === "bridge_level") {
-                          setLevelModalVisible(true);
-                        }
-                      }}
-                    >
-                      <View style={styles.profileRow}>
-                        <Text style={styles.profileRowLabel}>{label}</Text>
-
-                        {/* Todo : Faire la traduction ici si country ou bridge_level */}
-                        <View style={styles.profileRowContent}>
-                          {type === "input" && (
-                            <Text style={styles.profileRowValue}>
-                              {userParams[id]}
-                            </Text>
-                          )}
-
-                          {type === "toggle" && (
-                            <Switch
-                              trackColor={{ true: "#007bff" }}
-                              value={userParams[id]}
-                              onValueChange={() => handleToggleSwitch(id)}
-                            />
-                          )}
-
-                          {["link", "input"].includes(type) && (
-                            <FeatherIcon
-                              name="chevron-right"
-                              color="#7f7f7f"
-                              size={20}
-                            />
-                          )}
-                        </View>
-                      </View>
-                    </TouchableOpacity>
-                  )}
-                </View>
-              ))}
-          </View>
         </View>
       </View>
 
@@ -404,15 +168,19 @@ const styles = StyleSheet.create({
     borderWidth: 3,
   },
   profileBody: {
-    flex: 1,
-    marginLeft: 16,
+    marginLeft: 32,
   },
   profileName: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: "600",
     color: "#3e3e3e",
   },
   profileLevel: {
+    marginTop: 4,
+    fontSize: 18,
+    color: "#989898",
+  },
+  profileCountry: {
     marginTop: 4,
     fontSize: 16,
     color: "#989898",
@@ -467,7 +235,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: 24,
     height: 50,
-    justifyContent: "center",
+    justifyContent: "space-between",
   },
   profileRowLabel: {
     fontSize: 17,
@@ -485,6 +253,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "flex-end",
+    gap: 8,
   },
   profileActionsContainer: {
     flexDirection: "row",
@@ -496,8 +265,8 @@ const styles = StyleSheet.create({
     marginHorizontal: 8,
   },
   countryIcon: {
-    width: 26,
-    height: 26,
+    width: 30,
+    height: 30,
     marginRight: 4,
   },
   profileImageContainer: {
@@ -546,14 +315,26 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  contentContainer: {
-    flexDirection: "row",
-    flex: 1,
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
   chevronIcon: {
     marginLeft: "auto",
+  },
+  avatarContainer: {
+    height: 100,
+    width: 100,
+    alignSelf: "center",
+  },
+  editIcon: {
+    position: "absolute",
+    bottom: 0,
+    right: -10,
+    padding: 7,
+    borderRadius: 50,
+    backgroundColor: "white",
+    shadowColor: theme.colors.textLight,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.4,
+    shadowRadius: 5,
+    elevation: 7,
   },
 });
 

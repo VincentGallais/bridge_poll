@@ -31,17 +31,17 @@ AppState.addEventListener("change", (state) => {
 
 const Register = ({ navigation }) => {
   const emailRef = useRef("");
-  const pseudoRef = useRef("");
+  const nameRef = useRef("");
   const passwordRef = useRef("");
   const [loading, setLoading] = useState(false);
 
   const onSubmit = async () => {
-    if (!pseudoRef.current || !emailRef.current || !passwordRef.current) {
+    if (!nameRef.current || !emailRef.current || !passwordRef.current) {
       Alert.alert("Sign up", "Please fill all the fields!");
       return;
     }
 
-    let pseudonyme = pseudoRef.current.trim();
+    let name = nameRef.current.trim();
     let email = emailRef.current.trim();
     let password = passwordRef.current.trim();
 
@@ -54,7 +54,7 @@ const Register = ({ navigation }) => {
       password: password,
       options: {
         data: {
-          pseudonyme,
+          name,
         },
       },
     });
@@ -87,7 +87,7 @@ const Register = ({ navigation }) => {
               icon={<Icon name="user" size={26} strokeWidth={1.6} />}
               placeholder="Enter your pseudonyme"
               placeholderTextColor={theme.colors.textLight}
-              onChangeText={(value) => (pseudoRef.current = value)}
+              onChangeText={(value) => (nameRef.current = value)}
             />
             <Input
               icon={<Icon name="mail" size={26} strokeWidth={1.6} />}

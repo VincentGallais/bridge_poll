@@ -26,6 +26,10 @@ const Carousel = ({ polls, scrollX }) => {
       <Animated.FlatList
         showsHorizontalScrollIndicator={false}
         data={polls}
+        onEndReached={() => {
+          console.log('Polls end, searching for more');
+        }}
+        onEndReachedThreshold={0}
         keyExtractor={(item) => item.key}
         horizontal
         bounces={false}

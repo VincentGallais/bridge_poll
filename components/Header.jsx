@@ -1,14 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  Pressable,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import FeatherIcon from "react-native-vector-icons/Feather";
-import ProfileImage from "../assets/images/profile.png";
 import FiltersModal from "./FiltersModal";
 import { COLORS, ROUTES } from "../assets/constants"; // Assurez-vous d'importer ROUTES
 import { useAuth } from "../providers/AuthProvider";
 import Avatar from "../components/Avatar";
 import { theme } from "../assets/constants/theme";
 import Loading from "../components/Loading";
+import Icon from "../assets/icons";
 
 const Header = ({ navigation, page }) => {
   const [filterModalVisible, setFilterModalVisible] = useState(false);
@@ -18,10 +25,6 @@ const Header = ({ navigation, page }) => {
   useEffect(() => {
     if (userData) setLoading(false);
   }, [userData]);
-
-  const onFilterIconPress = () => {
-    setFilterModalVisible(true);
-  };
 
   const closeFilterModal = () => {
     setFilterModalVisible(false);
@@ -33,9 +36,26 @@ const Header = ({ navigation, page }) => {
         <Loading />
       ) : (
         <View style={styles.headerContainer}>
-          <Text style={styles.headerText}>
-            Welcome to {page} {userData?.pseudo}
-          </Text>
+          {page != ROUTES.QUIZZ ? (
+            <TouchableOpacity
+              style={{
+                marginRight: 8,
+                flexDirection: "row",
+                alignItems: "center",
+              }}
+              onPress={() => navigation.navigate(ROUTES.QUIZZ)}
+            >
+              <Icon
+                name="arrowLeft"
+                strokeWidth={2.5}
+                size={26}
+                color="white"
+              />
+
+              <Text style={styles.headerText}>Back</Text>
+            </TouchableOpacity>
+          ) : null}
+
           <View style={styles.iconContainer}>
             <TouchableOpacity
               onPress={() => navigation.navigate(ROUTES.NOTIFICATIONS)}
