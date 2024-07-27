@@ -125,11 +125,11 @@ const Quizz = ({ navigation }) => {
     return () => backHandler.remove();
   }, [isFocused, navigation]);
 
-  const [movies, setMovies] = useState([]);
+  const [polls, setMovies] = useState([]);
   const scrollX = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-    if (movies.length === 0) {
+    if (polls.length === 0) {
       const fetchData = async () => {
         setMovies([
           { key: "empty-left" },
@@ -140,9 +140,9 @@ const Quizz = ({ navigation }) => {
 
       fetchData();
     }
-  }, [movies]);
+  }, [polls]);
 
-  if (movies.length === 0) {
+  if (polls.length === 0) {
     return <Loading />;
   }
 
@@ -155,7 +155,7 @@ const Quizz = ({ navigation }) => {
         onFilterChange={handleFilterChange}
       />
 
-      <Carousel movies={movies} scrollX={scrollX} />
+      <Carousel polls={polls} scrollX={scrollX} />
 
       <TouchableOpacity
         style={{ ...styles.floatingButton, right: 16 }}

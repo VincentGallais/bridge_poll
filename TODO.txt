@@ -1,8 +1,7 @@
-Boutons flotant AddPoll & FilterPoll
-
 Page profile :
-    Ajouter search user (pour follow d'autres joueurs)
-    Clic sur "X followers" ou "X sondages" dans ma bio me redirige vers la liste de mes followers / sondages
+    -> Ajouter search user (pour follow d'autres joueurs)
+    -> Clic sur "X followers" ou "X sondages" dans ma bio me redirige vers la liste de mes followers / sondages
+    -> Faire toute l'édition du profil (copier le code with nomi)
     Mettre à jour la bdd à chaque modification dans profile
     Faire interface des quizz suivis qui redirige
 
@@ -16,7 +15,8 @@ Page quizz :
     Quizz avec background dorés pour joueurs spéciaux
 
 Notifications :
-    Revoir bouton supprimer lors du slide (et update bdd)
+    -> Revoir bouton supprimer lors du slide
+    Brancher les notifications sur la bdd (et update quand on a vu)
     Faire marcher les notifications push
     Faire table notifications en BDD
 
@@ -24,24 +24,23 @@ Page soutenir :
     Faire le paiement & le restore purchase
 
 Login / Register :
-    Créer ligne userInformations avec pseudo et country lors du register
     -> Ajouter modale pick country au register
-    Checker pseudo pas déjà utilisé
-    Login se fait avec email ou pseudo
-    Créer page mot de passe oublié
-    Cliquer sur login/register quand clavier ouvert
+    -> Pouvoir cliquer sur login/register même quand le clavier est ouvert
+    -> Créer page mot de passe oublié
+    Créer ligne dans la table userInformations avec pseudo et country lors du register
+    Checker si le pseudo n'est pas déjà utilisé
+    Login peut se faire avec email ou pseudo
 
 Publications : 
     Mettre dans une scroll View
     Améliorer esthétique et faire gui pour sélectionner cartes et enchères
 
 Autre :
-    -> Rajouter champ isPremium en BDD
+    -> Compléter la liste des pays fournis
+    Rajouter champ isPremium en BDD
     Stocker image user en bdd
-    Compléter la liste des pays fournis
     Traductions en anglais de l'application
     Créer des premiers sondages pour alimenter le contenu
     Revoir la police choisie
     Faire des illustrations pour welcome, login, register, change password, forgotten password
     Revoir la bdd (table liante friends et poll sur laquelle on compte le nombre d'associations plutôt que de créer les attributs followed_polls, published_polls, friends, notifications, skiped_polls)
-    Chargement userData terminé avant d'ouvrir vue notifications ou profil

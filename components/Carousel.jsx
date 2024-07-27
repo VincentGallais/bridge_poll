@@ -20,12 +20,12 @@ const ITEM_SIZE = Platform.OS === "ios" ? width * 0.87 : width * 0.9;
 const EMPTY_ITEM_SIZE = (width - ITEM_SIZE) / 2;
 const BACKGROUND_IMG_HEIGHT = height * 0.65;
 
-const Carousel = ({ movies, scrollX }) => {
+const Carousel = ({ polls, scrollX }) => {
   return (
     <View style={{ ...styles.container, backgroundColor: "green" }}>
       <Animated.FlatList
         showsHorizontalScrollIndicator={false}
-        data={movies}
+        data={polls}
         keyExtractor={(item) => item.key}
         horizontal
         bounces={false}
@@ -82,7 +82,16 @@ const Carousel = ({ movies, scrollX }) => {
                     <FeatherIcon color="#1d1d1d" name="x" size={24} />
                   </View>
 
-                  <View style={{ flexDirection: "row", alignItems: "center", gap: 8, justifyContent: 'flex-start', marginLeft: 16, marginVertical: 4 }}>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      gap: 8,
+                      justifyContent: "flex-start",
+                      marginLeft: 16,
+                      marginVertical: 4,
+                    }}
+                  >
                     <Tags tags={item.tags} />
                     <Text
                       style={{
@@ -91,18 +100,32 @@ const Carousel = ({ movies, scrollX }) => {
                     >
                       {item.description}
                     </Text>
-
-                    
                   </View>
 
                   <Text>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis praesentium unde est suscipit velit tenetur?
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Nobis praesentium unde est suscipit velit tenetur?
                   </Text>
                 </View>
-                <Image
-                  source={{ uri: item.poster }}
-                  style={{ ...styles.posterImage, height: ITEM_SIZE * 1.1 }}
-                />
+
+                {item.author === "BRIDGE_POLL" ? (
+                  <Text
+                    style={{
+                      height: 100,
+                      textAlign: "center",
+                      backgroundColor: "blue",
+                      color: "white",
+                      fontSize: 24,
+                    }}
+                  >
+                    Publicité
+                  </Text>
+                ) : (
+                  <Image
+                    source={{ uri: item.poster }}
+                    style={{ ...styles.posterImage, height: ITEM_SIZE * 1.1 }}
+                  />
+                )}
 
                 <View
                   style={{
@@ -149,9 +172,11 @@ const Carousel = ({ movies, scrollX }) => {
                   }}
                 >
                   <StackedCircularAvatar size="small" answers={item?.answers} />
-                  <Text style={{ fontSize: 14 }}>{item?.comments < 2
-                  ? `${item?.comments} commentaire`
-                  : `${item?.comments} commentaires`}</Text>
+                  <Text style={{ fontSize: 14 }}>
+                    {item?.comments < 2
+                      ? `${item?.comments} commentaire`
+                      : `${item?.comments} commentaires`}
+                  </Text>
                 </View>
               </Animated.View>
             </View>
