@@ -1,9 +1,7 @@
 Page profile :
-    -> Ajouter search user (pour follow d'autres joueurs)
-    -> Clic sur "X followers" ou "X sondages" dans ma bio me redirige vers la liste de mes followers / sondages
-    -> Faire toute l'édition du profil (copier le code with nomi)
+    -> Ajouter search user (pour follow d'autres joueurs) & clic sur follower/following me donne la liste
     Mettre à jour la bdd à chaque modification dans profile
-    Faire interface des quizz suivis qui redirige
+    Mettre la liste des quizz créés
 
 Page quizz :
     Meilleure gestion de la hauteur (marginH et centrage ?)
@@ -25,7 +23,6 @@ Page soutenir :
 
 Login / Register :
     -> Ajouter modale pick country au register
-    -> Pouvoir cliquer sur login/register même quand le clavier est ouvert
     -> Créer page mot de passe oublié
     Créer ligne dans la table userInformations avec pseudo et country lors du register
     Checker si le pseudo n'est pas déjà utilisé
@@ -34,6 +31,9 @@ Login / Register :
 Publications : 
     Mettre dans une scroll View
     Améliorer esthétique et faire gui pour sélectionner cartes et enchères
+
+Filtre : 
+    Parler du tri par ordre croissant/décroissant/nombre like/nombre commentaires
 
 Autre :
     -> Compléter la liste des pays fournis

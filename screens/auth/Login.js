@@ -5,7 +5,8 @@ import {
   Pressable,
   Alert,
   AppState,
-  ScrollView,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from "react-native";
 import React, { useRef, useState } from "react";
 import ScreenWrapper from "../../components/ScreenWrapper";
@@ -31,6 +32,7 @@ const Login = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
 
   const onSubmit = async () => {
+    Keyboard.dismiss()
     if (!emailRef.current || !passwordRef.current) {
       Alert.alert("Login", "Please fill all the fields!");
       return;
@@ -52,68 +54,70 @@ const Login = ({ navigation }) => {
   };
 
   return (
-    <ScreenWrapper bg={"white"}>
-      <ScrollView>
-        <View style={styles.container}>
-          {/* back button */}
-          <View>
-            <BackButton router={navigation} route={ROUTES.WELCOMESCREEN} />
-          </View>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={{ flex: 1 }}>
+        <ScreenWrapper bg={"white"}>
+          <View style={styles.container}>
+            {/* back button */}
+            <View>
+              <BackButton router={navigation} route={ROUTES.WELCOMESCREEN} />
+            </View>
 
-          {/* welcome */}
-          <View>
-            <Text style={styles.welcomeText}>Hey, </Text>
-            <Text style={styles.welcomeText}>Welcome Back </Text>
-          </View>
+            {/* welcome */}
+            <View>
+              <Text style={styles.welcomeText}>Hey, </Text>
+              <Text style={styles.welcomeText}>Welcome Back </Text>
+            </View>
 
-          {/* form */}
-          <View style={styles.form}>
-            <Input
-              icon={<Icon name="mail" size={26} strokeWidth={1.6} />}
-              placeholder="Enter your email"
-              placeholderTextColor={theme.colors.textLight}
-              onChangeText={(value) => (emailRef.current = value)}
-            />
-            <Input
-              icon={<Icon name="lock" size={26} strokeWidth={1.6} />}
-              secureTextEntry
-              placeholder="Enter your password"
-              placeholderTextColor={theme.colors.textLight}
-              onChangeText={(value) => (passwordRef.current = value)}
-            />
-            <Pressable
-              onPress={() =>
-                navigation.navigate(ROUTES.FORGOT_PASSWORD, {
-                  userId: "X0001",
-                })
-              }
-            >
-              <Text style={styles.forgotPassword}>Forgot Password?</Text>
-            </Pressable>
-
-            {/* button */}
-            <Button title="Login" loading={loading} onPress={onSubmit} />
-          </View>
-
-          <View style={styles.footer}>
-            <Text style={styles.footerText}>Don't have an account?</Text>
-            <Pressable onPress={() => navigation.navigate(ROUTES.REGISTER)}>
-              <Text
-                style={[
-                  styles.footerText,
-                  {
-                    color: theme.colors.primaryDark,
-                    fontWeight: theme.fonts.semibold,
-                  },
-                ]}
+            {/* form */}
+            <View style={styles.form}>
+              <Input
+                icon={<Icon name="mail" size={26} strokeWidth={1.6} />}
+                placeholder="Enter your email"
+                placeholderTextColor={theme.colors.textLight}
+                onChangeText={(value) => (emailRef.current = value)}
+              />
+              <Input
+                icon={<Icon name="lock" size={26} strokeWidth={1.6} />}
+                secureTextEntry
+                placeholder="Enter your password"
+                placeholderTextColor={theme.colors.textLight}
+                onChangeText={(value) => (passwordRef.current = value)}
+              />
+              <Pressable
+                onPress={() =>
+                  navigation.navigate(ROUTES.FORGOT_PASSWORD, {
+                    userId: "X0001",
+                  })
+                }
               >
-                Sign up
-              </Text>
-            </Pressable>
+                <Text style={styles.forgotPassword}>Forgot Password?</Text>
+              </Pressable>
+
+              {/* button */}
+              <Button title="Login" loading={loading} onPress={onSubmit} />
+            </View>
+
+            <View style={styles.footer}>
+              <Text style={styles.footerText}>Don't have an account?</Text>
+              <Pressable onPress={() => navigation.navigate(ROUTES.REGISTER)}>
+                <Text
+                  style={[
+                    styles.footerText,
+                    {
+                      color: theme.colors.primaryDark,
+                      fontWeight: theme.fonts.semibold,
+                    },
+                  ]}
+                >
+                  Sign up
+                </Text>
+              </Pressable>
+            </View>
           </View>
-        </View>
-      </ScrollView>
-    </ScreenWrapper>
+        </ScreenWrapper>
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 

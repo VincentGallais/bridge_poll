@@ -80,7 +80,7 @@ const Quizz = ({ navigation }) => {
   const [filterOptions, setFilterOptions] = useState({
     quizzDate: "Last Week",
     quizzType: "Lead",
-    quizzAfinity: "Never Seen",
+    quizzAfinity: "New",
   });
   const [filterModalVisible, setFilterModalVisible] = useState(false);
   const openFilterModal = () => setFilterModalVisible(true);

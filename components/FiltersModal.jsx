@@ -1,11 +1,15 @@
 import React from "react";
 import { Modal, StyleSheet, TouchableOpacity, View, Text } from "react-native";
 
-const FiltersModal = ({ modalVisible, closeModal, filterOptions = {}, onFilterChange }) => {
-
+const FiltersModal = ({
+  modalVisible,
+  closeModal,
+  filterOptions = {},
+  onFilterChange,
+}) => {
   // Render buttons
-  const renderButton = (type, options) => (
-    options.map(option => (
+  const renderButton = (type, options) =>
+    options.map((option) => (
       <TouchableOpacity
         key={option}
         style={[
@@ -24,8 +28,7 @@ const FiltersModal = ({ modalVisible, closeModal, filterOptions = {}, onFilterCh
           {option}
         </Text>
       </TouchableOpacity>
-    ))
-  );
+    ));
 
   return (
     <Modal
@@ -50,7 +53,7 @@ const FiltersModal = ({ modalVisible, closeModal, filterOptions = {}, onFilterCh
 
           <Text style={styles.subtitle}>Quizz Afinity</Text>
           <View style={styles.buttonGroup}>
-            {renderButton("quizzAfinity", ["Never Seen", "Followed", "All"])}
+            {renderButton("quizzAfinity", ["New", "Followed", "Friends", "All"])}
           </View>
 
           <TouchableOpacity style={styles.closeButton} onPress={closeModal}>

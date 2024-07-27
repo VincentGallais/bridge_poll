@@ -54,7 +54,7 @@ const Header = ({ navigation, page }) => {
 
               <Text style={styles.headerText}>Back</Text>
             </TouchableOpacity>
-          ) : null}
+          ) : <Text style={styles.headerText}>Welcome {userData.pseudo}</Text>}
 
           <View style={styles.iconContainer}>
             <TouchableOpacity
