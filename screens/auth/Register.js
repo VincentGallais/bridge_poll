@@ -17,6 +17,7 @@ import { supabase } from "../../lib/supabase";
 import Icon from "../../assets/icons";
 import Input from "../../components/Input";
 import { ROUTES } from "../../assets/constants";
+import FeatherIcon from "react-native-vector-icons/Feather";
 
 // Tells Supabase Auth to continuously refresh the session automatically if
 // the app is in the foreground. When this is added, you will continue to receive
@@ -35,9 +36,10 @@ const Register = ({ navigation }) => {
   const nameRef = useRef("");
   const passwordRef = useRef("");
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const onSubmit = async () => {
-    Keyboard.dismiss()
+    Keyboard.dismiss();
 
     if (!nameRef.current || !emailRef.current || !passwordRef.current) {
       Alert.alert("Sign up", "Please fill all the fields!");
@@ -65,7 +67,15 @@ const Register = ({ navigation }) => {
     console.log("session: ", session);
     console.log("error: ", error);
 
-    if (error) Alert.alert("Sign up", error.message);
+    if (error)
+      console.log(
+        error.cause,
+        error.code,
+        error.message,
+        error.name,
+        error.stack,
+        error.status
+      ); //Alert.alert("Sign up", error.message);
     setLoading(false);
   };
 
@@ -99,13 +109,28 @@ const Register = ({ navigation }) => {
                 placeholderTextColor={theme.colors.textLight}
                 onChangeText={(value) => (emailRef.current = value)}
               />
-              <Input
-                icon={<Icon name="lock" size={26} strokeWidth={1.6} />}
-                secureTextEntry
-                placeholder="Enter your password"
-                placeholderTextColor={theme.colors.textLight}
-                onChangeText={(value) => (passwordRef.current = value)}
-              />
+              <View style={styles.passwordContainer}>
+                <Input
+                  icon={<Icon name="lock" size={26} strokeWidth={1.6} />}
+                  secureTextEntry={!showPassword}
+                  placeholder="Enter your password"
+                  placeholderTextColor={theme.colors.textLight}
+                  onChangeText={(value) => (passwordRef.current = value)}
+                  style={styles.passwordInput}
+                />
+                <Pressable
+                  onPress={() => setShowPassword(!showPassword)}
+                  style={styles.showPasswordButton}
+                >
+                  <FeatherIcon
+                    color={theme.colors.textLight}
+                    name={showPassword ? "eye-off" : "eye"}
+                    size={24}
+                  />
+
+                  <Icon size={26} strokeWidth={1.6} />
+                </Pressable>
+              </View>
 
               <Button title="Sign up" loading={loading} onPress={onSubmit} />
             </View>
@@ -172,6 +197,17 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: theme.colors.text,
     fontSize: 16,
+  },
+  passwordContainer: {
+    position: "relative",
+  },
+  passwordInput: {
+    flex: 1,
+  },
+  showPasswordButton: {
+    position: "absolute",
+    right: 20,
+    top: 17,
   },
 });
 

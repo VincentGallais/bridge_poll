@@ -37,9 +37,8 @@ const CountryPickerModal = ({
     <Modal
       visible={visible}
       transparent
-      animationType="slide"
-      onRequestClose={onClose}
       animationType="fade"
+      onRequestClose={onClose}
     >
       <SafeAreaView style={styles.safeAreaView}>
         <View style={styles.modalContainer}>

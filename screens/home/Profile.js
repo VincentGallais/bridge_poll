@@ -154,7 +154,7 @@ const Profile = () => {
         </View>
 
         <View style={{ marginTop: 26, marginHorizontal: 26 }}>
-          <Text>Mes sondages :</Text>
+          <Text>Mes sondages publiés :</Text>
           <ScrollView>
             <Text>Sondage 1</Text>
           </ScrollView>

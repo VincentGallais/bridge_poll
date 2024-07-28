@@ -1,7 +1,12 @@
+-> Faire un bdd plus proche de notre projet (champ isAdmin, isPremium, notification_type, table followers (même fonctionnement que table notifications)) + renommer bdd en enlevant V2
+-> Ajouter modale pick country au register
+-> Notification : Rajouter une notion de suppression (vu) en cliquant sur un petit check => maj en bdd
+-> Profile : Mettre la liste des quizz créés par l'utilisateur
+-> Mettre à jour la bdd à chaque modification dans profile
+-> Notification : icône en fonction du type de notification
+
 Page profile :
-    -> Ajouter search user (pour follow d'autres joueurs) & clic sur follower/following me donne la liste
-    Mettre à jour la bdd à chaque modification dans profile
-    Mettre la liste des quizz créés
+    Ajouter search user (pour follow d'autres joueurs) & clic sur follower/following me donne la liste
 
 Page quizz :
     Meilleure gestion de la hauteur (marginH et centrage ?)
@@ -13,30 +18,25 @@ Page quizz :
     Quizz avec background dorés pour joueurs spéciaux
 
 Notifications :
-    -> Revoir bouton supprimer lors du slide
-    Brancher les notifications sur la bdd (et update quand on a vu)
+    Ne pas fetch à chaque fois, essayer de garder en local en mettant à jour avec un abonnement aux updates (filtré sur l'user)
     Faire marcher les notifications push
-    Faire table notifications en BDD
 
 Page soutenir :
     Faire le paiement & le restore purchase
 
 Login / Register :
-    Bouton pour voir le password
-    -> Ajouter modale pick country au register
-    -> Créer page mot de passe oublié
-    Checker si le pseudo n'est pas déjà utilisé
+    Créer page pour les mots de passe oubliés
+    Expliquer l'erreur "pseudonyme déjà utilisé"
     Login peut se faire avec email ou pseudo
 
 Créer publication : 
-    Améliorer esthétique et faire gui pour sélectionner cartes et enchères
+    Améliorer esthétique et faire un gui pour sélectionner cartes et enchères
 
 Filtre : 
     Parler du tri par ordre croissant/décroissant/nombre like/nombre commentaires
 
 Autre :
-    -> Compléter la liste des pays fournis
-    Rajouter champ isPremium en BDD
+    Compléter la liste des pays fournis
     Traductions en anglais de l'application
     Créer des premiers sondages pour alimenter le contenu
     Revoir la police choisie

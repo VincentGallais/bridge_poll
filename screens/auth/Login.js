@@ -17,6 +17,7 @@ import { supabase } from "../../lib/supabase";
 import Icon from "../../assets/icons";
 import Input from "../../components/Input";
 import { ROUTES } from "../../assets/constants";
+import FeatherIcon from "react-native-vector-icons/Feather";
 
 AppState.addEventListener("change", (state) => {
   if (state === "active") {
@@ -30,6 +31,7 @@ const Login = ({ navigation }) => {
   const emailRef = useRef("");
   const passwordRef = useRef("");
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const onSubmit = async () => {
     Keyboard.dismiss();
@@ -84,13 +86,28 @@ const Login = ({ navigation }) => {
                 placeholderTextColor={theme.colors.textLight}
                 onChangeText={(value) => (emailRef.current = value)}
               />
-              <Input
-                icon={<Icon name="lock" size={26} strokeWidth={1.6} />}
-                secureTextEntry
-                placeholder="Enter your password"
-                placeholderTextColor={theme.colors.textLight}
-                onChangeText={(value) => (passwordRef.current = value)}
-              />
+              <View style={styles.passwordContainer}>
+                <Input
+                  icon={<Icon name="lock" size={26} strokeWidth={1.6} />}
+                  secureTextEntry={!showPassword}
+                  placeholder="Enter your password"
+                  placeholderTextColor={theme.colors.textLight}
+                  onChangeText={(value) => (passwordRef.current = value)}
+                  style={styles.passwordInput}
+                />
+                <Pressable
+                  onPress={() => setShowPassword(!showPassword)}
+                  style={styles.showPasswordButton}
+                >
+                  <FeatherIcon
+                    color={theme.colors.textLight}
+                    name={showPassword ? "eye-off" : "eye"}
+                    size={24}
+                  />
+
+                  <Icon size={26} strokeWidth={1.6} />
+                </Pressable>
+              </View>
               <Pressable
                 onPress={() =>
                   navigation.navigate(ROUTES.FORGOT_PASSWORD, {
@@ -141,6 +158,17 @@ const styles = StyleSheet.create({
   },
   form: {
     gap: 25,
+  },
+  passwordContainer: {
+    position: "relative",
+  },
+  passwordInput: {
+    flex: 1,
+  },
+  showPasswordButton: {
+    position: "absolute",
+    right: 20,
+    top: 17,
   },
   forgotPassword: {
     textAlign: "right",

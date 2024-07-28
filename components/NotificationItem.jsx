@@ -34,7 +34,6 @@ const styles = StyleSheet.create({
         borderWidth: 0.5,
         borderColor: theme.colors.darkLight,
         padding: 15,
-        // paddingVertical: 12,
         borderRadius: theme.radius.xxl,
         borderCurve: 'continuous'
     },

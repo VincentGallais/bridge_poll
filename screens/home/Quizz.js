@@ -13,6 +13,7 @@ import FeatherIcon from "react-native-vector-icons/Feather";
 import { useIsFocused } from "@react-navigation/native";
 import { ROUTES } from "../../assets/constants";
 import FiltersModal from "../../components/FiltersModal";
+import { supabase } from "../../lib/supabase";
 
 const defaultMovies = [
   {

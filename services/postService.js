@@ -61,7 +61,7 @@ export const fetchPosts = async (limit = 10, userId = null) => {
 
     // .limit(limit); // later when implementing pagination
 
-    // comments: getting all the comments ona post, then getting user within each comment
+    // comments: getting all the comments on a post, then getting user within each comment
 
     if (userId) {
       const { data, error } = await supabase
