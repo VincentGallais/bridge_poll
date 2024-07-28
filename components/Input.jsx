@@ -1,37 +1,34 @@
-import { View, Text, StyleSheet, TextInput } from 'react-native'
-import React from 'react'
+import { View, TextInput, StyleSheet } from 'react-native'
+import React, { forwardRef } from 'react'
 import { theme } from '../assets/constants/theme'
-import { hp } from '../helpers/common'
 
-const Input = (props) => {
+const Input = forwardRef((props, ref) => {
   return (
-    <View style={[styles.container, props.containerStyle && props.containerStyle]}>
-        {
-            props.icon && props.icon
-        }
-        <TextInput
-            style={{flex: 1}}
-            placeholderTextColor={theme.colors.textLight}
-            ref={props.inputRef && props.inputRef}
-            {...props}
-        />
+    <View style={[styles.container, props.containerStyle]}>
+      {props.icon && props.icon}
+      <TextInput
+        style={{ flex: 1 }}
+        placeholderTextColor={theme.colors.textLight}
+        ref={ref}
+        {...props}
+      />
     </View>
   )
-}
+});
 
 const styles = StyleSheet.create({
-    container: {
-        flexDirection: 'row',
-        paddingVertical: 16,
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderWidth: 0.4,
-        borderColor: theme.colors.text,
-        borderRadius: theme.radius.xxl,
-        borderCurve: 'continuous',
-        paddingHorizontal: 18,
-        gap: 12
-    },
-})
+  container: {
+    flexDirection: 'row',
+    paddingVertical: 16,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 0.4,
+    borderColor: theme.colors.text,
+    borderRadius: theme.radius.xxl,
+    borderCurve: 'continuous',
+    paddingHorizontal: 18,
+    gap: 12,
+  },
+});
 
 export default Input;

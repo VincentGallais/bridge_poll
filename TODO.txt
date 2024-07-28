@@ -1,8 +1,10 @@
--> Faire un bdd plus proche de notre projet (champ isAdmin, isPremium, notification_type, table followers (même fonctionnement que table notifications)) + renommer bdd en enlevant V2
--> Ajouter modale pick country au register
+-> Faire les modales d'erreur (cf vidéo)
+
+-> Faire une bdd plus proche de notre projet (champ isAdmin, isPremium, notification_type, table followers (même fonctionnement que table notifications)) + renommer bdd en enlevant V2
+-> Fit la langue de l'user avec les informations du téléphone (ressortir emulateur)
 -> Notification : Rajouter une notion de suppression (vu) en cliquant sur un petit check => maj en bdd
--> Profile : Mettre la liste des quizz créés par l'utilisateur
--> Mettre à jour la bdd à chaque modification dans profile
+-> Profile : Mettre la liste des quizz créés par l'utilisateur & Mettre border colorée si premium ou admin
+-> Mettre à jour la bdd à chaque modification dans profil
 -> Notification : icône en fonction du type de notification
 
 Page profile :

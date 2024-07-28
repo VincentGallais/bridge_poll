@@ -1,6 +1,5 @@
-import { View, Text, StyleSheet, Pressable, ActivityIndicator } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import React from 'react'
-import { hp } from '../helpers/common'
 import { theme } from '../assets/constants/theme'
 import Loading from './Loading'
 
@@ -29,9 +28,9 @@ const Button = ({
         )
     }
     return (
-        <Pressable onPress={onPress} style={[styles.button, buttonStyle, hasShadow && shadowStyle]}>
+        <TouchableOpacity onPress={onPress} style={[styles.button, buttonStyle, hasShadow && shadowStyle]}>
             <Text style={[styles.text, textStyle]}>{title}</Text>
-        </Pressable>
+        </TouchableOpacity>
     )
 }
 
