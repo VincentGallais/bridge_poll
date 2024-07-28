@@ -22,25 +22,24 @@ import * as ImagePicker from "expo-image-picker";
 
 const Profile = () => {
   const { user } = useAuth();
+  const [userParams, setUserParams] = useState(user);
+
   const [countryModalVisible, setCountryModalVisible] = useState(false);
   const [levelModalVisible, setLevelModalVisible] = useState(false);
-
-  // TODO : Je mets une valeur par défault
-  const [userParams, setUserParams] = useState({...user, bridge_level: 'EXPERT', country: 'FR', friends: [1, 2], pseudo: 'Galesh'});
   
-  const handleCountrySelect = (country) => {
+  const handleCountrySelect = (locale) => {
     setUserParams((prevForm) => ({
       ...prevForm,
-      country: country,
+      locale: locale,
     }));
     setCountryModalVisible(false);
     console.log("Country Modification");
   };
 
-  const handleLevelSelect = (bridge_level) => {
+  const handleLevelSelect = (bridgeLevel) => {
     setUserParams((prevForm) => ({
       ...prevForm,
-      bridge_level: bridge_level,
+      bridgeLevel: bridgeLevel,
     }));
     setLevelModalVisible(false);
     console.log("Bridge Level Modification");
@@ -96,28 +95,25 @@ const Profile = () => {
                 <Image
                   style={styles.countryIcon}
                   source={{
-                    uri: `https://flagsapi.com/${userParams?.country}/flat/64.png`,
+                    uri: `https://flagsapi.com/${userParams?.locale}/flat/64.png`,
                   }}
                 />
-                <Text style={styles.profileName}>{userParams?.pseudo}</Text>
+                <Text style={styles.profileName}>{userParams?.pseudonyme}</Text>
               </View>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => setLevelModalVisible(true)}>
               <Text style={styles.profileLevel}>
-                bridge_level_{userParams?.bridge_level}
+              {`bridge_level_${userParams?.bridgeLevel ? userParams.bridgeLevel : 'unknown'}`}
+                
               </Text>
             </TouchableOpacity>
 
             <View style={{ flexDirection: "row", marginTop: 6, gap: 16 }}>
               <Text style={{ fontSize: 15 }}>
-                {userParams?.friends?.length < 2
-                  ? `${userParams?.friends?.length} follower`
-                  : `${userParams?.friends?.length} followers`}
+                0 followers
               </Text>
               <Text style={{ fontSize: 15 }}>
-                {userParams?.friends?.length < 2
-                  ? `${userParams?.friends?.length} following`
-                  : `${userParams?.friends?.length} following`}
+                0 following
               </Text>
             </View>
           </View>
@@ -165,13 +161,13 @@ const Profile = () => {
       <CountryPickerModal
         visible={countryModalVisible}
         onClose={() => setCountryModalVisible(false)}
-        initialSelectedCountry={userParams?.country}
+        initialSelectedCountry={userParams?.locale}
         onSelect={handleCountrySelect}
       />
       <BridgeLevelPickerModal
         visible={levelModalVisible}
         onClose={() => setLevelModalVisible(false)}
-        initialSelectedLevel={userParams?.bridge_level}
+        initialSelectedLevel={userParams?.bridgeLevel}
         onSelect={handleLevelSelect}
       />
     </SafeAreaView>

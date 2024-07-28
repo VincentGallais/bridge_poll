@@ -1,11 +1,7 @@
--> Faire les modales d'erreur (cf vidéo)
-
--> Faire une bdd plus proche de notre projet (champ isAdmin, isPremium, notification_type, table followers (même fonctionnement que table notifications)) + renommer bdd en enlevant V2
--> Fit la langue de l'user avec les informations du téléphone (ressortir emulateur)
+-> Faire une bdd plus proche de notre projet (notification_type, table followers (même fonctionnement que table notifications))
 -> Notification : Rajouter une notion de suppression (vu) en cliquant sur un petit check => maj en bdd
 -> Profile : Mettre la liste des quizz créés par l'utilisateur & Mettre border colorée si premium ou admin
--> Mettre à jour la bdd à chaque modification dans profil
--> Notification : icône en fonction du type de notification
+-> Mettre à jour la bdd à chaque modification dans user_profil
 
 Page profile :
     Ajouter search user (pour follow d'autres joueurs) & clic sur follower/following me donne la liste
@@ -18,10 +14,12 @@ Page quizz :
     Cliquer sur le nom de l'auteur pour voir son profil
     Cliquer sur les têtes pour voir qui a répondu (possibilité d'ajouter en ami & mettre la photo des amis en priorié sous le sondage)
     Quizz avec background dorés pour joueurs spéciaux
+    ProgressBar : https://tamagui.dev/ui/progress?subpath=progress
 
 Notifications :
     Ne pas fetch à chaque fois, essayer de garder en local en mettant à jour avec un abonnement aux updates (filtré sur l'user)
     Faire marcher les notifications push
+    Icône en fonction du type de notification
 
 Page soutenir :
     Faire le paiement & le restore purchase
@@ -38,6 +36,7 @@ Filtre :
     Parler du tri par ordre croissant/décroissant/nombre like/nombre commentaires
 
 Autre :
+    Faire des jolies modales d'erreur (https://youtu.be/oHIt1P2Leao)
     Compléter la liste des pays fournis
     Traductions en anglais de l'application
     Créer des premiers sondages pour alimenter le contenu

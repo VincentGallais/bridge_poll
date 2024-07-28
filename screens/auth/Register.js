@@ -6,6 +6,7 @@ import {
   Alert,
   AppState,
   Keyboard,
+  NativeModules,
   TouchableWithoutFeedback,
 } from "react-native";
 import React, { useRef, useState } from "react";
@@ -31,22 +32,25 @@ AppState.addEventListener("change", (state) => {
   }
 });
 
+
+
 const Register = ({ navigation }) => {
   const emailRef = useRef("");
-  const nameRef = useRef("");
+  const pseudonymeRef = useRef("");
   const passwordRef = useRef("");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const locale = NativeModules.I18nManager.localeIdentifier?.slice(0, 2)?.toUpperCase();
 
   const onSubmit = async () => {
     Keyboard.dismiss();
 
-    if (!nameRef.current || !emailRef.current || !passwordRef.current) {
+    if (!pseudonymeRef.current || !emailRef.current || !passwordRef.current) {
       Alert.alert("Sign up", "Please fill all the fields!");
       return;
     }
 
-    let name = nameRef.current.trim();
+    let pseudonyme = pseudonymeRef.current.trim();
     let email = emailRef.current.trim();
     let password = passwordRef.current.trim();
 
@@ -59,7 +63,8 @@ const Register = ({ navigation }) => {
       password: password,
       options: {
         data: {
-          name,
+          pseudonyme,
+          locale
         },
       },
     });
@@ -101,7 +106,7 @@ const Register = ({ navigation }) => {
                 icon={<Icon name="user" size={26} strokeWidth={1.6} />}
                 placeholder="Enter your pseudonyme"
                 placeholderTextColor={theme.colors.textLight}
-                onChangeText={(value) => (nameRef.current = value)}
+                onChangeText={(value) => (pseudonymeRef.current = value)}
               />
               <Input
                 icon={<Icon name="mail" size={26} strokeWidth={1.6} />}

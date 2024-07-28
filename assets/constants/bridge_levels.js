@@ -1,7 +1,7 @@
 export default [
-  { id: "UNKNOWN" },
-  { id: "BEGINNER" },
-  { id: "INTERMEDIATE" },
-  { id: "EXPERT" },
-  { id: "PROFESSIONAL" },
+  { id: "unknown" },
+  { id: "beginner" },
+  { id: "intermediate" },
+  { id: "expert" },
+  { id: "professional" },
 ];
