@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { ROUTES } from "../assets/constants";
 import { Quizz, Notifications, Profile } from "../screens/Index";
 import Publications from "../screens/home/Publications";
-import { useAuth } from "../providers/AuthProvider";
+import { useAuth } from "../contexts/AuthContext";
 import { useNavigation } from "@react-navigation/native";
 import Header from "../components/Header";
 
@@ -15,7 +15,7 @@ function AppNavigator() {
   
   useEffect(() => {
     if (!user) {
-      navigation.navigate(ROUTES.WELCOMESCREEN);
+      navigation.navigate(ROUTES.LOGIN);
     }
   }, [user]);
 

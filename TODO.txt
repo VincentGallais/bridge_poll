@@ -22,14 +22,13 @@ Page soutenir :
     Faire le paiement & le restore purchase
 
 Login / Register :
+    Bouton pour voir le password
     -> Ajouter modale pick country au register
     -> Créer page mot de passe oublié
-    Créer ligne dans la table userInformations avec pseudo et country lors du register
     Checker si le pseudo n'est pas déjà utilisé
     Login peut se faire avec email ou pseudo
 
-Publications : 
-    Mettre dans une scroll View
+Créer publication : 
     Améliorer esthétique et faire gui pour sélectionner cartes et enchères
 
 Filtre : 
@@ -38,9 +37,7 @@ Filtre :
 Autre :
     -> Compléter la liste des pays fournis
     Rajouter champ isPremium en BDD
-    Stocker image user en bdd
     Traductions en anglais de l'application
     Créer des premiers sondages pour alimenter le contenu
     Revoir la police choisie
     Faire des illustrations pour welcome, login, register, change password, forgotten password
-    Revoir la bdd (table liante friends et poll sur laquelle on compte le nombre d'associations plutôt que de créer les attributs followed_polls, published_polls, friends, notifications, skiped_polls)

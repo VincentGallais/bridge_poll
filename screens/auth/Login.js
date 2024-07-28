@@ -32,7 +32,8 @@ const Login = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
 
   const onSubmit = async () => {
-    Keyboard.dismiss()
+    Keyboard.dismiss();
+
     if (!emailRef.current || !passwordRef.current) {
       Alert.alert("Login", "Please fill all the fields!");
       return;
@@ -42,15 +43,21 @@ const Login = ({ navigation }) => {
     let password = passwordRef.current.trim();
 
     setLoading(true);
-    const { error } = await supabase.auth.signInWithPassword({
-      email: email,
-      password: password,
-    });
 
-    if (error) Alert.alert("Login", error.message, email, password);
-    setLoading(false);
+    try {
+      const { error } = await supabase.auth.signInWithPassword({
+        email: email,
+        password: password,
+      });
 
-    // setLoading(true);
+      if (error) {
+        Alert.alert("Login", error.message);
+      }
+    } catch (error) {
+      Alert.alert("Login Error", error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (

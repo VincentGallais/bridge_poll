@@ -60,6 +60,6 @@ export const downloadFile = async (url) => {
 };
 
 const getLocalFilePath = (filePath) => {
-  let fileName = filePath.split("/").pop();
+  let fileName = filePath?.split("/")?.pop();
   return `${FileSystem.documentDirectory}${fileName}`;
 };

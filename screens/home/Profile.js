@@ -14,18 +14,20 @@ import CountryPickerModal from "../../components/CountryPickerModal";
 import BridgeLevelPickerModal from "../../components/BridgeLevelPickerModal";
 import { COLORS } from "../../assets/constants";
 import { supabase } from "../../lib/supabase";
-import { useAuth } from "../../providers/AuthProvider";
+import { useAuth } from "../../contexts/AuthContext";
 import Avatar from "../../components/Avatar";
 import Icon from "../../assets/icons";
 import { theme } from "../../assets/constants/theme";
 import * as ImagePicker from "expo-image-picker";
 
 const Profile = () => {
-  const { userData, setUserData } = useAuth();
-  const [userParams, setUserParams] = useState(userData);
+  const { user } = useAuth();
   const [countryModalVisible, setCountryModalVisible] = useState(false);
   const [levelModalVisible, setLevelModalVisible] = useState(false);
 
+  // TODO : Je mets une valeur par défault
+  const [userParams, setUserParams] = useState({...user, bridge_level: 'EXPERT', country: 'FR', friends: [1, 2], pseudo: 'Galesh'});
+  
   const handleCountrySelect = (country) => {
     setUserParams((prevForm) => ({
       ...prevForm,

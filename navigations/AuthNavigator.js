@@ -3,30 +3,46 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { Login, ForgotPassword, Register, WelcomeScreen } from "../screens/Index";
 import { ROUTES } from "../assets/constants";
 import BottomTabNavigator from "./AppNavigator";
-import AuthProvider, {useAuth} from "../providers/AuthProvider";
+import { AuthProvider, useAuth } from '../contexts/AuthContext'
 import { useNavigation } from "@react-navigation/native";
+import { supabase } from "../lib/supabase";
+import { getUserData } from '../services/userService'
 
 const Stack = createStackNavigator();
 
 function AuthNavigator() {
   return (
     <AuthProvider>
-      <AuthNavigatorInner />
+      <MainLayout />
     </AuthProvider>
   );
 }
 
-function AuthNavigatorInner() {
-  const { user } = useAuth();
-  const navigation = useNavigation();
+const MainLayout = ()=>{
+const {setAuth, setUserData} = useAuth();
+const navigation = useNavigation();
 
-  useEffect(() => {
-    if (user) {
-      navigation.navigate(ROUTES.HOME);
+    useEffect(() => {
+        // triggers automatically when auth state changes
+        supabase.auth.onAuthStateChange((_event, session) => {
+        console.log('session: ', session?.user?.id);
+        if (session) {
+            setAuth(session?.user);
+            updateUserData(session?.user); // update user like image, phone, bio
+            navigation.navigate(ROUTES.HOME);
+        } else {
+            setAuth(null);
+            navigation.navigate(ROUTES.WELCOMESCREEN);
+        }
+        })
+    }, []);
+
+    const updateUserData = async (user)=>{
+        let res = await getUserData(user.id);
+        if(res.success) setUserData(res.data);
     }
-  }, [user]);
 
-  return (
+    return (
     <Stack.Navigator
       initialRouteName={ROUTES.WELCOMESCREEN}
       screenOptions={{

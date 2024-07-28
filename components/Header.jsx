@@ -4,14 +4,12 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  Image,
-  Pressable,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import FiltersModal from "./FiltersModal";
 import { COLORS, ROUTES } from "../assets/constants"; // Assurez-vous d'importer ROUTES
-import { useAuth } from "../providers/AuthProvider";
+import { useAuth } from "../contexts/AuthContext";
 import Avatar from "../components/Avatar";
 import { theme } from "../assets/constants/theme";
 import Loading from "../components/Loading";
@@ -20,11 +18,11 @@ import Icon from "../assets/icons";
 const Header = ({ navigation, page }) => {
   const [filterModalVisible, setFilterModalVisible] = useState(false);
   const [loading, setLoading] = useState(true);
-  const { userData } = useAuth();
+  const { user } = useAuth();
 
   useEffect(() => {
-    if (userData) setLoading(false);
-  }, [userData]);
+    if (user) setLoading(false);
+  }, [user]);
 
   const closeFilterModal = () => {
     setFilterModalVisible(false);
@@ -54,7 +52,7 @@ const Header = ({ navigation, page }) => {
 
               <Text style={styles.headerText}>Back</Text>
             </TouchableOpacity>
-          ) : <Text style={styles.headerText}>Welcome {userData.pseudo}</Text>}
+          ) : <Text style={styles.headerText}>Welcome {user?.name}</Text>}
 
           <View style={styles.iconContainer}>
             <TouchableOpacity
@@ -62,7 +60,7 @@ const Header = ({ navigation, page }) => {
             >
               <View style={styles.bellContainer}>
                 <FeatherIcon name="bell" size={20} color="white" />
-                {userData?.notifications?.length > 0 && (
+                {user?.notifications?.length > 0 && (
                   <View
                     style={{
                       ...styles.notificationBadge,
@@ -70,7 +68,7 @@ const Header = ({ navigation, page }) => {
                     }}
                   >
                     <Text style={styles.notificationText}>
-                      {userData?.notifications?.length}
+                      {user?.notifications?.length}
                     </Text>
                   </View>
                 )}
@@ -81,12 +79,12 @@ const Header = ({ navigation, page }) => {
               onPress={() => navigation.navigate(ROUTES.PROFILE)}
             >
               <Avatar
-                uri={userData?.image}
+                uri={user?.image}
                 size={40}
                 rounded={theme.radius.sm}
                 style={{
                   borderWidth: 2,
-                  borderColor: userData?.isAdmin ? "orange" : "#ccc",
+                  borderColor: user?.isAdmin ? "orange" : "#ccc",
                 }}
               />
             </TouchableOpacity>
