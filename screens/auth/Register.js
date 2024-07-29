@@ -19,6 +19,7 @@ import Icon from "../../assets/icons";
 import Input from "../../components/Input";
 import { ROUTES } from "../../assets/constants";
 import FeatherIcon from "react-native-vector-icons/Feather";
+import { isPseudonymeTaken, test } from "../../services/userService";
 
 // Tells Supabase Auth to continuously refresh the session automatically if
 // the app is in the foreground. When this is added, you will continue to receive
@@ -32,15 +33,15 @@ AppState.addEventListener("change", (state) => {
   }
 });
 
-
-
 const Register = ({ navigation }) => {
   const emailRef = useRef("");
   const pseudonymeRef = useRef("");
   const passwordRef = useRef("");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const locale = NativeModules.I18nManager.localeIdentifier?.slice(0, 2)?.toUpperCase();
+  const locale = NativeModules.I18nManager.localeIdentifier
+    ?.slice(0, 2)
+    ?.toUpperCase();
 
   const onSubmit = async () => {
     Keyboard.dismiss();
@@ -50,37 +51,57 @@ const Register = ({ navigation }) => {
       return;
     }
 
-    let pseudonyme = pseudonymeRef.current.trim();
-    let email = emailRef.current.trim();
-    let password = passwordRef.current.trim();
+    const pseudonyme = pseudonymeRef.current.trim();
+    const email = emailRef.current.trim();
+    const password = passwordRef.current.trim();
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      Alert.alert("Sign up", "Please enter a valid email address.");
+      return;
+    }
 
     setLoading(true);
+
+    // Vérifier si le pseudo est déjà pris
+    const { success, isTaken, msg } = await isPseudonymeTaken(pseudonyme);
+
+    console.log({ success, isTaken, msg });
+
+    if (!success) {
+      setLoading(false);
+      Alert.alert("Error", msg);
+      return;
+    }
+
+    if (isTaken) {
+      setLoading(false);
+      Alert.alert(
+        "Sign up",
+        "This pseudonyme is already taken. Please choose another one."
+      );
+      return;
+    }
+
+    // Si le pseudo est disponible, procéder à l'inscription
     const {
       data: { session },
-      error,
+      error: signUpError,
     } = await supabase.auth.signUp({
       email: email,
       password: password,
       options: {
         data: {
           pseudonyme,
-          locale
+          locale,
         },
       },
     });
 
-    console.log("session: ", session);
-    console.log("error: ", error);
+    if (signUpError) {
+      Alert.alert("Sign up", signUpError.message);
+    } 
 
-    if (error)
-      console.log(
-        error.cause,
-        error.code,
-        error.message,
-        error.name,
-        error.stack,
-        error.status
-      ); //Alert.alert("Sign up", error.message);
     setLoading(false);
   };
 

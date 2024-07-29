@@ -64,19 +64,21 @@ const Carousel = ({ polls, scrollX }) => {
           });
 
           return (
-            <View style={{ width: ITEM_SIZE }}>
+            <View
+              style={{
+                width: ITEM_SIZE,
+              }}
+            >
               <Animated.View
-                style={{ ...styles.cardContainer, transform: [{ translateY }] }}
+                style={{
+                  ...styles.cardContainer,
+                  transform: [{ translateY }],
+                }}
               >
                 <Image
                   source={cardBackgroundImage}
                   resizeMode="cover"
-                  style={{
-                    width: "100%",
-                    height: ITEM_SIZE * 1.3,
-                    borderTopLeftRadius: 24,
-                    borderTopRightRadius: 24,
-                  }}
+                  style={styles.backgroundImage}
                 />
 
                 <View
@@ -159,7 +161,7 @@ const Carousel = ({ polls, scrollX }) => {
                     </View>
                   </View>
                 </View>
-                <TouchableOpacity style={{ top: -20 }}>
+                <TouchableOpacity style={{ alignSelf: 'flex-start', top: -20}}>
                   <StackedCircularAvatar size="small" answers={item?.answers} />
                 </TouchableOpacity>
 
@@ -238,5 +240,16 @@ export const styles = StyleSheet.create({
     borderRadius: 24,
     padding: 4,
     overflow: "hidden",
+    elevation: 10, // For Android shadow
+    shadowColor: "#000", // For iOS shadow
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 10,
   },
+  backgroundImage: {
+    width: "100%",
+    height: ITEM_SIZE * 1.3,
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
+  }
 });

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   SafeAreaView,
   StyleSheet,
@@ -7,6 +7,7 @@ import {
   View,
   Image,
   ScrollView,
+  Alert,
 } from "react-native";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import CountryPickerModal from "../../components/CountryPickerModal";
@@ -19,30 +20,60 @@ import Icon from "../../assets/icons";
 import { theme } from "../../assets/constants/theme";
 import * as ImagePicker from "expo-image-picker";
 import AnimatedProgress from "../../components/AnimatedProgress";
+import { uploadFile } from "../../services/imageService";
+import { updateUser } from "../../services/userService";
+import Loading from "../../components/Loading";
 
 const Profile = () => {
-  const { user } = useAuth();
-  const [userParams, setUserParams] = useState(user);
+  const { user: currentUser, setUserData } = useAuth();
+  const [user, setUser] = useState({
+    pseudonyme: "",
+    image: null,
+    bridgeLevel: null,
+    locale: "",
+    image: null,
+  });
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (currentUser) {
+      setUser({
+        pseudonyme: currentUser.pseudonyme || "",
+        bridgeLevel: currentUser.bridgeLevel || "",
+        locale: currentUser.locale || "en",
+        image: currentUser.image || null,
+      });
+    }
+  }, [currentUser]);
 
   const [countryModalVisible, setCountryModalVisible] = useState(false);
   const [levelModalVisible, setLevelModalVisible] = useState(false);
 
   const handleCountrySelect = (locale) => {
-    setUserParams((prevForm) => ({
+    setUser((prevForm) => ({
       ...prevForm,
       locale: locale,
     }));
     setCountryModalVisible(false);
-    console.log("Country Modification");
+    updateUserData({ locale });
   };
-
+  
   const handleLevelSelect = (bridgeLevel) => {
-    setUserParams((prevForm) => ({
+    setUser((prevForm) => ({
       ...prevForm,
       bridgeLevel: bridgeLevel,
     }));
     setLevelModalVisible(false);
-    console.log("Bridge Level Modification");
+    updateUserData({ bridgeLevel });
+  };
+
+  const updateUserData = async (updatedData) => {
+    const res = await updateUser(currentUser?.id, updatedData);
+    if (res.success) {
+      setUserData({ ...currentUser, ...updatedData });
+    } else {
+      Alert.alert("Erreur", "La mise à jour a échoué. Veuillez réessayer.");
+    }
   };
 
   const onPickImage = async () => {
@@ -54,26 +85,27 @@ const Profile = () => {
     });
 
     if (!result.canceled) {
-      // Mettez à jour l'avatar avec la nouvelle image sélectionnée
-      setUserParams((prevParams) => ({
+      const imageUri = result.assets[0].uri;
+      setUser((prevParams) => ({
         ...prevParams,
-        avatar: result.assets[0].uri,
+        image: imageUri,
       }));
 
-      // Si vous souhaitez sauvegarder cette image sur votre serveur, vous pouvez utiliser la logique du service de téléchargement d'image
-      // let imageResult = await uploadFile('profiles', result.assets[0].uri, true);
-      // if (imageResult.success) {
-      //   setUserParams(prevParams => ({
-      //     ...prevParams,
-      //     avatar: imageResult.data
-      //   }));
-      //   setUserData(prevUserData => ({
-      //     ...prevUserData,
-      //     avatar: imageResult.data
-      //   }));
-      // } else {
-      //   Alert.alert("Erreur", "Échec du téléchargement de l'image");
-      // }
+      let userData = { ...user, image: imageUri };
+
+      setLoading(true);
+      let imageResult = await uploadFile("profiles", imageUri, true);
+      if (imageResult.success) {
+        userData.image = imageResult.data;
+      } else {
+        userData.image = null;
+      }
+
+      const res = await updateUser(currentUser?.id, userData);
+      setLoading(false);
+      if (res.success) {
+        setUserData({ ...currentUser, ...userData });
+      }
     }
   };
 
@@ -83,18 +115,27 @@ const Profile = () => {
         <View style={styles.profileHeader}>
           <View style={styles.profileImageContainer}>
             <View style={styles.avatarContainer}>
-              <Avatar
-                uri={userParams?.avatar}
-                size={100}
-                rounded={32}
-                style={{
-                  borderWidth: 3,
-                  borderColor: user?.isAdmin ? "orange" : "#ccc",
-                }}
-              />
-              <TouchableOpacity style={styles.cameraIcon} onPress={onPickImage}>
-                <Icon name="camera" strokeWidth={2.5} size={20} />
-              </TouchableOpacity>
+              {loading ? (
+                <Loading />
+              ) : (
+                <>
+                  <Avatar
+                    uri={user?.image}
+                    size={100}
+                    rounded={32}
+                    style={{
+                      borderWidth: 3,
+                      borderColor: user?.isAdmin ? "orange" : "#ccc",
+                    }}
+                  />
+                  <TouchableOpacity
+                    style={styles.cameraIcon}
+                    onPress={onPickImage}
+                  >
+                    <Icon name="camera" strokeWidth={2.5} size={20} />
+                  </TouchableOpacity>
+                </>
+              )}
             </View>
           </View>
           <View style={styles.profileBody}>
@@ -103,21 +144,21 @@ const Profile = () => {
                 <Image
                   style={styles.countryIcon}
                   source={{
-                    uri: `https://flagsapi.com/${userParams?.locale}/flat/64.png`,
+                    uri: `https://flagsapi.com/${user?.locale}/flat/64.png`,
                   }}
                 />
-                <Text style={styles.profileName}>{userParams?.pseudonyme}</Text>
+                <Text style={styles.profileName}>{user?.pseudonyme}</Text>
               </View>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => setLevelModalVisible(true)}>
               <Text style={styles.profileLevel}>
-                {`bridge_level_${userParams?.bridgeLevel ? userParams.bridgeLevel : "unknown"}`}
+                {`bridge_level_${user?.bridgeLevel ? user.bridgeLevel : "unknown"}`}
               </Text>
             </TouchableOpacity>
 
             <View style={{ flexDirection: "row", marginTop: 6, gap: 16 }}>
               <Text style={{ fontSize: 16 }}>0 followers</Text>
-              <Text style={{ fontSize: 16 }}>0 following</Text>
+              <Text style={{ fontSize: 16 }}>0 polls</Text>
             </View>
           </View>
         </View>
@@ -152,14 +193,14 @@ const Profile = () => {
           </TouchableOpacity>
         </View>
 
-        <View style={{margin: 24}}>
-        <AnimatedProgress widthPct={56} barWidth={200}/>
+        <View style={{ margin: 24 }}>
+          <AnimatedProgress widthPct={56} barWidth={200} />
         </View>
 
         <View style={{ marginTop: 26, marginHorizontal: 26 }}>
           <Text>Mes sondages publiés :</Text>
           <ScrollView>
-            <Text>Sondage 1</Text>
+            <Text>Sondage testBids</Text>
           </ScrollView>
         </View>
       </View>
@@ -168,13 +209,13 @@ const Profile = () => {
       <CountryPickerModal
         visible={countryModalVisible}
         onClose={() => setCountryModalVisible(false)}
-        initialSelectedCountry={userParams?.locale}
+        initialSelectedCountry={user?.locale}
         onSelect={handleCountrySelect}
       />
       <BridgeLevelPickerModal
         visible={levelModalVisible}
         onClose={() => setLevelModalVisible(false)}
-        initialSelectedLevel={userParams?.bridgeLevel}
+        initialSelectedLevel={user?.bridgeLevel}
         onSelect={handleLevelSelect}
       />
     </SafeAreaView>
@@ -249,6 +290,8 @@ const styles = StyleSheet.create({
     height: 100,
     width: 100,
     alignSelf: "center",
+    alignItems: "center",
+    justifyContent: "center",
   },
   cameraIcon: {
     position: "absolute",

@@ -50,7 +50,7 @@ const CountryPickerModal = ({
           </View>
 
           <ScrollView contentContainerStyle={styles.content}>
-            {COUNTRIES.map(({ id }, index) => {
+            {COUNTRIES.map(({ id, countryKey }, index) => {
               const isActive = value === index;
               return (
                 <TouchableOpacity
@@ -71,8 +71,7 @@ const CountryPickerModal = ({
                   <View
                     style={[styles.radio, index === 0 && { borderTopWidth: 0 }]}
                   >
-                    {/*Todo : Faire la traduction */}
-                    <Text style={styles.radioLabel}>{id}</Text>
+                    <Text style={styles.radioLabel}>{countryKey}</Text>
                     <View
                       style={[
                         styles.radioCheck,
