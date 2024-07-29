@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   View,
   Image,
-  Alert,
   ScrollView,
 } from "react-native";
 import FeatherIcon from "react-native-vector-icons/Feather";
@@ -19,6 +18,7 @@ import Avatar from "../../components/Avatar";
 import Icon from "../../assets/icons";
 import { theme } from "../../assets/constants/theme";
 import * as ImagePicker from "expo-image-picker";
+import AnimatedProgress from "../../components/AnimatedProgress";
 
 const Profile = () => {
   const { user } = useAuth();
@@ -150,6 +150,10 @@ const Profile = () => {
               <Icon name="logout" strokeWidth={2.5} size={20} color="white" />
             </View>
           </TouchableOpacity>
+        </View>
+
+        <View style={{margin: 24}}>
+        <AnimatedProgress widthPct={56} barWidth={200}/>
         </View>
 
         <View style={{ marginTop: 26, marginHorizontal: 26 }}>

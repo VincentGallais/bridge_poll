@@ -1,7 +1,6 @@
 -> Rajouter une notion de suppression (vu) sur les notifications (clique sur un petit check)
 -> Profile : Mettre la liste des quizz créés par l'utilisateur
 -> Mettre à jour la bdd à chaque modification dans user_profil
--> ProgressBar : https://tamagui.dev/ui/progress?subpath=progress
 
 Page profile :
     Ajouter search user (pour follow d'autres joueurs) & clic sur follower/following me donne la liste
@@ -17,6 +16,7 @@ Page quizz :
     Quizz avec background dorés pour joueurs spéciaux
     Ajouter une ombre sous les cards
     Permettre les backgrounds spéciaux puur superuser / premium
+    S'abonner aux changement sur les votes d'un quizz
     
 Notifications :
     Ne pas fetch à chaque fois, essayer de garder en local en mettant à jour avec un abonnement aux updates (filtré sur l'user)
