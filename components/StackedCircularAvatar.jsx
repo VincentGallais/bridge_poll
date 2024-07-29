@@ -4,7 +4,7 @@ import { StyleSheet, View, Image, Text } from 'react-native';
 
 const StackedCircularAvatar = ({ size = 'small', answers = 0 }) => {
   const sizes = {
-    small: 32,
+    small: 38,
     medium: 48,
     large: 64
   };
@@ -13,7 +13,7 @@ const StackedCircularAvatar = ({ size = 'small', answers = 0 }) => {
   const marginLeft = -(avatarSize / 4);
 
   return (
-    <View style={[styles.avatarWrapper, { width: (avatarSize * Math.min(answers, 4)) + (answers > 4 ? avatarSize : 0), height: avatarSize }]}>
+    <View style={[styles.avatarWrapper, { width: (avatarSize * Math.min(answers, 4)) + (answers > 4 ? avatarSize : avatarSize - 16), height: avatarSize }]}>
       {[...Array(Math.min(answers, 4))].map((_, index) => (
         <Image
           key={index}
@@ -24,8 +24,8 @@ const StackedCircularAvatar = ({ size = 'small', answers = 0 }) => {
         />
       ))}
       {answers > 4 && (
-        <View style={[styles.additionalAvatar, { height: avatarSize, marginLeft, paddingHorizontal: 5 }]}>
-          <Text style={styles.additionalText}>+{answers - 4}</Text>
+        <View style={[styles.additionalAvatar, { height: avatarSize, marginLeft, minWidth: avatarSize, padding: sizes[size]/6 }]}>
+          <Text style={{...styles.additionalText}}>+ {answers - 4}</Text>
         </View>
       )}
     </View>

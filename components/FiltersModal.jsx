@@ -41,19 +41,14 @@ const FiltersModal = ({
         <View style={styles.modalContainer}>
           <Text style={styles.title}>Filtering Quizz</Text>
 
-          <Text style={styles.subtitle}>Quizz Date</Text>
-          <View style={styles.buttonGroup}>
-            {renderButton("quizzDate", ["Last Week", "Last Month", "All"])}
-          </View>
-
           <Text style={styles.subtitle}>Quizz Type</Text>
           <View style={styles.buttonGroup}>
-            {renderButton("quizzType", ["Bid", "Lead", "Suit Play"])}
+            {renderButton("quizzType", ["Bid", "Lead", "Suit Play", "All"])}
           </View>
 
           <Text style={styles.subtitle}>Quizz Afinity</Text>
           <View style={styles.buttonGroup}>
-            {renderButton("quizzAfinity", ["New", "Followed", "Friends", "All"])}
+            {renderButton("quizzAfinity", ["New", "Liked", "Friends", "All"])}
           </View>
 
           <TouchableOpacity style={styles.closeButton} onPress={closeModal}>

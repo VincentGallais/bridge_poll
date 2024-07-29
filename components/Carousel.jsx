@@ -7,6 +7,7 @@ import {
   Animated,
   Platform,
   StyleSheet,
+  TouchableOpacity,
 } from "react-native";
 import Tags from "./Tags";
 
@@ -14,6 +15,8 @@ const { width, height } = Dimensions.get("window");
 import StackedCircularAvatar from "./StackedCircularAvatar";
 import AwesomeButton from "react-native-really-awesome-button";
 import FeatherIcon from "react-native-vector-icons/Feather";
+import cardBackgroundImage from "../assets/images/card_background.png";
+import Icon from "../assets/icons";
 
 const SPACING = 5;
 const ITEM_SIZE = Platform.OS === "ios" ? width * 0.87 : width * 0.9;
@@ -27,7 +30,7 @@ const Carousel = ({ polls, scrollX }) => {
         showsHorizontalScrollIndicator={false}
         data={polls}
         onEndReached={() => {
-          console.log('Polls end, searching for more');
+          console.log("Polls end, searching for more");
         }}
         onEndReachedThreshold={0}
         keyExtractor={(item) => item.key}
@@ -63,124 +66,150 @@ const Carousel = ({ polls, scrollX }) => {
           return (
             <View style={{ width: ITEM_SIZE }}>
               <Animated.View
-                style={{
-                  marginHorizontal: SPACING,
-                  padding: SPACING * 2,
-                  transform: [{ translateY }],
-                  backgroundColor: "white",
-                  borderRadius: 34,
-                }}
+                style={{ ...styles.cardContainer, transform: [{ translateY }] }}
               >
-                <View style={{ marginBottom: 16 }}>
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      justifyContent: "space-between",
-                      marginHorizontal: 22,
-                      alignItems: "center",
-                    }}
-                  >
-                    <Text style={{ fontSize: 14 }}>{item.author}</Text>
-                    <Text style={{ fontSize: 14 }}>{item.date}</Text>
-                    <FeatherIcon color="#1d1d1d" name="star" size={24} />
-                    <FeatherIcon color="#1d1d1d" name="x" size={24} />
-                  </View>
-
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      alignItems: "center",
-                      gap: 8,
-                      justifyContent: "flex-start",
-                      marginLeft: 16,
-                      marginVertical: 4,
-                    }}
-                  >
-                    <Tags tags={item.tags} />
-                    <Text
-                      style={{
-                        fontSize: 16,
-                      }}
-                    >
-                      {item.description}
-                    </Text>
-                  </View>
-
-                  <Text>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Nobis praesentium unde est suscipit velit tenetur?
-                  </Text>
-                </View>
-
-                {item.author === "BRIDGE_POLL" ? (
-                  <Text
-                    style={{
-                      height: 100,
-                      textAlign: "center",
-                      backgroundColor: "blue",
-                      color: "white",
-                      fontSize: 24,
-                    }}
-                  >
-                    Publicité
-                  </Text>
-                ) : (
-                  <Image
-                    source={{ uri: item.poster }}
-                    style={{ ...styles.posterImage, height: ITEM_SIZE * 1.1 }}
-                  />
-                )}
+                <Image
+                  source={cardBackgroundImage}
+                  resizeMode="cover"
+                  style={{
+                    width: "100%",
+                    height: ITEM_SIZE * 1.3,
+                    borderTopLeftRadius: 24,
+                    borderTopRightRadius: 24,
+                  }}
+                />
 
                 <View
                   style={{
-                    flexDirection: "row",
-                    justifyContent: "space-around",
-                    marginHorizontal: 10,
-                    marginTop: 16,
-                    marginBottom: 24,
-                    gap: 8,
+                    position: "absolute",
+                    width: "100%",
                   }}
                 >
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      marginRight: 10,
+                      marginTop: 10,
+                      marginLeft: 20,
+                    }}
+                  >
+                    <Tags tags={item.tags} />
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                        gap: 8,
+                      }}
+                    >
+                      <TouchableOpacity
+                        style={{
+                          width: 48,
+                          height: 48,
+                          backgroundColor: "white",
+                          borderRadius: 999,
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <FeatherIcon
+                          color="black"
+                          name={"eye-off"}
+                          size={24}
+                          strokeWidth={2.5}
+                        />
+                      </TouchableOpacity>
+
+                      <TouchableOpacity
+                        style={{
+                          width: 48,
+                          height: 48,
+                          backgroundColor: "white",
+                          borderRadius: 999,
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <Icon
+                          name="share"
+                          strokeWidth={2.5}
+                          size={24}
+                          color="black"
+                        />
+                      </TouchableOpacity>
+
+                      <TouchableOpacity
+                        style={{
+                          width: 48,
+                          height: 48,
+                          backgroundColor: "white",
+                          borderRadius: 999,
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <Icon
+                          name="heart"
+                          strokeWidth={2.5}
+                          size={24}
+                          color="black"
+                        />
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </View>
+                <TouchableOpacity style={{ top: -20 }}>
+                  <StackedCircularAvatar size="small" answers={item?.answers} />
+                </TouchableOpacity>
+
+                <View style={styles.votingButtonContainer}>
                   <AwesomeButton
-                    width={60}
-                    height={60}
+                    width={70}
+                    height={70}
                     backgroundColor="orange"
                   >
                     A
                   </AwesomeButton>
                   <AwesomeButton
-                    width={60}
-                    height={60}
+                    width={70}
+                    height={70}
                     backgroundColor="orange"
                   >
                     B
                   </AwesomeButton>
                   <AwesomeButton
-                    width={60}
-                    height={60}
+                    width={70}
+                    height={70}
                     backgroundColor="orange"
                   >
                     C
                   </AwesomeButton>
-                  <AwesomeButton width={100} height={60}>
-                    Share
+                  <AwesomeButton
+                    width={70}
+                    height={70}
+                    backgroundColor="orange"
+                  >
+                    D
                   </AwesomeButton>
                 </View>
-
                 <View
                   style={{
                     flexDirection: "row",
-                    alignItems: "center",
+                    margin: 16,
                     justifyContent: "space-between",
-                    marginHorizontal: 8,
                   }}
                 >
-                  <StackedCircularAvatar size="small" answers={item?.answers} />
-                  <Text style={{ fontSize: 14 }}>
-                    {item?.comments < 2
-                      ? `${item?.comments} commentaire`
-                      : `${item?.comments} commentaires`}
-                  </Text>
+                  <TouchableOpacity>
+                    <Text style={{ fontSize: 14 }}>
+                      Submited by {item?.author}
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity>
+                    <Text style={{ fontSize: 14 }}>
+                      {item?.comments} commentaires
+                    </Text>
+                  </TouchableOpacity>
                 </View>
               </Animated.View>
             </View>
@@ -197,11 +226,17 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  posterImage: {
-    width: "100%",
-    resizeMode: "cover",
+  votingButtonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    marginHorizontal: 10,
+    gap: 8,
+  },
+  cardContainer: {
+    marginHorizontal: SPACING,
+    backgroundColor: "white",
     borderRadius: 24,
-    margin: 0,
-    marginBottom: 10,
+    padding: 4,
+    overflow: "hidden",
   },
 });

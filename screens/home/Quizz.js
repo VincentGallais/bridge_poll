@@ -31,7 +31,7 @@ const defaultMovies = [
     key: "2",
     author: "Clara",
     date: "20/02/2024",
-    answers: 150,
+    answers: 3,
     comments: 1,
     poster: "https://via.placeholder.com/300x450",
     backdrop: "https://via.placeholder.com/1200x800",

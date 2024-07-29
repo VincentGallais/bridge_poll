@@ -27,7 +27,7 @@ export const fetchNotifications = async (receiverId) => {
       .select(
         `
             *,
-            sender: senderId ( id, name, image )
+            sender: senderId ( id, pseudonyme, image )
         `
       )
       .order("created_at", { ascending: false })

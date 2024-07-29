@@ -7,13 +7,14 @@ Page profile :
     Ajouter search user (pour follow d'autres joueurs) & clic sur follower/following me donne la liste
 
 Page quizz :
-    Meilleure gestion de la hauteur (marginH et centrage ?)
     Clic sur un quizz l'ouvre en grand (version répondu et non répondu) + vue quand quizz répondu 
-    Proposer de follow (star) ou skip (croix) un sondage
+    Mettre à jour les quizz liké/skip
+    Bouton partage à mettre en marche
     Faire le fetching des quizz en pensant aux filtes
     Cliquer sur le nom de l'auteur pour voir son profil
     Cliquer sur les têtes pour voir qui a répondu (possibilité d'ajouter en ami & mettre la photo des amis en priorié sous le sondage)
     Quizz avec background dorés pour joueurs spéciaux
+    Mettre les cards en hauteur (ombre)
     ProgressBar : https://tamagui.dev/ui/progress?subpath=progress
 
 Notifications :

@@ -20,18 +20,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
-    marginVertical: 4,
   },
   tag: {
-    paddingHorizontal: 6,
+    paddingHorizontal: 8,
     paddingVertical: 2,
-    borderWidth: 1,
     borderRadius: 14,
-    borderColor: '#ccc',
-    marginRight: 4,
+    backgroundColor: '#fff'
   },
   tagText: {
-    fontSize: 12, 
-    opacity: 0.6
+    fontSize: 18, 
+    fontWeight: '400',
+    color: 'black'
   }
 });
