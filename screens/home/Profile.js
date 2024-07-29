@@ -26,7 +26,7 @@ const Profile = () => {
 
   const [countryModalVisible, setCountryModalVisible] = useState(false);
   const [levelModalVisible, setLevelModalVisible] = useState(false);
-  
+
   const handleCountrySelect = (locale) => {
     setUserParams((prevForm) => ({
       ...prevForm,
@@ -83,7 +83,15 @@ const Profile = () => {
         <View style={styles.profileHeader}>
           <View style={styles.profileImageContainer}>
             <View style={styles.avatarContainer}>
-              <Avatar uri={userParams?.avatar} size={100} rounded={32} />
+              <Avatar
+                uri={userParams?.avatar}
+                size={100}
+                rounded={32}
+                style={{
+                  borderWidth: 3,
+                  borderColor: user?.isAdmin ? "orange" : "#ccc",
+                }}
+              />
               <TouchableOpacity style={styles.cameraIcon} onPress={onPickImage}>
                 <Icon name="camera" strokeWidth={2.5} size={20} />
               </TouchableOpacity>
@@ -103,18 +111,13 @@ const Profile = () => {
             </TouchableOpacity>
             <TouchableOpacity onPress={() => setLevelModalVisible(true)}>
               <Text style={styles.profileLevel}>
-              {`bridge_level_${userParams?.bridgeLevel ? userParams.bridgeLevel : 'unknown'}`}
-                
+                {`bridge_level_${userParams?.bridgeLevel ? userParams.bridgeLevel : "unknown"}`}
               </Text>
             </TouchableOpacity>
 
             <View style={{ flexDirection: "row", marginTop: 6, gap: 16 }}>
-              <Text style={{ fontSize: 15 }}>
-                0 followers
-              </Text>
-              <Text style={{ fontSize: 15 }}>
-                0 following
-              </Text>
+              <Text style={{ fontSize: 16 }}>0 followers</Text>
+              <Text style={{ fontSize: 16 }}>0 following</Text>
             </View>
           </View>
         </View>

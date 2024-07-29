@@ -1,22 +1,23 @@
--> Faire une bdd plus proche de notre projet (notification_type, table followers (même fonctionnement que table notifications))
--> Notification : Rajouter une notion de suppression (vu) en cliquant sur un petit check => maj en bdd
--> Profile : Mettre la liste des quizz créés par l'utilisateur & Mettre border colorée si premium ou admin
+-> Rajouter une notion de suppression (vu) sur les notifications (clique sur un petit check)
+-> Profile : Mettre la liste des quizz créés par l'utilisateur
 -> Mettre à jour la bdd à chaque modification dans user_profil
+-> ProgressBar : https://tamagui.dev/ui/progress?subpath=progress
 
 Page profile :
     Ajouter search user (pour follow d'autres joueurs) & clic sur follower/following me donne la liste
+    Créer table followers sur le même modeèle que notifications
 
 Page quizz :
-    Clic sur un quizz l'ouvre en grand (version répondu et non répondu) + vue quand quizz répondu 
+    Clic sur un quizz l'ouvre en grand (version répondu et non répondu) + vue quand quizz répondu (https://youtu.be/_ivIUCSOZ78?t=6964)
     Mettre à jour les quizz liké/skip
     Bouton partage à mettre en marche
     Faire le fetching des quizz en pensant aux filtes
     Cliquer sur le nom de l'auteur pour voir son profil
     Cliquer sur les têtes pour voir qui a répondu (possibilité d'ajouter en ami & mettre la photo des amis en priorié sous le sondage)
     Quizz avec background dorés pour joueurs spéciaux
-    Mettre les cards en hauteur (ombre)
-    ProgressBar : https://tamagui.dev/ui/progress?subpath=progress
-
+    Ajouter une ombre sous les cards
+    Permettre les backgrounds spéciaux puur superuser / premium
+    
 Notifications :
     Ne pas fetch à chaque fois, essayer de garder en local en mettant à jour avec un abonnement aux updates (filtré sur l'user)
     Faire marcher les notifications push
@@ -27,7 +28,7 @@ Page soutenir :
 
 Login / Register :
     Créer page pour les mots de passe oubliés
-    Expliquer l'erreur "pseudonyme déjà utilisé"
+    Expliquer l'erreur "pseudonyme déjà utilisé" et "format de l'email incorrect"
     Login peut se faire avec email ou pseudo
 
 Créer publication : 
