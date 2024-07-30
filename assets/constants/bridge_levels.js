@@ -1,5 +1,5 @@
 export default [
-  { id: "unknown" },
+  { id: "undefined" },
   { id: "beginner" },
   { id: "intermediate" },
   { id: "expert" },

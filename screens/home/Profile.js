@@ -152,7 +152,7 @@ const Profile = () => {
             </TouchableOpacity>
             <TouchableOpacity onPress={() => setLevelModalVisible(true)}>
               <Text style={styles.profileLevel}>
-                {`bridge_level_${user?.bridgeLevel ? user.bridgeLevel : "unknown"}`}
+                {`bridge_level_${user?.bridgeLevel ? user.bridgeLevel : "undefined"}`}
               </Text>
             </TouchableOpacity>
 

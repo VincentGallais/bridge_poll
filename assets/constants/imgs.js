@@ -3,4 +3,5 @@ export default {
   user: require('../images/user.jpg'),
   profile: require('../images/profile.png'),
   welcomeScreenIllustration: require('../images/welcome-screen-illustration.png'),
+  quizzIcon: require('../images/quizz_icon.png'),
 };

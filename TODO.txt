@@ -1,5 +1,4 @@
 -> Faire des jolies modales d'erreur (https://youtu.be/oHIt1P2Leao)
--> Revoir les notifications (icone en fonction du type et checked)
 
 Page profile :
     Ajouter search user (pour follow d'autres joueurs) & clic sur follower/following me donne la liste
@@ -19,8 +18,9 @@ Page quizz :
     
 Notifications :
     S'abonner aux changement sur les notifs (pas fetch à chaque fois) + regarder que la notification n'est pas déjà check
+    Mettre à jour le header en fonction du nombre de notifications non checked
     Faire marcher les notifications push
-    Icône en fonction du type de notification
+    Revoir les notifications (icone en fonction du type et checked)
 
 Page soutenir :
     Faire le paiement & le restore purchase

@@ -31,7 +31,8 @@ export const fetchNotifications = async (receiverId) => {
         `
       )
       .order("created_at", { ascending: false })
-      .eq("receiverId", receiverId);
+      .eq("receiverId", receiverId)
+      .eq("checked", false);
 
     if (error) {
       console.log("fetchNotifications error: ", error);
@@ -40,6 +41,24 @@ export const fetchNotifications = async (receiverId) => {
     return { success: true, data: data };
   } catch (error) {
     console.log("fetchNotifications error: ", error);
+    return { success: false, msg: "Something went wrong!" };
+  }
+};
+
+export const updateNotificationToChecked = async (notificationId) => {
+  try {
+    const { data, error } = await supabase
+      .from("notifications")
+      .update({ checked: true })
+      .eq("id", notificationId);
+
+    if (error) {
+      console.log("updateNotificationToChecked error: ", error);
+      return { success: false, msg: "Could not update the notification" };
+    }
+    return { success: true, data: data };
+  } catch (error) {
+    console.log("updateNotificationToChecked error: ", error);
     return { success: false, msg: "Something went wrong!" };
   }
 };
