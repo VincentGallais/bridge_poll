@@ -1,41 +1,46 @@
 -> Faire des jolies modales d'erreur (https://youtu.be/oHIt1P2Leao)
+-> Renommer table posts en polls, ajouter le param answers
+-> Faire une table liante contenant entre user et polls avec les params liked & skip
+-> Faire fonctionner le fetch prenant en compte liked et skip + pouvoir mettre à jour avec les boutons
+-> Flexibilité sur la taille des boutons en fonction du nombre de réponses (2 -> 4)
 
 Page profile :
-    Ajouter search user (pour follow d'autres joueurs) & clic sur follower/following me donne la liste
+    Ajouter search user (pour follow d'autres joueurs) & clic sur follower/following me donne la liste (https://www.youtube.com/watch?v=I48oThkeIxw)
     Créer table followers sur le même modèle que notifications
-    Profile : Mettre la liste des quizz créés par l'utilisateur
+    Mettre la liste des quizz créés par l'utilisateur & quizz suivis
+    Achivement (https://dribbble.com/search/3d-medals)
 
 Page quizz :
     Clic sur un quizz l'ouvre en grand (version répondu et non répondu) + vue quand quizz répondu (https://youtu.be/_ivIUCSOZ78?t=6964)
-    Mettre à jour les quizz liké/skip
     Bouton partage à mettre en marche
     Faire le fetching des quizz en pensant aux filtes
     Cliquer sur le nom de l'auteur pour voir son profil
     Cliquer sur les têtes pour voir qui a répondu (possibilité d'ajouter en ami & mettre la photo des amis en priorié sous le sondage)
-    Quizz avec background dorés pour superuser / premium
+    Quizz avec background dorés pour superuser / premium (https://tamagui.dev/ui/linear-gradient?subpath=linear-gradient)
     S'abonner aux changement sur les votes d'un quizz
-    Flexibilité sur la taille des boutons en fonction du nombre de réponses (2 -> 4)
     
 Notifications :
-    S'abonner aux changement sur les notifs (pas fetch à chaque fois) + regarder que la notification n'est pas déjà check
+    S'abonner aux changement sur les notifs (pas fetch à chaque fois qu'on clique sur notif) en vérifiant que la notification n'est pas check + sort par date
     Mettre à jour le header en fonction du nombre de notifications non checked
-    Faire marcher les notifications push
-    Revoir les notifications (icone en fonction du type et checked)
+    Faire marcher les notifications push (https://www.youtube.com/watch?v=Z_84yf7fNsc)
+    Faire une icone en fonction du type de notification + redirection (quizz / user page)
 
 Page soutenir :
     Faire le paiement & le restore purchase
 
-Login / Register :
-    Créer page pour les mots de passe oubliés
+Login / Register / Welcome :
+    Créer page pour les mots de passe oubliés (https://youtu.be/YdxyAaO4VBk?list=LL)
+    Pouvoir cliquer sur toute la zone des inputs et pas que le texte
+    Améliorer le contenu de la welcome page
+    Faire des illustrations pour welcome, login, register, change password, forgotten password
 
 Créer publication : 
-    Améliorer esthétique et faire un gui pour sélectionner cartes et enchères
+    Créér un gui pour sélectionner cartes et enchères
 
 Filtre : 
-    Parler du tri par ordre croissant/décroissant/nombre like/nombre commentaires
+    Parler du tri par ordre croissant/décroissant/nombre like/nombre commentaires (https://dribbble.com/shots/24025570-Sort-By-Bottom-Sheet / https://dribbble.com/shots/17920785-E-Commerce-Filters)
 
 Autre :
-    Traductions en anglais de l'application
+    Traductions en anglais de l'application (composant <Translate/> avec les keys)
     Créer des premiers sondages pour alimenter le contenu
     Revoir la police choisie
-    Faire des illustrations pour welcome, login, register, change password, forgotten password
