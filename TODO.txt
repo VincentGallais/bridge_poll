@@ -1,4 +1,3 @@
--> Faire des jolies modales d'erreur (https://youtu.be/oHIt1P2Leao)
 -> Renommer table posts en polls, ajouter le param answers
 -> Faire une table liante contenant entre user et polls avec les params liked & skip
 -> Faire fonctionner le fetch prenant en compte liked et skip + pouvoir mettre à jour avec les boutons
@@ -44,3 +43,4 @@ Autre :
     Traductions en anglais de l'application (composant <Translate/> avec les keys)
     Créer des premiers sondages pour alimenter le contenu
     Revoir la police choisie
+    Linker tous les alerts avec le composant <CustomModal/>
