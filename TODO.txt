@@ -1,5 +1,4 @@
 -> Clic sur un quizz l'ouvre en grand (version répondu et non répondu) (https://youtu.be/_ivIUCSOZ78?t=6964)
--> Faire les progressbar de resultat
 -> Linker tous les alertes avec le composant <CustomModal/>
 -> S'abonner aux changements sur les notifs (pas fetch à chaque fois qu'on clique sur notif) en vérifiant que la notification n'est pas check + sort par date
 -> Mettre à jour le header en fonction du nombre de notifications non checked
@@ -14,7 +13,7 @@ Page quizz :
     Bouton partage à mettre en marche
     Mettre à jour le fetching des quizz avec les filtres
     Cliquer sur le nom de l'auteur pour voir son profil
-    Cliquer sur les têtes pour voir qui a répondu (possibilité d'ajouter en following)
+    Cliquer sur les têtes pour voir qui a répondu (possibilité d'ajouter en following) + voir le vote des gens quand l'user a voté
     Mettre la vraie photo de profil des gens qui ont voté (en premier ceux qui ont une photo)
     S'abonner aux changement sur les votes d'un quizz qui est dans notre range de visibilité
     

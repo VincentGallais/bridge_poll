@@ -24,17 +24,16 @@ const ITEM_SIZE = Platform.OS === "ios" ? width * 0.87 : width * 0.9;
 
 const PollCard = ({ item, translateY, user }) => {
   const [userAnswer, setUserAnswer] = useState(null);
+  const [answers, setAnswers] = useState(item.answers || []);
 
   useEffect(() => {
-    const answers = item.answers || [];
     const currentUserAnswer = answers.find(
       (answer) => answer.userId === user?.id
     );
     setUserAnswer(currentUserAnswer || null);
-  }, [item.answers, user?.id]);
+  }, [answers, user?.id]);
 
   const buttonWidth = ITEM_SIZE / (item.choices.length + 1);
-  const answers = item.answers || [];
   const isSubmittedByUser = item?.author === user?.pseudonyme;
 
   const handleVote = async (choice) => {
@@ -49,10 +48,18 @@ const PollCard = ({ item, translateY, user }) => {
     const response = await createPollAnswer(newAnswer);
     if (response.success) {
       setUserAnswer(newAnswer);
-      item.answers.push(newAnswer);
+      // Update local answers state
+      setAnswers((prevAnswers) => [...prevAnswers, newAnswer]);
     } else {
       console.log("Failed to record answer:", response.msg);
     }
+  };
+
+  const calculatePercentage = (choice) => {
+    const totalVotes = answers.length;
+    if (totalVotes === 0) return 0;
+    const votesForChoice = answers.filter((answer) => answer.answer === choice).length;
+    return (votesForChoice / totalVotes) * 100;
   };
 
   const getGradientColors = (visibility) => {
@@ -110,15 +117,22 @@ const PollCard = ({ item, translateY, user }) => {
             </TouchableOpacity>
             <View style={styles.votingButtonContainer}>
               {userAnswer ? (
-                <View>
-                  <Text>
-                    Affichage des réponses, user_vote_{userAnswer.answer}
-                  </Text>
-                  <AnimatedProgress
-                    widthPct={56}
-                    barWidth={200}
-                    barColor="green"
-                  />
+                <View style={styles.progressContainer}>
+                  {item.choices.map((choice, index) => (
+                    <View key={index} style={styles.progressItem}>
+                      <Text style={styles.choiceText}>{choice}</Text>
+                      <View style={styles.progressBarContainer}>
+                        <AnimatedProgress
+                          widthPct={calculatePercentage(choice)}
+                          barWidth={200}
+                          barColor={userAnswer.answer === choice ? "green" : "gray"}
+                        />
+                        <Text style={styles.percentageText}>
+                          {Math.round(calculatePercentage(choice))}%
+                        </Text>
+                      </View>
+                    </View>
+                  ))}
                 </View>
               ) : (
                 item.choices.map((choice, index) => (
@@ -198,8 +212,27 @@ const styles = StyleSheet.create({
   votingButtonContainer: {
     flexDirection: "row",
     justifyContent: "space-around",
-    marginHorizontal: 10,
     gap: 8,
+  },
+  progressContainer: {
+    flexDirection: "column",
+  },
+  progressItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginVertical: 2,
+  },
+  progressBarContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  choiceText: {
+    marginRight: 8
+  },
+  percentageText: {
+    marginLeft: 8,
+    fontSize: 14,
+    color: "#333",
   },
   footer: {
     flexDirection: "row",
