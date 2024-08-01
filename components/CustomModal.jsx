@@ -9,7 +9,7 @@ import React from "react";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Button from "./Button";
 
-const CustomModal = ({ messageType, buttonText, headerText, coreText }) => {
+const CustomModal = ({ messageType, buttonText, headerText, coreText, onClose, onProceed }) => {
   const messageColors = {
     fail: "#ef4444",
     warning: "#ca8a04",
@@ -26,12 +26,12 @@ const CustomModal = ({ messageType, buttonText, headerText, coreText }) => {
     info: "information-variant",
   };
 
-  const color = messageColors[messageType] || messageColors.info; // Default to 'info' color if messageType is not found
-  const iconName = messageIcon[messageType] || messageIcon.info; // Default to 'info' color if messageType is not found
+  const color = messageColors[messageType] || messageColors.info;
+  const iconName = messageIcon[messageType] || messageIcon.info;
 
   return (
-    <Modal animationType="slide" visible={true} transparent={true}>
-      <Pressable style={styles.container}>
+    <Modal animationType="fade" visible={true} transparent={true}>
+      <Pressable style={styles.container} onPress={onClose}>
         <View style={styles.modalView}>
           <View style={[styles.modalIcon, { backgroundColor: color }]}>
             <MaterialCommunityIcons name={iconName} size={75} color="white" />
@@ -43,18 +43,20 @@ const CustomModal = ({ messageType, buttonText, headerText, coreText }) => {
               <Button
                 title={buttonText}
                 buttonStyle={{ width: "100%", backgroundColor: color }}
+                onPress={onClose}
               />
             ) : (
               <View style={styles.buttonContainer}>
                 <Button
                   title="Cancel"
                   buttonStyle={{ width: "48%", backgroundColor: 'gray' }}
+                  onPress={onClose}
                 />
                 <Button
                   title="Proceed"
                   buttonStyle={{ width: "48%", backgroundColor: color }}
+                  onPress={onProceed}
                 />
-                
               </View>
             )}
           </View>
@@ -103,7 +105,7 @@ const styles = StyleSheet.create({
   modalContent: {
     width: "100%",
     alignItems: "center",
-    padding: 20,
+    padding: 16,
     gap: 16,
   },
   modalHeaderText: {

@@ -7,7 +7,6 @@ import {
   View,
   Image,
   ScrollView,
-  Alert,
 } from "react-native";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import CountryPickerModal from "../../components/CountryPickerModal";
@@ -22,6 +21,7 @@ import * as ImagePicker from "expo-image-picker";
 import { uploadFile } from "../../services/imageService";
 import { updateUser } from "../../services/userService";
 import Loading from "../../components/Loading";
+import CustomModal from "../../components/CustomModal";
 
 const Profile = () => {
   const { user: currentUser, setUserData } = useAuth();
@@ -30,9 +30,10 @@ const Profile = () => {
     image: null,
     bridgeLevel: null,
     locale: "",
-    image: null,
   });
   const [loading, setLoading] = useState(false);
+  const [errorModalVisible, setErrorModalVisible] = useState(false);
+  const [errorModalMessage, setErrorModalMessage] = useState("");
 
   useEffect(() => {
     if (currentUser) {
@@ -41,7 +42,7 @@ const Profile = () => {
         bridgeLevel: currentUser.bridgeLevel || "",
         locale: currentUser.locale || "en",
         image: currentUser.image || null,
-        isAdmin: currentUser.isAdmin ||false,
+        isAdmin: currentUser.isAdmin || false,
       });
     }
   }, [currentUser]);
@@ -72,7 +73,8 @@ const Profile = () => {
     if (res.success) {
       setUserData({ ...currentUser, ...updatedData });
     } else {
-      Alert.alert("Erreur", "La mise à jour a échoué. Veuillez réessayer.");
+      setErrorModalMessage("La mise à jour a échoué. Veuillez réessayer.");
+      setErrorModalVisible(true);
     }
   };
 
@@ -105,8 +107,15 @@ const Profile = () => {
       setLoading(false);
       if (res.success) {
         setUserData({ ...currentUser, ...userData });
+      } else {
+        setErrorModalMessage("La mise à jour a échoué. Veuillez réessayer.");
+        setErrorModalVisible(true);
       }
     }
+  };
+
+  const handleModalClose = () => {
+    setErrorModalVisible(false);
   };
 
   return (
@@ -213,6 +222,16 @@ const Profile = () => {
         initialSelectedLevel={user?.bridgeLevel}
         onSelect={handleLevelSelect}
       />
+
+      {errorModalVisible && (
+        <CustomModal
+          messageType="fail"
+          buttonText="OK"
+          headerText="Erreur"
+          coreText={errorModalMessage}
+          onClose={handleModalClose}
+        />
+      )}
     </SafeAreaView>
   );
 };

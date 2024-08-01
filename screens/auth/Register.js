@@ -1,15 +1,14 @@
+import React, { useRef, useState } from "react";
 import {
   View,
   Text,
   StyleSheet,
   Pressable,
-  Alert,
-  AppState,
   Keyboard,
   NativeModules,
   TouchableWithoutFeedback,
+  AppState,
 } from "react-native";
-import React, { useRef, useState } from "react";
 import ScreenWrapper from "../../components/ScreenWrapper";
 import { theme } from "../../assets/constants/theme";
 import BackButton from "../../components/BackButton";
@@ -19,7 +18,8 @@ import Icon from "../../assets/icons";
 import Input from "../../components/Input";
 import { ROUTES } from "../../assets/constants";
 import FeatherIcon from "react-native-vector-icons/Feather";
-import { isPseudonymeTaken, test } from "../../services/userService";
+import { isPseudonymeTaken } from "../../services/userService";
+import CustomModal from "../../components/CustomModal"; // Assurez-vous que le chemin est correct
 
 // Tells Supabase Auth to continuously refresh the session automatically if
 // the app is in the foreground. When this is added, you will continue to receive
@@ -39,6 +39,8 @@ const Register = ({ navigation }) => {
   const passwordRef = useRef("");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [errorModalVisible, setErrorModalVisible] = useState(false); 
+  const [errorModalMessage, setErrorModalMessage] = useState("");
   const locale = NativeModules.I18nManager.localeIdentifier
     ?.slice(0, 2)
     ?.toUpperCase();
@@ -47,7 +49,8 @@ const Register = ({ navigation }) => {
     Keyboard.dismiss();
 
     if (!pseudonymeRef.current || !emailRef.current || !passwordRef.current) {
-      Alert.alert("Sign up", "Please fill all the fields!");
+      setErrorModalMessage("Please fill all the fields!");
+      setErrorModalVisible(true);
       return;
     }
 
@@ -57,7 +60,8 @@ const Register = ({ navigation }) => {
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      Alert.alert("Sign up", "Please enter a valid email address.");
+      setErrorModalMessage("Please enter a valid email address.");
+      setErrorModalVisible(true);
       return;
     }
 
@@ -66,20 +70,18 @@ const Register = ({ navigation }) => {
     // Vérifier si le pseudo est déjà pris
     const { success, isTaken, msg } = await isPseudonymeTaken(pseudonyme);
 
-    console.log({ success, isTaken, msg });
 
     if (!success) {
       setLoading(false);
-      Alert.alert("Error", msg);
+      setErrorModalMessage(msg);
+      setErrorModalVisible(true);
       return;
     }
 
     if (isTaken) {
       setLoading(false);
-      Alert.alert(
-        "Sign up",
-        "This pseudonyme is already taken. Please choose another one."
-      );
+      setErrorModalMessage("This pseudonyme is already taken. Please choose another one.");
+      setErrorModalVisible(true);
       return;
     }
 
@@ -99,10 +101,15 @@ const Register = ({ navigation }) => {
     });
 
     if (signUpError) {
-      Alert.alert("Sign up", signUpError.message);
-    } 
+      setErrorModalMessage(signUpError.message);
+      setErrorModalVisible(true);
+    }
 
     setLoading(false);
+  };
+
+  const handleModalClose = () => {
+    setErrorModalVisible(false);
   };
 
   return (
@@ -117,7 +124,7 @@ const Register = ({ navigation }) => {
 
             {/* welcome */}
             <View>
-              <Text style={styles.welcomeText}>Lets's </Text>
+              <Text style={styles.welcomeText}>Let's </Text>
               <Text style={styles.welcomeText}>Get Started</Text>
             </View>
 
@@ -153,8 +160,6 @@ const Register = ({ navigation }) => {
                     name={showPassword ? "eye-off" : "eye"}
                     size={24}
                   />
-
-                  <Icon size={26} strokeWidth={1.6} />
                 </Pressable>
               </View>
 
@@ -179,6 +184,16 @@ const Register = ({ navigation }) => {
             </View>
           </View>
         </ScreenWrapper>
+
+        {errorModalVisible && (
+          <CustomModal
+            messageType="fail"
+            buttonText="OK"
+            headerText="Sign up"
+            coreText={errorModalMessage}
+            onClose={handleModalClose}
+          />
+        )}
       </View>
     </TouchableWithoutFeedback>
   );
@@ -198,15 +213,16 @@ const styles = StyleSheet.create({
   form: {
     gap: 25,
   },
-  input: {
-    flexDirection: "row",
-    borderWidth: 0.4,
-    borderColor: theme.colors.text,
-    borderRadius: theme.radius.xxl,
-    borderCurve: "continuous",
-    padding: 18,
-    paddingHorizontal: 20,
-    gap: 15,
+  passwordContainer: {
+    position: "relative",
+  },
+  passwordInput: {
+    flex: 1,
+  },
+  showPasswordButton: {
+    position: "absolute",
+    right: 20,
+    top: 17,
   },
   forgotPassword: {
     textAlign: "right",
@@ -223,17 +239,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: theme.colors.text,
     fontSize: 16,
-  },
-  passwordContainer: {
-    position: "relative",
-  },
-  passwordInput: {
-    flex: 1,
-  },
-  showPasswordButton: {
-    position: "absolute",
-    right: 20,
-    top: 17,
   },
 });
 

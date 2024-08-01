@@ -3,18 +3,18 @@ import {
   View,
   Animated,
   StyleSheet,
-  Alert,
   TouchableOpacity,
 } from "react-native";
 import Carousel from "../../components/Carousel";
 import Loading from "../../components/Loading";
 import { BackHandler } from "react-native";
 import FeatherIcon from "react-native-vector-icons/Feather";
-import { useIsFocused } from "@react-navigation/native";
+import { useFocusEffect, useIsFocused } from "@react-navigation/native";
 import { ROUTES } from "../../assets/constants";
 import FiltersModal from "../../components/FiltersModal";
 import { fetchPosts } from "../../services/postService";
 import moment from 'moment';
+import CustomModal from "../../components/CustomModal";
 
 var limit = 0;
 
@@ -22,6 +22,7 @@ const Quizz = ({ navigation }) => {
   const isFocused = useIsFocused();
   const [polls, setPolls] = useState([]);
   const [hasMore, setHasMore] = useState(true);
+  const [leavAppModalVisible, setLeavAppModalVisible] = useState(false);
 
   // Modale de filtre sur les quizz
   const [filterOptions, setFilterOptions] = useState({
@@ -70,38 +71,32 @@ const Quizz = ({ navigation }) => {
     }
   };
 
-  useEffect(() => {
-    const backAction = () => {
-      if (isFocused) {
-        Alert.alert(
-          "Quitter l'application",
-          "Voulez-vous vraiment quitter l'application?",
-          [
-            {
-              text: "Non",
-              onPress: () => null,
-              style: "cancel",
-            },
-            {
-              text: "Oui",
-              onPress: () => BackHandler.exitApp(),
-            },
-          ],
-          { cancelable: false }
-        );
-        return true;
-      } else {
-        navigation.navigate(ROUTES.QUIZZ);
-        return true;
-      }
-    };
+  useFocusEffect(
+    React.useCallback(() => {
+      const backAction = () => {
+        if (isFocused) {
+          setLeavAppModalVisible(true);
+          return true;
+        } else {
+          navigation.navigate(ROUTES.QUIZZ);
+          return true;
+        }
+      };
+      const backHandler = BackHandler.addEventListener(
+        "hardwareBackPress",
+        backAction
+      );
+      return () => backHandler.remove();
+    }, [isFocused, navigation])
+  );
 
-    const backHandler = BackHandler.addEventListener(
-      "hardwareBackPress",
-      backAction
-    );
-    return () => backHandler.remove();
-  }, [isFocused, navigation]);
+  const handleModalClose = () => {
+    setLeavAppModalVisible(false);
+  };
+
+  const handleProceed = () => {
+    BackHandler.exitApp();
+  };
 
   const scrollX = useRef(new Animated.Value(0)).current;
 
@@ -115,6 +110,17 @@ const Quizz = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      {leavAppModalVisible && (
+        <CustomModal
+          messageType="decision"
+          buttonText="Proceed"
+          headerText="Quitter l'application"
+          coreText="Voulez-vous vraiment quitter l'application?"
+          onClose={handleModalClose}
+          onProceed={handleProceed}
+        />
+      )}
+
       <FiltersModal
         modalVisible={filterModalVisible}
         closeModal={closeFilterModal}

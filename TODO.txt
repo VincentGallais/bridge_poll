@@ -10,6 +10,7 @@ Page profile :
     Achivement (https://dribbble.com/search/3d-medals)
 
 Page quizz :
+    Bouton des quizz moins sensibles
     Bouton partage à mettre en marche
     Mettre à jour le fetching des quizz avec les filtres
     Cliquer sur le nom de l'auteur pour voir son profil

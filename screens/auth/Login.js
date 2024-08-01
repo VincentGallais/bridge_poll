@@ -1,14 +1,13 @@
+import React, { useRef, useState } from "react";
 import {
   View,
   Text,
   StyleSheet,
   Pressable,
-  Alert,
-  AppState,
   TouchableWithoutFeedback,
   Keyboard,
+  AppState,
 } from "react-native";
-import React, { useRef, useState } from "react";
 import ScreenWrapper from "../../components/ScreenWrapper";
 import { theme } from "../../assets/constants/theme";
 import BackButton from "../../components/BackButton";
@@ -18,6 +17,8 @@ import Icon from "../../assets/icons";
 import Input from "../../components/Input";
 import { ROUTES } from "../../assets/constants";
 import FeatherIcon from "react-native-vector-icons/Feather";
+import CustomModal from "../../components/CustomModal"; // Assurez-vous que le chemin est correct
+
 
 AppState.addEventListener("change", (state) => {
   if (state === "active") {
@@ -32,12 +33,15 @@ const Login = ({ navigation }) => {
   const passwordRef = useRef("");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [errorModalVisible, setErrorModalVisible] = useState(false);
+  const [errorModalMessage, setErrorModalMessage] = useState("");
 
   const onSubmit = async () => {
     Keyboard.dismiss();
 
     if (!emailRef.current || !passwordRef.current) {
-      Alert.alert("Login", "Please fill all the fields!");
+      setErrorModalMessage("Please fill all the fields!");
+      setErrorModalVisible(true);
       return;
     }
 
@@ -53,13 +57,19 @@ const Login = ({ navigation }) => {
       });
 
       if (error) {
-        Alert.alert("Login", error.message);
+        setErrorModalMessage(error.message);
+        setErrorModalVisible(true);
       }
     } catch (error) {
-      Alert.alert("Login Error", error.message);
+      setErrorModalMessage(error.message);
+      setErrorModalVisible(true);
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleModalClose = () => {
+    setErrorModalVisible(false);
   };
 
   return (
@@ -104,8 +114,6 @@ const Login = ({ navigation }) => {
                     name={showPassword ? "eye-off" : "eye"}
                     size={24}
                   />
-
-                  <Icon size={26} strokeWidth={1.6} />
                 </Pressable>
               </View>
               <Pressable
@@ -140,6 +148,17 @@ const Login = ({ navigation }) => {
             </View>
           </View>
         </ScreenWrapper>
+
+        {/* Custom Modal */}
+        {errorModalVisible && (
+          <CustomModal
+            messageType="fail"
+            buttonText="OK"
+            headerText="Login"
+            coreText={errorModalMessage}
+            onClose={handleModalClose}
+          />
+        )}
       </View>
     </TouchableWithoutFeedback>
   );
