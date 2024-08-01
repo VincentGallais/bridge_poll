@@ -1,7 +1,6 @@
 Page profile :
     Ajouter search user (pour follow d'autres joueurs) & clic sur follower/following me donne la liste (https://www.youtube.com/watch?v=I48oThkeIxw)
     Créer table followers sur le même modèle que notifications
-    Mettre la liste des quizz créés par l'utilisateur & quizz suivis
     Achivement (https://dribbble.com/search/3d-medals)
 
 Page quizz :
@@ -42,3 +41,4 @@ Autre :
     V2 : Créer tables pollLike / pollSkip et fetcher en filtrant sur ces tables & pouvoir mettre à jour avec les boutons en haut de la card
     V2 : Trier StackedCircularAvatar pour afficher les following en premier
     V2 : Pouvoir editer / supprimer ses propres polls
+    V2 : Connexion avec google

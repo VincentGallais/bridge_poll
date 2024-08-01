@@ -17,6 +17,7 @@ import Icon from "../assets/icons";
 import { createPollAnswer } from "../services/postService";
 import AnimatedProgress from "../components/AnimatedProgress";
 import { LinearGradient } from "expo-linear-gradient";
+import CustomModal from "./CustomModal"; // Assurez-vous d'importer le CustomModal
 
 const SPACING = 5;
 const { width } = Dimensions.get("window");
@@ -25,6 +26,8 @@ const ITEM_SIZE = Platform.OS === "ios" ? width * 0.87 : width * 0.9;
 const PollCard = ({ item, translateY, user }) => {
   const [userAnswer, setUserAnswer] = useState(null);
   const [answers, setAnswers] = useState(item.answers || []);
+  const [confirmVoteModalVisible, setConfirmVoteModalVisible] = useState(false);
+  const [selectedChoice, setSelectedChoice] = useState(null);
 
   useEffect(() => {
     const currentUserAnswer = answers.find(
@@ -36,23 +39,36 @@ const PollCard = ({ item, translateY, user }) => {
   const buttonWidth = ITEM_SIZE / (item.choices.length + 1);
   const isSubmittedByUser = item?.author === user?.pseudonyme;
 
-  const handleVote = async (choice) => {
+  const handleVote = (choice) => {
     if (userAnswer) {
       return;
     }
+    setSelectedChoice(choice);
+    setConfirmVoteModalVisible(true);
+  };
+
+  const confirmVote = async () => {
+    if (!selectedChoice) return;
+
     const newAnswer = {
       userId: user.id,
       pollId: item.key,
-      answer: choice,
+      answer: selectedChoice,
     };
     const response = await createPollAnswer(newAnswer);
     if (response.success) {
       setUserAnswer(newAnswer);
-      // Update local answers state
       setAnswers((prevAnswers) => [...prevAnswers, newAnswer]);
     } else {
       console.log("Failed to record answer:", response.msg);
     }
+    setConfirmVoteModalVisible(false);
+    setSelectedChoice(null);
+  };
+
+  const cancelVote = () => {
+    setConfirmVoteModalVisible(false);
+    setSelectedChoice(null);
   };
 
   const calculatePercentage = (choice) => {
@@ -113,7 +129,7 @@ const PollCard = ({ item, translateY, user }) => {
               }}
             >
               <TouchableOpacity>
-              <StackedCircularAvatar size="small" answers={answers.length} />
+                <StackedCircularAvatar size="small" answers={answers.length} />
               </TouchableOpacity>
               <Text style={styles.date}>{item.creationDate}</Text>
             </View>
@@ -166,6 +182,18 @@ const PollCard = ({ item, translateY, user }) => {
           </View>
         </LinearGradient>
       </Animated.View>
+      
+      {/* Afficher le modal de confirmation */}
+      {confirmVoteModalVisible && (
+        <CustomModal
+          messageType="confirmVote"
+          buttonText="Close"
+          headerText="Confirm Your Vote"
+          coreText={`Are you sure to vote for "${selectedChoice}"?`}
+          onClose={cancelVote}
+          onProceed={confirmVote}
+        />
+      )}
     </View>
   );
 };
@@ -214,7 +242,7 @@ const styles = StyleSheet.create({
   votingButtonContainer: {
     flexDirection: "row",
     justifyContent: "space-around",
-    gap: 8,
+    paddingHorizontal: 8
   },
   progressContainer: {
     flexDirection: "column",

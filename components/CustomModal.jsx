@@ -16,6 +16,7 @@ const CustomModal = ({ messageType, buttonText, headerText, coreText, onClose, o
     success: "#16a34a",
     decision: "#d97706",
     info: "#0284c7",
+    confirmVote: "#16a34a",
   };
 
   const messageIcon = {
@@ -24,6 +25,7 @@ const CustomModal = ({ messageType, buttonText, headerText, coreText, onClose, o
     success: "check",
     decision: "alert-circle-check-outline",
     info: "information-variant",
+    confirmVote: "check",
   };
 
   const color = messageColors[messageType] || messageColors.info;
