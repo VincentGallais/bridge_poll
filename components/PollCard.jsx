@@ -104,7 +104,7 @@ const PollCard = ({ item, translateY, user }) => {
                 </View>
               </View>
             </View>
-            <TouchableOpacity
+            <View
               style={{
                 top: -20,
                 flexDirection: "row",
@@ -112,9 +112,11 @@ const PollCard = ({ item, translateY, user }) => {
                 justifyContent: "space-between",
               }}
             >
+              <TouchableOpacity>
               <StackedCircularAvatar size="small" answers={answers.length} />
+              </TouchableOpacity>
               <Text style={styles.date}>{item.creationDate}</Text>
-            </TouchableOpacity>
+            </View>
             <View style={styles.votingButtonContainer}>
               {userAnswer ? (
                 <View style={styles.progressContainer}>
