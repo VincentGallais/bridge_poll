@@ -1,4 +1,3 @@
--> Clic sur un quizz l'ouvre en grand (version répondu et non répondu) (https://youtu.be/_ivIUCSOZ78?t=6964)
 -> Linker tous les alertes avec le composant <CustomModal/>
 -> S'abonner aux changements sur les notifs (pas fetch à chaque fois qu'on clique sur notif) en vérifiant que la notification n'est pas check + sort par date
 -> Mettre à jour le header en fonction du nombre de notifications non checked
@@ -16,6 +15,7 @@ Page quizz :
     Cliquer sur les têtes pour voir qui a répondu (possibilité d'ajouter en following) + voir le vote des gens quand l'user a voté
     Mettre la vraie photo de profil des gens qui ont voté (en premier ceux qui ont une photo)
     S'abonner aux changement sur les votes d'un quizz qui est dans notre range de visibilité
+    Clic sur un quizz l'ouvre en grand (version répondu et non répondu) (https://youtu.be/_ivIUCSOZ78?t=6964)
     
 Notifications :
     Faire marcher les notifications push (https://www.youtube.com/watch?v=Z_84yf7fNsc)
@@ -34,7 +34,7 @@ Créer publication :
     Créér un gui pour sélectionner cartes et enchères
 
 Filtre : 
-    Parler du tri par ordre croissant/décroissant/nombre like/nombre commentaires (https://dribbble.com/shots/24025570-Sort-By-Bottom-Sheet / https://dribbble.com/shots/17920785-E-Commerce-Filters)
+    Parler du tri par ordre croissant date/décroissant date/nombre réponses/nombre commentaires (https://dribbble.com/shots/24025570-Sort-By-Bottom-Sheet / https://dribbble.com/shots/17920785-E-Commerce-Filters)
 
 Autre :
     Traductions en anglais de l'application (composant <Translate/> avec les keys)
