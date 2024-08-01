@@ -21,7 +21,6 @@ export const createNotification = async (notification) => {
 
 export const fetchNotifications = async (receiverId) => {
   try {
-    // we can specify the object: foreignkey (fields), eg: sender: senderId(id, name, image) or receiver: receiverId(id, name, iamge)
     const { data, error } = await supabase
       .from("notifications")
       .select(

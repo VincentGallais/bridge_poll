@@ -1,5 +1,5 @@
 -> Linker tous les alertes avec le composant <CustomModal/>
--> S'abonner aux changements sur les notifs (pas fetch à chaque fois qu'on clique sur notif) en vérifiant que la notification n'est pas check + sort par date
+-> S'abonner aux changements sur les notifs (pas fetch à chaque fois qu'on clique sur notif)
 -> Mettre à jour le header en fonction du nombre de notifications non checked
 
 Page profile :

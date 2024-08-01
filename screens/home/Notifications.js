@@ -7,10 +7,11 @@ import { theme } from '../../assets/constants/theme';
 
 const Notifications = () => {
   const [notifications, setNotifications] = useState([]);
-  const { user } = useAuth();
+  const { user, setNotificationCount } = useAuth();
 
   useEffect(() => {
     getNotifications();
+    setNotificationCount(0)
   }, []);
 
   const getNotifications = async () => {

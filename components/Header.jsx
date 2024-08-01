@@ -18,7 +18,7 @@ import Icon from "../assets/icons";
 const Header = ({ navigation, page }) => {
   const [filterModalVisible, setFilterModalVisible] = useState(false);
   const [loading, setLoading] = useState(true);
-  const { user } = useAuth();
+  const { user, notificationCount } = useAuth();
 
   useEffect(() => {
     if (user) setLoading(false);
@@ -60,7 +60,7 @@ const Header = ({ navigation, page }) => {
             >
               <View style={styles.bellContainer}>
                 <FeatherIcon name="bell" size={20} color="white" />
-                {user?.notifications?.length > 0 && (
+                {notificationCount > 0 && (
                   <View
                     style={{
                       ...styles.notificationBadge,
@@ -68,7 +68,7 @@ const Header = ({ navigation, page }) => {
                     }}
                   >
                     <Text style={styles.notificationText}>
-                      {user?.notifications?.length}
+                      {notificationCount}
                     </Text>
                   </View>
                 )}
