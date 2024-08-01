@@ -3,7 +3,7 @@ import { Animated, Dimensions, StyleSheet, View } from 'react-native';
 
 const { width } = Dimensions.get('screen');
 
-const ProgressBar = ({ widthPct, barWidth }) => {
+const ProgressBar = ({ widthPct, barWidth, barColor }) => {
   const animatedWidth = React.useRef(new Animated.Value(0)).current;
 
   const finalWidth = (barWidth * widthPct) / 100;
@@ -13,13 +13,13 @@ const ProgressBar = ({ widthPct, barWidth }) => {
       toValue: finalWidth,
       bounciness: 10,
       speed: 2,
-      useNativeDriver: false, // Ensure useNativeDriver is false
+      useNativeDriver: false, // Ensure useNativeDriver is set based on your animation
     }).start();
-  }, [barWidth, finalWidth, widthPct]);
+  }, [finalWidth]); // Dependencies should include only necessary values
 
   return (
     <View style={[styles.barContainer, { width: barWidth }]}>
-      <Animated.View style={[styles.progressBar, { width: animatedWidth }]} />
+      <Animated.View style={[styles.progressBar, { width: animatedWidth, backgroundColor: barColor }]} />
     </View>
   );
 };
@@ -32,7 +32,6 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   progressBar: {
-    backgroundColor: 'purple',
     height: '100%',
     borderRadius: 15,
   },

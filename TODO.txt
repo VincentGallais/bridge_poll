@@ -43,6 +43,8 @@ Autre :
     Créer des premiers sondages pour alimenter le contenu
     Revoir la police choisie
     Linker tous les alertes avec le composant <CustomModal/>
+    Brancher crashlytics
+    Poll custom publicitaire à faire
 
     V2 : Créer tables pollLike / pollSkip et fetcher en filtrant sur ces tables & pouvoir mettre à jour avec les boutons en haut de la card
     V2 : Trier la tête des gens qui ont voté

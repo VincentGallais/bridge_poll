@@ -15,6 +15,7 @@ import AwesomeButton from "react-native-really-awesome-button";
 import cardBackgroundImage from "../assets/images/card_background.png";
 import Icon from "../assets/icons";
 import { createPollAnswer } from "../services/postService";
+import AnimatedProgress from "../components/AnimatedProgress";
 
 const SPACING = 5;
 const { width } = Dimensions.get("window");
@@ -81,7 +82,10 @@ const PollCard = ({ item, translateY, user }) => {
         </TouchableOpacity>
         <View style={styles.votingButtonContainer}>
           {userAnswer ? (
-            <Text>Affichage des réponses, user_vote_{userAnswer.answer}</Text>
+            <View>
+              <Text>Affichage des réponses, user_vote_{userAnswer.answer}</Text>
+              <AnimatedProgress widthPct={56} barWidth={200} barColor='green'/>
+            </View>
           ) : (
             item.choices.map((choice, index) => (
               <AwesomeButton
@@ -97,13 +101,13 @@ const PollCard = ({ item, translateY, user }) => {
           )}
         </View>
         <View style={styles.footer}>
-        {isSubmittedByUser ? (
-        <Text style={styles.text}>Submitted by you</Text>
-      ) : (
-        <TouchableOpacity>
-          <Text style={styles.text}>Submitted by {item?.author}</Text>
-        </TouchableOpacity>
-      )}
+          {isSubmittedByUser ? (
+            <Text style={styles.text}>Submitted by you</Text>
+          ) : (
+            <TouchableOpacity>
+              <Text style={styles.text}>Submitted by {item?.author}</Text>
+            </TouchableOpacity>
+          )}
 
           <TouchableOpacity>
             <Text style={{ fontSize: 14 }}>{item?.comments} comments</Text>

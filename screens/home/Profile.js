@@ -19,7 +19,6 @@ import Avatar from "../../components/Avatar";
 import Icon from "../../assets/icons";
 import { theme } from "../../assets/constants/theme";
 import * as ImagePicker from "expo-image-picker";
-import AnimatedProgress from "../../components/AnimatedProgress";
 import { uploadFile } from "../../services/imageService";
 import { updateUser } from "../../services/userService";
 import Loading from "../../components/Loading";
@@ -192,11 +191,6 @@ const Profile = () => {
             </View>
           </TouchableOpacity>
         </View>
-
-        <View style={{ margin: 24 }}>
-          <AnimatedProgress widthPct={56} barWidth={200} />
-        </View>
-
         <View style={{ marginTop: 26, marginHorizontal: 26 }}>
           <Text>Mes sondages publiés :</Text>
           <ScrollView>
