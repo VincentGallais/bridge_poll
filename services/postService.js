@@ -180,3 +180,26 @@ export const createPollAnswer = async (answer) => {
     return { success: false, msg: "Could not record your answer" };
   }
 };
+
+export const fetchPostsByUser = async (userId, limit = 10) => {
+  try {
+    const { data, error } = await supabase
+      .from("polls")
+      .select(`
+          *,
+          user: users ( id, pseudonyme, image ),
+          pollAnswers (*),
+          pollComments (count)
+        `)
+      .eq("userId", userId)
+
+    if (error) {
+      console.log("fetchPostsByUser error: ", error);
+      return { success: false, msg: "Could not fetch the user's polls" };
+    }
+    return { success: true, data: data };
+  } catch (error) {
+    console.log("fetchPostsByUser error: ", error);
+    return { success: false, msg: "Could not fetch the user's polls" };
+  }
+};

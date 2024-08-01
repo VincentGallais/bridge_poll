@@ -7,6 +7,7 @@ import {
   View,
   Image,
   ScrollView,
+  FlatList,
 } from "react-native";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import CountryPickerModal from "../../components/CountryPickerModal";
@@ -22,9 +23,25 @@ import { uploadFile } from "../../services/imageService";
 import { updateUser } from "../../services/userService";
 import Loading from "../../components/Loading";
 import CustomModal from "../../components/CustomModal";
+import moment from "moment";
+
+const PollItem = ({ poll }) => {
+  return (
+    <View style={styles.pollItem}>
+      <View>
+        <Text style={styles.pollTitle}>{poll.body}</Text>
+        <Text style={styles.pollText}>{moment(poll?.created_at).format('MMM D')}</Text>
+      </View>
+      <View>
+        <Text style={styles.pollText}>{poll.pollAnswers.length || 0} réponses</Text>
+        <Text style={styles.pollText}>{poll.pollComments[0].count || 0} commentaires</Text>
+      </View>
+    </View>
+  );
+};
 
 const Profile = () => {
-  const { user: currentUser, setUserData } = useAuth();
+  const { user: currentUser, setUserData, userPosts } = useAuth();
   const [user, setUser] = useState({
     pseudonyme: "",
     image: null,
@@ -58,7 +75,7 @@ const Profile = () => {
     setCountryModalVisible(false);
     updateUserData({ locale });
   };
-  
+
   const handleLevelSelect = (bridgeLevel) => {
     setUser((prevForm) => ({
       ...prevForm,
@@ -201,11 +218,14 @@ const Profile = () => {
             </View>
           </TouchableOpacity>
         </View>
+
         <View style={{ marginTop: 26, marginHorizontal: 26 }}>
           <Text>Mes sondages publiés :</Text>
-          <ScrollView>
-            <Text>Sondage testBids</Text>
-          </ScrollView>
+          <FlatList
+            data={userPosts} // Assurez-vous que userPosts est défini
+            renderItem={({ item }) => <PollItem poll={item} />}
+            keyExtractor={(item) => item.id.toString()} // Utilisez une clé unique pour chaque élément
+          />
         </View>
       </View>
 
@@ -319,6 +339,21 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.4,
     shadowRadius: 5,
     elevation: 7,
+  },
+  pollItem: {
+    padding: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#e3e3e3',
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  pollTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+  },
+  pollText: {
+    fontSize: 14,
+    color: '#989898',
   },
 });
 

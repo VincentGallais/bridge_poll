@@ -42,7 +42,6 @@ const Quizz = ({ navigation }) => {
 
   const getPolls = async () => {
     if (!hasMore) {
-      console.log("No more polls");
       return null;
     }
     limit += 10; // get 10 more polls every time
