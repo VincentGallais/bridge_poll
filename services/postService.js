@@ -31,6 +31,7 @@ export const fetchPosts = async (limit = 10) => {
                 pollComments (count)
             `
       )
+      .neq("visibility", "hidden")
       .order("created_at", { ascending: false })
       .limit(limit);
     if (error) {

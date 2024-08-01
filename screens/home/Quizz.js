@@ -14,6 +14,7 @@ import { useIsFocused } from "@react-navigation/native";
 import { ROUTES } from "../../assets/constants";
 import FiltersModal from "../../components/FiltersModal";
 import { fetchPosts } from "../../services/postService";
+import moment from 'moment';
 
 var limit = 0;
 
@@ -61,6 +62,8 @@ const Quizz = ({ navigation }) => {
           category: post.category,
           choices: post.choices,
           description: post.body,
+          visibility: post.visibility,
+          creationDate: moment(post?.created_at).format('MMM D')
         };
       });
       setPolls((prevPolls) => [...prevPolls, ...formattedPolls]);

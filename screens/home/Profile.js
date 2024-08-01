@@ -41,6 +41,7 @@ const Profile = () => {
         bridgeLevel: currentUser.bridgeLevel || "",
         locale: currentUser.locale || "en",
         image: currentUser.image || null,
+        isAdmin: currentUser.isAdmin ||false,
       });
     }
   }, [currentUser]);
@@ -123,7 +124,7 @@ const Profile = () => {
                     size={100}
                     rounded={32}
                     style={{
-                      borderWidth: 3,
+                      borderWidth: 5,
                       borderColor: user?.isAdmin ? "orange" : "#ccc",
                     }}
                   />

@@ -1,7 +1,8 @@
--> Paramètre quizz visibility (visible / hiden / golden) (https://tamagui.dev/ui/linear-gradient?subpath=linear-gradient)
--> Clic sur un quizz l'ouvre en grand (version répondu et non répondu) + vue quand quizz répondu (https://youtu.be/_ivIUCSOZ78?t=6964)
+-> Clic sur un quizz l'ouvre en grand (version répondu et non répondu) (https://youtu.be/_ivIUCSOZ78?t=6964)
 -> Faire les progressbar de resultat
--> Ajouter date du quizz quelque part (const createdAt = moment(item?.created_at).format('MMM D'))
+-> Linker tous les alertes avec le composant <CustomModal/>
+-> S'abonner aux changements sur les notifs (pas fetch à chaque fois qu'on clique sur notif) en vérifiant que la notification n'est pas check + sort par date
+-> Mettre à jour le header en fonction du nombre de notifications non checked
 
 Page profile :
     Ajouter search user (pour follow d'autres joueurs) & clic sur follower/following me donne la liste (https://www.youtube.com/watch?v=I48oThkeIxw)
@@ -18,8 +19,6 @@ Page quizz :
     S'abonner aux changement sur les votes d'un quizz qui est dans notre range de visibilité
     
 Notifications :
-    S'abonner aux changement sur les notifs (pas fetch à chaque fois qu'on clique sur notif) en vérifiant que la notification n'est pas check + sort par date
-    Mettre à jour le header en fonction du nombre de notifications non checked
     Faire marcher les notifications push (https://www.youtube.com/watch?v=Z_84yf7fNsc)
     Faire une icone en fonction du type de notification + redirection (quizz / user page)
 
@@ -42,10 +41,9 @@ Autre :
     Traductions en anglais de l'application (composant <Translate/> avec les keys)
     Créer des premiers sondages pour alimenter le contenu
     Revoir la police choisie
-    Linker tous les alertes avec le composant <CustomModal/>
     Brancher crashlytics
     Poll custom publicitaire à faire
 
     V2 : Créer tables pollLike / pollSkip et fetcher en filtrant sur ces tables & pouvoir mettre à jour avec les boutons en haut de la card
-    V2 : Trier la tête des gens qui ont voté
-    V2 : Editer / supprimer ses propres polls
+    V2 : Trier StackedCircularAvatar pour afficher les following en premier
+    V2 : Pouvoir editer / supprimer ses propres polls
