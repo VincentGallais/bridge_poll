@@ -1,6 +1,6 @@
 import { supabase } from "../lib/supabase";
 export const getUserData = async (userId) => {
-  console.log('fetching');
+  console.log('Fetching user data');
   try {
     const { data, error } = await supabase
       .from("users")

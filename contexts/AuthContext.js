@@ -1,10 +1,11 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
-import { supabase } from '../lib/supabase';
+import { fetchNotifications, fetchSenderDetails, subscribeToNotifications, unsubscribeFromNotifications } from '../services/notificationService'; // Adjust the import path as needed
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [notifications, setNotifications] = useState([]);
   const [notificationCount, setNotificationCount] = useState(0);
 
   const setAuth = (authUser) => {
@@ -15,28 +16,40 @@ export const AuthProvider = ({ children }) => {
     setUser({ ...userData });
   };
 
-  const handleNewNotification = (payload) => {
+  const fetchAndSetNotifications = async (userId) => {
+    const res = await fetchNotifications(userId);
+    if (res.success) {
+      setNotifications(res.data);
+      const uncheckedCount = res.data.filter(notification => !notification.checked).length;
+      setNotificationCount(uncheckedCount);
+    }
+  };
+
+  const handleNewNotification = async (payload) => {
     console.log('got new notification:', payload);
     if (payload.eventType === 'INSERT' && payload?.new?.id) {
-      setNotificationCount((prev) => prev + 1);
+      const senderDetails = await fetchSenderDetails(payload.new.senderId);
+      if (senderDetails.success) {
+        const newNotification = { ...payload.new, sender: senderDetails.data };
+        setNotifications((prevNotifications) => [newNotification, ...prevNotifications]);
+        setNotificationCount((prev) => prev + 1);
+      }
     }
   };
 
   useEffect(() => {
     if (user) {
-      let notificationChannel = supabase
-        .channel('notifications')
-        .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'notifications', filter: `receiverId=eq.${user.id}` }, handleNewNotification)
-        .subscribe();
+      fetchAndSetNotifications(user.id);
+      const notificationChannel = subscribeToNotifications(user.id, handleNewNotification);
 
       return () => {
-        supabase.removeChannel(notificationChannel);
+        unsubscribeFromNotifications(notificationChannel);
       };
     }
   }, [user]);
 
   return (
-    <AuthContext.Provider value={{ user, setAuth, setUserData, notificationCount, setNotificationCount  }}>
+    <AuthContext.Provider value={{ user, setAuth, setUserData, notifications, setNotifications, notificationCount, setNotificationCount }}>
       {children}
     </AuthContext.Provider>
   );

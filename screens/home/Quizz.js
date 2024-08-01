@@ -46,7 +46,7 @@ const Quizz = ({ navigation }) => {
       return null;
     }
     limit += 10; // get 10 more polls every time
-    console.log("fetching polls: ", limit);
+    console.log("Fetching polls:", limit);
     let res = await fetchPosts(limit);
   
     if (res.success) {

@@ -1,28 +1,17 @@
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import React, { useEffect, useState } from 'react';
-import { fetchNotifications } from '../../services/notificationService';
+import React from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import NotificationItem from '../../components/NotificationItem';
 import { theme } from '../../assets/constants/theme';
 
 const Notifications = () => {
-  const [notifications, setNotifications] = useState([]);
-  const { user, setNotificationCount } = useAuth();
-
-  useEffect(() => {
-    getNotifications();
-    setNotificationCount(0)
-  }, []);
-
-  const getNotifications = async () => {
-    let res = await fetchNotifications(user.id);
-    if (res.success) setNotifications(res.data);
-  };
+  const { notifications, setNotifications, setNotificationCount } = useAuth();
 
   const removeNotification = (notificationId) => {
     setNotifications((prevNotifications) =>
       prevNotifications.filter((notification) => notification.id !== notificationId)
     );
+    setNotificationCount((prevCount) => prevCount - 1);
   };
 
   return (
