@@ -161,7 +161,6 @@ export const removePost = async (pollId) => {
   }
 };
 
-
 export const createPollAnswer = async (answer) => {
   try {
     const { data, error } = await supabase

@@ -1,5 +1,7 @@
--> S'abonner aux changement sur les votes d'un quizz
--> Quizz avec background dorés pour superuser / premium (https://tamagui.dev/ui/linear-gradient?subpath=linear-gradient)
+-> Paramètre quizz visibility (visible / hiden / golden) (https://tamagui.dev/ui/linear-gradient?subpath=linear-gradient)
+-> Clic sur un quizz l'ouvre en grand (version répondu et non répondu) + vue quand quizz répondu (https://youtu.be/_ivIUCSOZ78?t=6964)
+-> Faire les progressbar de resultat
+-> Ajouter date du quizz quelque part (const createdAt = moment(item?.created_at).format('MMM D'))
 
 Page profile :
     Ajouter search user (pour follow d'autres joueurs) & clic sur follower/following me donne la liste (https://www.youtube.com/watch?v=I48oThkeIxw)
@@ -8,11 +10,12 @@ Page profile :
     Achivement (https://dribbble.com/search/3d-medals)
 
 Page quizz :
-    Clic sur un quizz l'ouvre en grand (version répondu et non répondu) + vue quand quizz répondu (https://youtu.be/_ivIUCSOZ78?t=6964)
     Bouton partage à mettre en marche
-    Faire le fetching des quizz en pensant aux filtes
+    Mettre à jour le fetching des quizz avec les filtres
     Cliquer sur le nom de l'auteur pour voir son profil
-    Cliquer sur les têtes pour voir qui a répondu (possibilité d'ajouter en ami & mettre la photo des amis en priorié sous le sondage)
+    Cliquer sur les têtes pour voir qui a répondu (possibilité d'ajouter en following)
+    Mettre la vraie photo de profil des gens qui ont voté (en premier ceux qui ont une photo)
+    S'abonner aux changement sur les votes d'un quizz qui est dans notre range de visibilité
     
 Notifications :
     S'abonner aux changement sur les notifs (pas fetch à chaque fois qu'on clique sur notif) en vérifiant que la notification n'est pas check + sort par date
@@ -39,6 +42,8 @@ Autre :
     Traductions en anglais de l'application (composant <Translate/> avec les keys)
     Créer des premiers sondages pour alimenter le contenu
     Revoir la police choisie
-    Linker tous les alerts avec le composant <CustomModal/>
+    Linker tous les alertes avec le composant <CustomModal/>
 
     V2 : Créer tables pollLike / pollSkip et fetcher en filtrant sur ces tables & pouvoir mettre à jour avec les boutons en haut de la card
+    V2 : Trier la tête des gens qui ont voté
+    V2 : Editer / supprimer ses propres polls

@@ -1,5 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Image, StyleSheet, TouchableOpacity, Animated, Platform, Dimensions } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  Animated,
+  Platform,
+  Dimensions,
+} from "react-native";
 import Tags from "./Tags";
 import StackedCircularAvatar from "./StackedCircularAvatar";
 import AwesomeButton from "react-native-really-awesome-button";
@@ -15,13 +24,15 @@ const PollCard = ({ item, translateY, user }) => {
   const [userAnswer, setUserAnswer] = useState(null);
   useEffect(() => {
     const answers = item.answers || [];
-    const currentUserAnswer = answers.find(answer => answer.userId === user?.id);
+    const currentUserAnswer = answers.find(
+      (answer) => answer.userId === user?.id
+    );
     setUserAnswer(currentUserAnswer || null);
   }, [item.answers, user?.id]);
 
   const buttonWidth = ITEM_SIZE / (item.choices.length + 1);
   const answers = item.answers || [];
-  
+  const isSubmittedByUser = item?.author === user?.pseudonyme;
   const handleVote = async (choice) => {
     if (userAnswer) {
       return;
@@ -30,7 +41,7 @@ const PollCard = ({ item, translateY, user }) => {
     const newAnswer = {
       userId: user.id,
       pollId: item.key,
-      answer: choice
+      answer: choice,
     };
 
     console.log(newAnswer);
@@ -39,7 +50,7 @@ const PollCard = ({ item, translateY, user }) => {
 
     if (response.success) {
       setUserAnswer(newAnswer);
-      item.answers.push(newAnswer); 
+      item.answers.push(newAnswer);
     } else {
       console.log("Failed to record answer:", response.msg);
     }
@@ -47,8 +58,14 @@ const PollCard = ({ item, translateY, user }) => {
 
   return (
     <View style={{ width: ITEM_SIZE }}>
-      <Animated.View style={{ ...styles.cardContainer, transform: [{ translateY }] }}>
-        <Image source={cardBackgroundImage} resizeMode="cover" style={styles.backgroundImage} />
+      <Animated.View
+        style={{ ...styles.cardContainer, transform: [{ translateY }] }}
+      >
+        <Image
+          source={cardBackgroundImage}
+          resizeMode="cover"
+          style={styles.backgroundImage}
+        />
         <View style={{ position: "absolute", width: "100%" }}>
           <View style={styles.header}>
             <Tags tags={[item.category]} />
@@ -59,12 +76,12 @@ const PollCard = ({ item, translateY, user }) => {
             </View>
           </View>
         </View>
-        <TouchableOpacity style={{ alignSelf: 'flex-start', top: -20 }}>
+        <TouchableOpacity style={{ alignSelf: "flex-start", top: -20 }}>
           <StackedCircularAvatar size="small" answers={answers.length} />
         </TouchableOpacity>
         <View style={styles.votingButtonContainer}>
           {userAnswer ? (
-            <Text>Vous avez répondu {userAnswer.answer}</Text>
+            <Text>Affichage des réponses, user_vote_{userAnswer.answer}</Text>
           ) : (
             item.choices.map((choice, index) => (
               <AwesomeButton
@@ -80,9 +97,14 @@ const PollCard = ({ item, translateY, user }) => {
           )}
         </View>
         <View style={styles.footer}>
-          <TouchableOpacity>
-            <Text style={{ fontSize: 14 }}>Submitted by {item?.author}</Text>
-          </TouchableOpacity>
+        {isSubmittedByUser ? (
+        <Text style={styles.text}>Submitted by you</Text>
+      ) : (
+        <TouchableOpacity>
+          <Text style={styles.text}>Submitted by {item?.author}</Text>
+        </TouchableOpacity>
+      )}
+
           <TouchableOpacity>
             <Text style={{ fontSize: 14 }}>{item?.comments} comments</Text>
           </TouchableOpacity>
@@ -142,7 +164,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     margin: 16,
     justifyContent: "space-between",
-  }
+  },
 });
 
 export default PollCard;
