@@ -13,69 +13,14 @@ import FeatherIcon from "react-native-vector-icons/Feather";
 import { useIsFocused } from "@react-navigation/native";
 import { ROUTES } from "../../assets/constants";
 import FiltersModal from "../../components/FiltersModal";
-import { supabase } from "../../lib/supabase";
+import { fetchPosts } from "../../services/postService";
 
-const defaultMovies = [
-  {
-    key: "1",
-    author: "Vincent",
-    date: "20/02/2024",
-    answers: 2,
-    comments: 200,
-    poster: "https://via.placeholder.com/300x450",
-    backdrop: "https://via.placeholder.com/1200x800",
-    tags: ["Enchère"],
-    description: "Quelle est votre enchère ?",
-  },
-  {
-    key: "2",
-    author: "Clara",
-    date: "20/02/2024",
-    answers: 3,
-    comments: 1,
-    poster: "https://via.placeholder.com/300x450",
-    backdrop: "https://via.placeholder.com/1200x800",
-    tags: ["Entame"],
-    description: "Quelle est votre entame ?",
-  },
-  {
-    key: "3",
-    author: "Vincent",
-    date: "20/02/2024",
-    answers: 25,
-    comments: 2,
-    poster: "https://via.placeholder.com/300x450",
-    backdrop: "https://via.placeholder.com/1200x800",
-    tags: ["Enchère"],
-    description: "Quelle est votre enchère ?",
-  },
-  {
-    key: "4",
-    author: "Vincent",
-    date: "20/02/2024",
-    answers: 15,
-    comments: 7,
-    poster: "https://via.placeholder.com/300x450",
-    backdrop: "https://via.placeholder.com/1200x800",
-    tags: ["Entame"],
-    description: "Quelle est votre entame ?",
-  },
-  {
-    key: "5",
-    author: "BRIDGE_POLL",
-    date: "99/99/9999",
-    answers: 15,
-    comments: 5,
-    poster: "https://via.placeholder.com/300x450",
-    backdrop: "https://via.placeholder.com/1200x800",
-    tags: ["Help Us"],
-    description: "Submit to premium subscription",
-  },
-  // Add more default movies as needed
-];
+var limit = 0;
 
 const Quizz = ({ navigation }) => {
   const isFocused = useIsFocused();
+  const [polls, setPolls] = useState([]);
+  const [hasMore, setHasMore] = useState(true);
 
   // Modale de filtre sur les quizz
   const [filterOptions, setFilterOptions] = useState({
@@ -91,6 +36,35 @@ const Quizz = ({ navigation }) => {
       ...prevOptions,
       [type]: value,
     }));
+  };
+
+  const getPolls = async () => {
+    if (!hasMore) {
+      console.log("No more polls");
+      return null;
+    }
+    limit += 10; // get 10 more polls every time
+    console.log("fetching polls: ", limit);
+    let res = await fetchPosts(limit);
+  
+    if (res.success) {
+      if (polls.length === res.data.length || res.data.length <= 10) {
+        setHasMore(false);
+      }
+      const formattedPolls = res.data.map((post) => {
+        return {
+          key: post.id.toString(),
+          author: post.user.pseudonyme,
+          date: post.date,
+          answers: post.pollAnswers,
+          comments: post.pollComments[0]?.count || 0,
+          category: post.category,
+          choices: post.choices,
+          description: post.body,
+        };
+      });
+      setPolls((prevPolls) => [...prevPolls, ...formattedPolls]);
+    }
   };
 
   useEffect(() => {
@@ -126,22 +100,11 @@ const Quizz = ({ navigation }) => {
     return () => backHandler.remove();
   }, [isFocused, navigation]);
 
-  const [polls, setMovies] = useState([]);
   const scrollX = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-    if (polls.length === 0) {
-      const fetchData = async () => {
-        setMovies([
-          { key: "empty-left" },
-          ...defaultMovies,
-          { key: "empty-right" },
-        ]);
-      };
-
-      fetchData();
-    }
-  }, [polls]);
+    getPolls(); // Fetch initial polls
+  }, []);
 
   if (polls.length === 0) {
     return <Loading />;
@@ -156,7 +119,11 @@ const Quizz = ({ navigation }) => {
         onFilterChange={handleFilterChange}
       />
 
-      <Carousel polls={polls} scrollX={scrollX} />
+      <Carousel
+        polls={[{ key: "empty-left" }, ...polls, { key: "empty-right" }]}
+        scrollX={scrollX}
+        getPosts={getPolls}
+      />
 
       <TouchableOpacity
         style={{ ...styles.floatingButton, right: 16 }}

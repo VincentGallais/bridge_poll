@@ -4,7 +4,7 @@ import { View, Text, StyleSheet } from 'react-native';
 export default function Tags({ tags }) {
   return (
     <View style={styles.tags}>
-      {tags.map((tag, i) => {
+      {tags?.map((tag, i) => {
         return (
           <View key={tag} style={styles.tag}>
             <Text style={styles.tagText}>{tag}</Text>

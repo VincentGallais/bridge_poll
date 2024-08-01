@@ -1,38 +1,9 @@
 import { supabase } from "../lib/supabase";
-import { uploadFile } from "./imageService";
 
 export const createOrUpdatePost = async (post) => {
   try {
-    // // just for creating the post
-    // if(post.file && typeof post.file == 'object'){
-    //     let isImage = post?.file?.type=='image';
-    //     let folderName = isImage? 'postImages': 'postVideos';
-    //     let fileResult = await uploadFile(folderName, post?.file?.uri, isImage);
-    //     if(fileResult.success) post.file = fileResult.data;
-    //     else {
-    //         return fileResult;
-    //     }
-    // }
-
-    // const { data, error } = await supabase
-    // .from('posts')
-    // .insert(post)
-    // .select()
-    // .single();
-
-    // create or update
-    if (post.file && typeof post.file == "object") {
-      let isImage = post?.file?.type == "image";
-      let folderName = isImage ? "postImages" : "postVideos";
-      let fileResult = await uploadFile(folderName, post?.file?.uri, isImage);
-      if (fileResult.success) post.file = fileResult.data;
-      else {
-        return fileResult;
-      }
-    }
-
     const { data, error } = await supabase
-      .from("posts")
+      .from("polls")
       .upsert(post)
       .select()
       .single();
@@ -48,79 +19,45 @@ export const createOrUpdatePost = async (post) => {
   }
 };
 
-export const fetchPosts = async (limit = 10, userId = null) => {
+export const fetchPosts = async (limit = 10) => {
   try {
-    // .select(`
-    //     id,
-    //     body,
-    //     file,
-    //     users ( id, name, image )
-    // `);
-
-    // add postLikes later when wroking on post like
-
-    // .limit(limit); // later when implementing pagination
-
-    // comments: getting all the comments on a post, then getting user within each comment
-
-    if (userId) {
-      const { data, error } = await supabase
-        .from("posts")
-        .select(
-          `
+    const { data, error } = await supabase
+      .from("polls")
+      .select(
+        `
                 *,
-                user: users ( id, name, image ),
-                postLikes (*),
-                comments (count)
+                user: users ( id, pseudonyme, image ),
+                pollAnswers (*),
+                pollComments (count)
             `
-        )
-        .eq("userId", userId)
-        .order("created_at", { ascending: false })
-        .limit(limit);
-      if (error) {
-        console.log("fetchPosts error: ", error);
-        return { success: false, msg: "Could not fetch the posts" };
-      }
-      return { success: true, data: data };
-    } else {
-      const { data, error } = await supabase
-        .from("posts")
-        .select(
-          `
-                *,
-                user: users ( id, name, image ),
-                postLikes (*),
-                comments (count)
-            `
-        )
-        .order("created_at", { ascending: false })
-        .limit(limit);
-      if (error) {
-        console.log("fetchPosts error: ", error);
-        return { success: false, msg: "Could not fetch the posts" };
-      }
-      return { success: true, data: data };
+      )
+      .order("created_at", { ascending: false })
+      .limit(limit);
+    if (error) {
+      console.log("fetchPosts error: ", error);
+      return { success: false, msg: "Could not fetch the polls" };
     }
+    return { success: true, data: data };
   } catch (error) {
     console.log("fetchPosts error: ", error);
-    return { success: false, msg: "Could not fetch the posts" };
+    return { success: false, msg: "Could not fetch the polls" };
   }
 };
 
 export const fetchPostDetails = async (postId) => {
   try {
     const { data, error } = await supabase
-      .from("posts")
+      .from("polls")
       .select(
         `
             *,
-            user: users ( id, name, image ),
-            postLikes (*),
-            comments (*, user: users(id, name, image))
+            user: users ( id, pseudonyme, image ),
+            pollAnswers (*),
+            commepollCommentsnts (*, user: users(id, pseudonyme, image))
         `
       )
       .eq("id", postId)
-      .order("created_at", { ascending: false, foreignTable: "comments" })
+      .order("created_at", { ascending: false, foreignTable: "pollComments" })
       .single();
 
     if (error) {
@@ -137,7 +74,7 @@ export const fetchPostDetails = async (postId) => {
 export const createPostLike = async (postLike) => {
   try {
     const { data, error } = await supabase
-      .from("postLikes")
+      .from("pollAnswers")
       .insert(postLike)
       .select()
       .single();
@@ -156,10 +93,10 @@ export const createPostLike = async (postLike) => {
 export const removePostLike = async (postId, userId) => {
   try {
     const { error } = await supabase
-      .from("postLikes")
+      .from("pollAnswers")
       .delete()
       .eq("userId", userId)
-      .eq("postId", postId);
+      .eq("pollId", postId);
 
     if (error) {
       console.log("postLike error: ", error);
@@ -175,7 +112,7 @@ export const removePostLike = async (postId, userId) => {
 export const createComment = async (comment) => {
   try {
     const { data, error } = await supabase
-      .from("comments")
+      .from("pollComments")
       .insert(comment)
       .select()
       .single();
@@ -194,7 +131,7 @@ export const createComment = async (comment) => {
 export const removeComment = async (commentId) => {
   try {
     const { error } = await supabase
-      .from("comments")
+      .from("pollComments")
       .delete()
       .eq("id", commentId);
 
@@ -209,17 +146,37 @@ export const removeComment = async (commentId) => {
   }
 };
 
-export const removePost = async (postId) => {
+export const removePost = async (pollId) => {
   try {
-    const { error } = await supabase.from("posts").delete().eq("id", postId);
+    const { error } = await supabase.from("polls").delete().eq("id", pollId);
 
     if (error) {
       console.log("removePost error: ", error);
       return { success: false, msg: "Could not remove the post" };
     }
-    return { success: true, data: { postId } };
+    return { success: true, data: { pollId } };
   } catch (error) {
     console.log("removePost error: ", error);
     return { success: false, msg: "Could not remove the post" };
+  }
+};
+
+
+export const createPollAnswer = async (answer) => {
+  try {
+    const { data, error } = await supabase
+      .from("pollAnswers")
+      .insert(answer)
+      .select()
+      .single();
+
+    if (error) {
+      console.log("Poll answer error: ", error);
+      return { success: false, msg: "Could not record your answer" };
+    }
+    return { success: true, data: data };
+  } catch (error) {
+    console.log("Poll answer error: ", error);
+    return { success: false, msg: "Could not record your answer" };
   }
 };

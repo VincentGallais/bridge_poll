@@ -1,7 +1,5 @@
--> Renommer table posts en polls, ajouter le param answers
--> Faire une table liante contenant entre user et polls avec les params liked & skip
--> Faire fonctionner le fetch prenant en compte liked et skip + pouvoir mettre à jour avec les boutons
--> Flexibilité sur la taille des boutons en fonction du nombre de réponses (2 -> 4)
+-> S'abonner aux changement sur les votes d'un quizz
+-> Quizz avec background dorés pour superuser / premium (https://tamagui.dev/ui/linear-gradient?subpath=linear-gradient)
 
 Page profile :
     Ajouter search user (pour follow d'autres joueurs) & clic sur follower/following me donne la liste (https://www.youtube.com/watch?v=I48oThkeIxw)
@@ -15,8 +13,6 @@ Page quizz :
     Faire le fetching des quizz en pensant aux filtes
     Cliquer sur le nom de l'auteur pour voir son profil
     Cliquer sur les têtes pour voir qui a répondu (possibilité d'ajouter en ami & mettre la photo des amis en priorié sous le sondage)
-    Quizz avec background dorés pour superuser / premium (https://tamagui.dev/ui/linear-gradient?subpath=linear-gradient)
-    S'abonner aux changement sur les votes d'un quizz
     
 Notifications :
     S'abonner aux changement sur les notifs (pas fetch à chaque fois qu'on clique sur notif) en vérifiant que la notification n'est pas check + sort par date
@@ -44,3 +40,5 @@ Autre :
     Créer des premiers sondages pour alimenter le contenu
     Revoir la police choisie
     Linker tous les alerts avec le composant <CustomModal/>
+
+    V2 : Créer tables pollLike / pollSkip et fetcher en filtrant sur ces tables & pouvoir mettre à jour avec les boutons en haut de la card
