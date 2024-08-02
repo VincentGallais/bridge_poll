@@ -131,6 +131,7 @@ const Quizz = ({ navigation }) => {
         polls={[{ key: "empty-left" }, ...polls, { key: "empty-right" }]}
         scrollX={scrollX}
         getPosts={getPolls}
+        navigation={navigation}
       />
 
       <TouchableOpacity

@@ -18,12 +18,14 @@ import { createPollAnswer } from "../services/postService";
 import AnimatedProgress from "../components/AnimatedProgress";
 import { LinearGradient } from "expo-linear-gradient";
 import CustomModal from "./CustomModal"; // Assurez-vous d'importer le CustomModal
+import { ROUTES } from "../assets/constants";
+import { calculatePercentage, getGradientColors } from "../helpers/common";
 
 const SPACING = 5;
 const { width } = Dimensions.get("window");
 const ITEM_SIZE = Platform.OS === "ios" ? width * 0.87 : width * 0.9;
 
-const PollCard = ({ item, translateY, user }) => {
+const PollCard = ({ item, translateY, user, navigation }) => {
   const [userAnswer, setUserAnswer] = useState(null);
   const [answers, setAnswers] = useState(item.answers || []);
   const [confirmVoteModalVisible, setConfirmVoteModalVisible] = useState(false);
@@ -71,25 +73,6 @@ const PollCard = ({ item, translateY, user }) => {
     setSelectedChoice(null);
   };
 
-  const calculatePercentage = (choice) => {
-    const totalVotes = answers.length;
-    if (totalVotes === 0) return 0;
-    const votesForChoice = answers.filter((answer) => answer.answer === choice).length;
-    return (votesForChoice / totalVotes) * 100;
-  };
-
-  const getGradientColors = (visibility) => {
-    switch (visibility) {
-      case "gold":
-        return ["#FFD700", "#FF8C00"];
-      case "diamond":
-        return ["#00FFFF", "#0000FF"];
-      case "visible":
-      default:
-        return ["#FFFFFF", "#FFFFFF"];
-    }
-  };
-
   return (
     <View style={{ width: ITEM_SIZE }}>
       <Animated.View style={{ transform: [{ translateY }] }}>
@@ -112,6 +95,17 @@ const PollCard = ({ item, translateY, user }) => {
                   <TouchableOpacity style={styles.iconButton}>
                     <Icon
                       name="share"
+                      strokeWidth={2.5}
+                      size={24}
+                      color="black"
+                    />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.iconButton}
+                    onPress={() => navigation.navigate(ROUTES.POLLDETAILS, {userAnswer: userAnswer, pollDetails: item, answers: answers})}
+                  >
+                    <Icon
+                      name="heart"
                       strokeWidth={2.5}
                       size={24}
                       color="black"
@@ -141,12 +135,14 @@ const PollCard = ({ item, translateY, user }) => {
                       <Text style={styles.choiceText}>{choice}</Text>
                       <View style={styles.progressBarContainer}>
                         <AnimatedProgress
-                          widthPct={calculatePercentage(choice)}
+                          widthPct={calculatePercentage({choice, answers})}
                           barWidth={200}
-                          barColor={userAnswer.answer === choice ? "green" : "gray"}
+                          barColor={
+                            userAnswer.answer === choice ? "green" : "gray"
+                          }
                         />
                         <Text style={styles.percentageText}>
-                          {Math.round(calculatePercentage(choice))}%
+                          {Math.round(calculatePercentage({choice, answers}))}%
                         </Text>
                       </View>
                     </View>
@@ -182,7 +178,7 @@ const PollCard = ({ item, translateY, user }) => {
           </View>
         </LinearGradient>
       </Animated.View>
-      
+
       {/* Afficher le modal de confirmation */}
       {confirmVoteModalVisible && (
         <CustomModal
@@ -242,7 +238,7 @@ const styles = StyleSheet.create({
   votingButtonContainer: {
     flexDirection: "row",
     justifyContent: "space-around",
-    paddingHorizontal: 8
+    paddingHorizontal: 8,
   },
   progressContainer: {
     flexDirection: "column",
@@ -257,7 +253,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   choiceText: {
-    marginRight: 8
+    marginRight: 8,
   },
   percentageText: {
     marginLeft: 8,

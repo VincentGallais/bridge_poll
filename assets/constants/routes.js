@@ -18,4 +18,6 @@ export default {
   NOTIFICATIONS: 'Notifications',
   
   PROFILE: 'My Profile',
+
+  POLLDETAILS: 'PollDetails',
 };

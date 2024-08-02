@@ -1,23 +1,24 @@
+Choix catégory sur le create poll
+Je veux que le header soit statique
+Ne pas afficher le profil par défaut sur la page profil pendant 1ms
+Page pollDetails à continuer (https://youtu.be/_ivIUCSOZ78?t=6964)
+
 Page profile :
-    Améliorer la vue "mes sondages publiés"
+    Améliorer la vue "mes sondages publiés" (s'abonner aux mises à jour en eq sur user.id)
     Ajouter search user (pour follow d'autres joueurs) & clic sur follower/following me donne la liste (https://www.youtube.com/watch?v=I48oThkeIxw)
     Créer table followers sur le même modèle que notifications
 
 Page quizz :
-    Bouton partage à mettre en marche
+    Gerer les likes de poll (insert / delete)
     Mettre à jour le fetching des quizz avec les filtres
     Cliquer sur le nom de l'auteur pour voir son profil
     Cliquer sur les têtes pour voir qui a répondu (possibilité d'ajouter en following) + voir le vote des gens quand l'user a voté
     Mettre la vraie photo de profil des gens qui ont voté (en premier ceux qui ont une photo)
-    S'abonner aux changement sur les votes d'un quizz qui est dans notre range de visibilité
-    Clic sur un quizz l'ouvre en grand (version répondu et non répondu) (https://youtu.be/_ivIUCSOZ78?t=6964)
+    S'abonner aux changements sur les votes d'un quizz qui est dans notre range de visibilité (ou alors tirer à fond vers la droite lance un refresh)
     
 Notifications :
     Faire marcher les notifications push (https://www.youtube.com/watch?v=Z_84yf7fNsc)
     Faire une icone en fonction du type de notification + redirection (quizz / user page)
-
-Page soutenir :
-    Faire le paiement & le restore purchase
 
 Login / Register / Welcome :
     Créer page pour les mots de passe oubliés (https://youtu.be/YdxyAaO4VBk?list=LL)
@@ -36,10 +37,13 @@ Autre :
     Créer des premiers sondages pour alimenter le contenu
     Revoir la police choisie
     Brancher crashlytics
-    Poll custom publicitaire à faire
+    Renommer chaque occurence de "post" en "poll"
+    Icône de l'application
 
-    V2 : Créer tables pollLike / pollSkip et fetcher en filtrant sur ces tables & pouvoir mettre à jour avec les boutons en haut de la card
     V2 : Trier StackedCircularAvatar pour afficher les following en premier
-    V2 : Pouvoir editer / supprimer ses propres polls
-    V2 : Connexion avec google
+    V2 : Pouvoir supprimer ses propres polls
+    V2 : Pouvoir se connecter avec google
     V2 : Achivement (https://dribbble.com/search/3d-medals)
+    V2 : Bouton partage génère un deeplink vers le sondage dans la vue élargie
+    V2 : Poll publicitaire à faire
+    V2 : Gérer le paiement & le restore purchase

@@ -48,7 +48,7 @@ const FiltersModal = ({
 
           <Text style={styles.subtitle}>Quizz Afinity</Text>
           <View style={styles.buttonGroup}>
-            {renderButton("quizzAfinity", ["New", "Answered", "Friends", "All"])}
+            {renderButton("quizzAfinity", ["New", "Answered", "Friends", "All", "Mine", "Liked"])}
           </View>
 
           <TouchableOpacity style={styles.closeButton} onPress={closeModal}>

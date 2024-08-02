@@ -1,21 +1,20 @@
 import { supabase } from "../lib/supabase";
 
-export const createOrUpdatePost = async (post) => {
+export const createPoll = async ({body, choices, userId, visibility, category}) => {
   try {
     const { data, error } = await supabase
       .from("polls")
-      .upsert(post)
-      .select()
-      .single();
+      .insert([{ body, choices, userId, visibility, category}])
+      .select();
 
     if (error) {
       console.log("createPost error: ", error);
-      return { success: false, msg: "Could not create your post" };
+      return { success: false, msg: "Could not create your poll" };
     }
     return { success: true, data: data };
   } catch (error) {
     console.log("createPost error: ", error);
-    return { success: false, msg: "Could not create your post" };
+    return { success: false, msg: "Could not create your poll" };
   }
 };
 
@@ -201,5 +200,24 @@ export const fetchPostsByUser = async (userId, limit = 10) => {
   } catch (error) {
     console.log("fetchPostsByUser error: ", error);
     return { success: false, msg: "Could not fetch the user's polls" };
+  }
+};
+
+export const createPollLike= async (like) => {
+  try {
+    const { data, error } = await supabase
+      .from("pollLikes")
+      .insert(like)
+      .select()
+      .single();
+
+    if (error) {
+      console.log("Poll answer error: ", error);
+      return { success: false, msg: "Could not record your answer" };
+    }
+    return { success: true, data: data };
+  } catch (error) {
+    console.log("Poll answer error: ", error);
+    return { success: false, msg: "Could not record your answer" };
   }
 };

@@ -30,74 +30,78 @@ const Header = ({ navigation, page }) => {
 
   return (
     <SafeAreaView style={{ backgroundColor: COLORS.Green500 }}>
-      {loading ? (
-        <Loading />
-      ) : (
-        <View style={styles.headerContainer}>
-          {page != ROUTES.QUIZZ ? (
-            <TouchableOpacity
-              style={{
-                marginRight: 8,
-                flexDirection: "row",
-                alignItems: "center",
-              }}
-              onPress={() => navigation.navigate(ROUTES.QUIZZ)}
-            >
-              <Icon
-                name="arrowLeft"
-                strokeWidth={2.5}
-                size={26}
-                color="white"
-              />
-
-              <Text style={styles.headerText}>Back</Text>
-            </TouchableOpacity>
-          ) : <Text style={styles.headerText}>Welcome {user?.pseudonyme}</Text>}
-
-          <View style={styles.iconContainer}>
-            <TouchableOpacity
-              onPress={() => navigation.navigate(ROUTES.NOTIFICATIONS)}
-            >
-              <View style={styles.bellContainer}>
-                <FeatherIcon name="bell" size={20} color="white" />
-                {notificationCount > 0 && (
-                  <View
-                    style={{
-                      ...styles.notificationBadge,
-                      backgroundColor: "red",
-                    }}
-                  >
-                    <Text style={styles.notificationText}>
-                      {notificationCount}
-                    </Text>
-                  </View>
-                )}
-              </View>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              onPress={() => navigation.navigate(ROUTES.PROFILE)}
-            >
-              <Avatar
-                uri={user?.image}
-                size={40}
-                rounded={theme.radius.sm}
-                style={{
-                  borderWidth: 2,
-                  borderColor: user?.isAdmin ? "orange" : "#ccc",
-                }}
-              />
-            </TouchableOpacity>
-          </View>
+      <View style={styles.headerContainer}>
+        {page !== ROUTES.QUIZZ ? (
+          <TouchableOpacity
+            style={{
+              marginRight: 8,
+              flexDirection: "row",
+              alignItems: "center",
+            }}
+            onPress={() => navigation.navigate(ROUTES.QUIZZ)}
+          >
+            <Icon
+              name="arrowLeft"
+              strokeWidth={2.5}
+              size={26}
+              color="white"
+            />
+            <Text style={styles.headerText}>Back</Text>
+          </TouchableOpacity>
+        ) : (
+          <Text style={styles.headerText}>Welcome {user?.pseudonyme}</Text>
+        )}
+  
+        <View style={styles.iconContainer}>
+          {loading ? (
+            <Loading />
+          ) : (
+            <>
+              <TouchableOpacity
+                onPress={() => navigation.navigate(ROUTES.NOTIFICATIONS)}
+              >
+                <View style={styles.bellContainer}>
+                  <FeatherIcon name="bell" size={20} color="white" />
+                  {notificationCount > 0 && (
+                    <View
+                      style={{
+                        ...styles.notificationBadge,
+                        backgroundColor: "red",
+                      }}
+                    >
+                      <Text style={styles.notificationText}>
+                        {notificationCount}
+                      </Text>
+                    </View>
+                  )}
+                </View>
+              </TouchableOpacity>
+  
+              <TouchableOpacity
+                onPress={() => navigation.navigate(ROUTES.PROFILE)}
+              >
+                <Avatar
+                  uri={user?.image}
+                  size={40}
+                  rounded={theme.radius.sm}
+                  style={{
+                    borderWidth: 2,
+                    borderColor: user?.isAdmin ? "orange" : "#ccc",
+                  }}
+                />
+              </TouchableOpacity>
+            </>
+          )}
         </View>
-      )}
+      </View>
       <FiltersModal
         modalVisible={filterModalVisible}
         closeModal={closeFilterModal}
       />
     </SafeAreaView>
   );
-};
+  
+}
 
 const styles = StyleSheet.create({
   headerContainer: {
@@ -106,6 +110,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginHorizontal: 16,
     paddingVertical: 8,
+    height: 60
   },
   headerText: {
     fontSize: 18,

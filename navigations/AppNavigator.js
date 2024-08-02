@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { ROUTES } from "../assets/constants";
-import { Quizz, Notifications, Profile } from "../screens/Index";
+import { Quizz, Notifications, Profile, PollDetails } from "../screens/Index";
 import Publications from "../screens/home/Publications";
 import { useAuth } from "../contexts/AuthContext";
 import { useNavigation } from "@react-navigation/native";
@@ -50,6 +50,11 @@ function AppNavigator() {
         name={ROUTES.NOTIFICATIONS}
         component={Notifications}
         options={screenOptionsWithHeader(ROUTES.NOTIFICATIONS)}
+      />
+      <Stack.Screen
+        name={ROUTES.POLLDETAILS}
+        component={PollDetails}
+        options={screenOptionsWithHeader(ROUTES.POLLDETAILS)}
       />
     </Stack.Navigator>
   );

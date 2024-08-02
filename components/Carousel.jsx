@@ -8,7 +8,7 @@ const { width, height } = Dimensions.get("window");
 const ITEM_SIZE = Platform.OS === "ios" ? width * 0.87 : width * 0.9;
 const EMPTY_ITEM_SIZE = (width - ITEM_SIZE) / 2;
 
-const Carousel = ({ polls, scrollX, getPosts }) => {
+const Carousel = ({ polls, scrollX, getPosts, navigation }) => {
   const { user } = useAuth();
   return (
     <View style={{ ...styles.container, backgroundColor: "green" }}>
@@ -47,7 +47,7 @@ const Carousel = ({ polls, scrollX, getPosts }) => {
             extrapolate: "clamp",
           });
 
-          return <PollCard item={item} translateY={translateY} user={user}/>;
+          return <PollCard item={item} translateY={translateY} user={user} navigation={navigation}/>;
         }}
       />
     </View>

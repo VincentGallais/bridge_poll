@@ -10,81 +10,84 @@ import {
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { supabase } from "../../lib/supabase";
+import { useAuth } from "../../contexts/AuthContext";
+import { createPoll } from "../../services/postService";
+import CustomModal from "../../components/CustomModal";
 
 export default function Publications() {
-  const [question, setQuestion] = useState("");
-  const [options, setOptions] = useState(["", ""]);
+  const [body, setBody] = useState("");
+  const [choices, setChoices] = useState(["", ""]);
   const [error, setError] = useState("");
-  const [polls, setPolls] = useState([]);
-  
+  const { user } = useAuth();
+  const [successModalVisible, setsuccessModalVisible] = useState(false);
+  const [failModalVisible, setFailModalVisible] = useState(false);
 
-  useEffect(() => {
-    const fetchPolls = async () => {
-      const { data, error } = await supabase.from("polls").select("*");
-      if (error) {
-        console.error("Error fetching polls:", error);
-        return;
-      }
-      else{
-        console.log('Sucessfully Fetching Polls')
-      }
-      setPolls(data);
-    };
-    fetchPolls();
-  }, []);
-
-  const createPoll = async () => {
+  const handleCreatePoll = async () => {
     setError("");
-    if (!question) {
+    if (!body) {
       setError("Please provide the question");
       return;
     }
-    const validOptions = options.filter((o) => !!o);
+    const validOptions = choices.filter((o) => !!o);
     if (validOptions.length < 2) {
       setError("Please provide at least 2 valid options");
       return;
     }
 
-    const { data, error } = await supabase
-      .from('polls')
-      .insert([{ question, options: validOptions }])
-      .select();
-    if (error) {
-      Alert.alert('Failed to create the poll');
-      console.log(error);
+    const response = await createPoll({
+      body,
+      choices,
+      userId: user.id,
+      visibility: "under_review",
+      category: "Bidding",
+    });
+    if (response.success) {
+      setBody("");
+      setChoices(["", ""]);
+      setsuccessModalVisible(true);
+    } else {
+      setFailModalVisible(true);
       return;
-    }
-
-    else{
-      setPolls([
-        ...polls,
-        { id: (polls.length + 1).toString(), question, options: validOptions },
-      ]);
-      setQuestion("");
-      setOptions(["", ""]);
-      console.warn("Poll successfully created");
     }
   };
 
   return (
     <View style={styles.container}>
+      {successModalVisible && (
+        <CustomModal
+          messageType="success"
+          buttonText="Close"
+          headerText="Poll successfully created"
+          coreText="Our team is currently reviewing it before showing it publicly"
+        />
+      )}
+
+      {failModalVisible && (
+        <CustomModal
+          messageType="fail"
+          buttonText="Close"
+          headerText="Failed to create the poll"
+          coreText="Please retry later"
+        />
+      )}
+
       <Text style={styles.label}>Create New Poll</Text>
       <TextInput
-        value={question}
-        onChangeText={setQuestion}
+        value={body}
+        onChangeText={setBody}
         placeholder="Type your question here"
         style={styles.input}
       />
 
       <Text style={styles.label}>Options</Text>
-      {options.map((option, index) => (
+      {choices?.map((option, index) => (
         <View key={index} style={styles.optionContainer}>
           <TextInput
             value={option}
             onChangeText={(text) => {
-              const updated = [...options];
+              const updated = [...choices];
               updated[index] = text;
-              setOptions(updated);
+              setChoices(updated);
             }}
             placeholder={`Option ${index + 1}`}
             style={styles.input}
@@ -95,38 +98,17 @@ export default function Publications() {
             color="gray"
             onPress={() => {
               // delete option based index
-              const updated = [...options];
+              const updated = [...choices];
               updated.splice(index, 1);
-              setOptions(updated);
+              setChoices(updated);
             }}
             style={styles.removeOptionIcon}
           />
         </View>
       ))}
-      <Button title="Add option" onPress={() => setOptions([...options, ""])} />
-      <Button title="Create Poll" onPress={createPoll} />
+      <Button title="Add option" onPress={() => setChoices([...choices, ""])} />
+      <Button title="Create Poll" onPress={handleCreatePoll} />
       {error ? <Text style={styles.errorText}>{error}</Text> : null}
-
-      <Text style={styles.header}>Submited Polls :</Text>
-      <FlatList
-        data={polls}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <View style={styles.pollItem}>
-            <Text style={styles.pollQuestion}>{item.question}</Text>
-            <View style={{ flexDirection: "row" }}>
-              {item.options.map((option, index) => (
-                <Text key={index} style={styles.pollOption}>
-                  - {option}
-                </Text>
-              ))}
-            </View>
-          </View>
-        )}
-        ListEmptyComponent={
-          <Text style={styles.emptyText}>No polls created yet</Text>
-        }
-      />
     </View>
   );
 }
