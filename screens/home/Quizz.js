@@ -22,23 +22,7 @@ const Quizz = ({ navigation }) => {
   const isFocused = useIsFocused();
   const [polls, setPolls] = useState([]);
   const [hasMore, setHasMore] = useState(true);
-  const [leavAppModalVisible, setLeavAppModalVisible] = useState(false);
-
-  // Modale de filtre sur les quizz
-  const [filterOptions, setFilterOptions] = useState({
-    quizzDate: "Last Week",
-    quizzType: "Lead",
-    quizzAfinity: "New",
-  });
-  const [filterModalVisible, setFilterModalVisible] = useState(false);
-  const openFilterModal = () => setFilterModalVisible(true);
-  const closeFilterModal = () => setFilterModalVisible(false);
-  const handleFilterChange = (type, value) => {
-    setFilterOptions((prevOptions) => ({
-      ...prevOptions,
-      [type]: value,
-    }));
-  };
+  const [leaveAppModalVisible, setLeavAppModalVisible] = useState(false);
 
   const getPolls = async () => {
     if (!hasMore) {
@@ -109,7 +93,7 @@ const Quizz = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      {leavAppModalVisible && (
+      {leaveAppModalVisible && (
         <CustomModal
           messageType="decision"
           buttonText="Proceed"
@@ -120,33 +104,12 @@ const Quizz = ({ navigation }) => {
         />
       )}
 
-      <FiltersModal
-        modalVisible={filterModalVisible}
-        closeModal={closeFilterModal}
-        filterOptions={filterOptions}
-        onFilterChange={handleFilterChange}
-      />
-
       <Carousel
         polls={[{ key: "empty-left" }, ...polls, { key: "empty-right" }]}
         scrollX={scrollX}
         getPolls={getPolls}
         navigation={navigation}
       />
-
-      <TouchableOpacity
-        style={{ ...styles.floatingButton, right: 16 }}
-        onPress={() => navigation.navigate(ROUTES.PUBLICATIONS)}
-      >
-        <FeatherIcon name="plus" size={20} color="white" />
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        style={{ ...styles.floatingButton, left: 16 }}
-        onPress={openFilterModal}
-      >
-        <FeatherIcon name="sliders" size={20} color="white" />
-      </TouchableOpacity>
     </View>
   );
 };

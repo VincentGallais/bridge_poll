@@ -30,11 +30,17 @@ const PollItem = ({ poll }) => {
     <View style={styles.pollItem}>
       <View>
         <Text style={styles.pollTitle}>{poll.body}</Text>
-        <Text style={styles.pollText}>{moment(poll?.created_at).format('MMM D')}</Text>
+        <Text style={styles.pollText}>
+          {moment(poll?.created_at).format("MMM D")}
+        </Text>
       </View>
       <View>
-        <Text style={styles.pollText}>{poll.pollAnswers.length || 0} réponses</Text>
-        <Text style={styles.pollText}>{poll.pollComments[0].count || 0} commentaires</Text>
+        <Text style={styles.pollText}>
+          {poll.pollAnswers.length || 0} réponses
+        </Text>
+        <Text style={styles.pollText}>
+          {poll.pollComments[0].count || 0} commentaires
+        </Text>
       </View>
     </View>
   );
@@ -48,7 +54,6 @@ const Profile = () => {
     bridgeLevel: null,
     locale: "",
   });
-  const [loading, setLoading] = useState(false);
   const [errorModalVisible, setErrorModalVisible] = useState(false);
   const [errorModalMessage, setErrorModalMessage] = useState("");
 
@@ -141,27 +146,18 @@ const Profile = () => {
         <View style={styles.profileHeader}>
           <View style={styles.profileImageContainer}>
             <View style={styles.avatarContainer}>
-              {loading ? (
-                <Loading />
-              ) : (
-                <>
-                  <Avatar
-                    uri={user?.image}
-                    size={100}
-                    rounded={32}
-                    style={{
-                      borderWidth: 5,
-                      borderColor: user?.isAdmin ? "orange" : "#ccc",
-                    }}
-                  />
-                  <TouchableOpacity
-                    style={styles.cameraIcon}
-                    onPress={onPickImage}
-                  >
-                    <Icon name="camera" strokeWidth={2.5} size={20} />
-                  </TouchableOpacity>
-                </>
-              )}
+              <Avatar
+                uri={user?.image}
+                size={100}
+                rounded={32}
+                style={{
+                  borderWidth: 5,
+                  borderColor: user?.isAdmin ? "orange" : "#ccc",
+                }}
+              />
+              <TouchableOpacity style={styles.cameraIcon} onPress={onPickImage}>
+                <Icon name="camera" strokeWidth={2.5} size={20} />
+              </TouchableOpacity>
             </View>
           </View>
           <View style={styles.profileBody}>
@@ -184,7 +180,7 @@ const Profile = () => {
 
             <View style={{ flexDirection: "row", marginTop: 6, gap: 16 }}>
               <Text style={{ fontSize: 16 }}>0 followers</Text>
-              <Text style={{ fontSize: 16 }}>0 polls</Text>
+              <Text style={{ fontSize: 16 }}>0 following</Text>
             </View>
           </View>
         </View>
@@ -343,17 +339,17 @@ const styles = StyleSheet.create({
   pollItem: {
     padding: 16,
     borderBottomWidth: 1,
-    borderBottomColor: '#e3e3e3',
-    flexDirection: 'row',
-    justifyContent: 'space-between'
+    borderBottomColor: "#e3e3e3",
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   pollTitle: {
     fontSize: 18,
-    fontWeight: '600',
+    fontWeight: "600",
   },
   pollText: {
     fontSize: 14,
-    color: '#989898',
+    color: "#989898",
   },
 });
 

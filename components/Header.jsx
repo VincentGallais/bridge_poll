@@ -1,10 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import FiltersModal from "./FiltersModal";
@@ -12,20 +7,25 @@ import { COLORS, ROUTES } from "../assets/constants"; // Assurez-vous d'importer
 import { useAuth } from "../contexts/AuthContext";
 import Avatar from "../components/Avatar";
 import { theme } from "../assets/constants/theme";
-import Loading from "../components/Loading";
 import Icon from "../assets/icons";
 
 const Header = ({ navigation, page }) => {
-  const [filterModalVisible, setFilterModalVisible] = useState(false);
-  const [loading, setLoading] = useState(true);
   const { user, notificationCount } = useAuth();
 
-  useEffect(() => {
-    if (user) setLoading(false);
-  }, [user]);
-
-  const closeFilterModal = () => {
-    setFilterModalVisible(false);
+  // Modale de filtre sur les quizz
+  const [filterOptions, setFilterOptions] = useState({
+    quizzDate: "Last Week",
+    quizzType: "Lead",
+    quizzAfinity: "New",
+  });
+  const [filterModalVisible, setFilterModalVisible] = useState(false);
+  const openFilterModal = () => setFilterModalVisible(true);
+  const closeFilterModal = () => setFilterModalVisible(false);
+  const handleFilterChange = (type, value) => {
+    setFilterOptions((prevOptions) => ({
+      ...prevOptions,
+      [type]: value,
+    }));
   };
 
   return (
@@ -40,68 +40,95 @@ const Header = ({ navigation, page }) => {
             }}
             onPress={() => navigation.navigate(ROUTES.QUIZZ)}
           >
-            <Icon
-              name="arrowLeft"
-              strokeWidth={2.5}
-              size={26}
-              color="white"
-            />
+            <Icon name="arrowLeft" strokeWidth={2.5} size={26} color="white" />
             <Text style={styles.headerText}>Back</Text>
           </TouchableOpacity>
         ) : (
           <Text style={styles.headerText}>Welcome {user?.pseudonyme}</Text>
         )}
-  
-        <View style={styles.iconContainer}>
-          {loading ? (
-            <Loading />
-          ) : (
-            <>
-              <TouchableOpacity
-                onPress={() => navigation.navigate(ROUTES.NOTIFICATIONS)}
-              >
-                <View style={styles.bellContainer}>
-                  <FeatherIcon name="bell" size={20} color="white" />
-                  {notificationCount > 0 && (
-                    <View
-                      style={{
-                        ...styles.notificationBadge,
-                        backgroundColor: "red",
-                      }}
-                    >
-                      <Text style={styles.notificationText}>
-                        {notificationCount}
-                      </Text>
-                    </View>
-                  )}
-                </View>
-              </TouchableOpacity>
-  
-              <TouchableOpacity
-                onPress={() => navigation.navigate(ROUTES.PROFILE)}
-              >
-                <Avatar
-                  uri={user?.image}
-                  size={40}
-                  rounded={theme.radius.sm}
+
+        <View style={styles.headerIconContainer}>
+          <FiltersModal
+            modalVisible={filterModalVisible}
+            closeModal={closeFilterModal}
+            filterOptions={filterOptions}
+            onFilterChange={handleFilterChange}
+          />
+
+          <TouchableOpacity onPress={openFilterModal}>
+            <View style={styles.iconContainer}>
+              <FeatherIcon name="sliders" size={20} color="white" />
+              {notificationCount > 0 && (
+                <View
                   style={{
-                    borderWidth: 2,
-                    borderColor: user?.isAdmin ? "orange" : "#ccc",
+                    ...styles.notificationBadge,
+                    backgroundColor: "red",
                   }}
-                />
-              </TouchableOpacity>
-            </>
-          )}
+                >
+                  <Text style={styles.notificationText}>
+                    {notificationCount}
+                  </Text>
+                </View>
+              )}
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => navigation.navigate(ROUTES.PUBLICATIONS)}
+          >
+            <View style={styles.iconContainer}>
+              <FeatherIcon name="plus" size={20} color="white" />
+              {notificationCount > 0 && (
+                <View
+                  style={{
+                    ...styles.notificationBadge,
+                    backgroundColor: "red",
+                  }}
+                >
+                  <Text style={styles.notificationText}>
+                    {notificationCount}
+                  </Text>
+                </View>
+              )}
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => navigation.navigate(ROUTES.NOTIFICATIONS)}
+          >
+            <View style={styles.iconContainer}>
+              <FeatherIcon name="bell" size={20} color="white" />
+              {notificationCount > 0 && (
+                <View
+                  style={{
+                    ...styles.notificationBadge,
+                    backgroundColor: "red",
+                  }}
+                >
+                  <Text style={styles.notificationText}>
+                    {notificationCount}
+                  </Text>
+                </View>
+              )}
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={() => navigation.navigate(ROUTES.PROFILE)}>
+            <Avatar
+              uri={user?.image}
+              size={40}
+              rounded={theme.radius.sm}
+              style={{
+                borderWidth: 2,
+                borderColor: user?.isAdmin ? "orange" : "#ccc",
+              }}
+            />
+          </TouchableOpacity>
         </View>
       </View>
-      <FiltersModal
-        modalVisible={filterModalVisible}
-        closeModal={closeFilterModal}
-      />
     </SafeAreaView>
   );
-  
-}
+};
 
 const styles = StyleSheet.create({
   headerContainer: {
@@ -110,19 +137,19 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginHorizontal: 16,
     paddingVertical: 8,
-    height: 60
+    height: 60,
   },
   headerText: {
     fontSize: 18,
     fontWeight: "600",
     color: "white",
   },
-  iconContainer: {
+  headerIconContainer: {
     flex: 1,
     flexDirection: "row",
     justifyContent: "flex-end",
   },
-  bellContainer: {
+  iconContainer: {
     position: "relative",
     width: 42,
     height: 42,

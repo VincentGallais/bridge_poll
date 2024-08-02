@@ -212,7 +212,7 @@ const styles = StyleSheet.create({
   },
   backgroundImage: {
     width: "100%",
-    height: ITEM_SIZE * 1.3,
+    height: ITEM_SIZE * 1.4,
   },
   header: {
     flexDirection: "row",

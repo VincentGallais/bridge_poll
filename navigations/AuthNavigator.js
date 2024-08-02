@@ -28,7 +28,7 @@ const navigation = useNavigation();
         console.log('session: ', session?.user?.id);
         if (session) {
             setAuth(session?.user);
-            updateUserData(session?.user); // update user like image, phone, bio
+            updateUserData(session?.user);
             navigation.navigate(ROUTES.HOME);
         } else {
             setAuth(null);

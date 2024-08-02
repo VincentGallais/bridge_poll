@@ -1,12 +1,11 @@
-Mettre l'image de l'user dans auth pour éviter de charger à chaque fois
-Page PollDetails à continuer (prendre tuto code by nomi) (https://youtu.be/_ivIUCSOZ78?t=6964)
-
 Page profile :
     Améliorer la vue "mes sondages publiés" (s'abonner aux mises à jour en eq sur user.id)
-    Ajouter search user (pour follow d'autres joueurs) & clic sur follower/following me donne la liste (https://www.youtube.com/watch?v=I48oThkeIxw)
     Créer table followers sur le même modèle que notifications
+    Ajouter search user (pour follow d'autres joueurs en fournissant les premières lettres => recherche dès 3 lettres) & clic sur follower/following me donne la liste (https://www.youtube.com/watch?v=I48oThkeIxw)
+    Mettre l'image de l'user dans auth pour éviter de charger à chaque fois
 
 Page quizz :
+    Page PollDetails à continuer (prendre tuto code by nomi) (https://youtu.be/_ivIUCSOZ78?t=6964)
     Gerer les likes de poll (insert / delete)
     Mettre à jour le fetching des quizz avec les filtres
     Cliquer sur le nom de l'auteur pour voir son profil
@@ -22,6 +21,7 @@ Login / Register / Welcome :
     Créer page pour les mots de passe oubliés (https://youtu.be/YdxyAaO4VBk?list=LL)
     Pouvoir cliquer sur toute la zone des inputs et pas que le texte
     Améliorer le contenu de la welcome page
+    Mettre une max length pour le pseudo
     Faire des illustrations pour welcome, login, register, change password, forgotten password
 
 Créer publication : 
@@ -35,9 +35,7 @@ Autre :
     Créer des premiers sondages pour alimenter le contenu
     Revoir la police choisie
     Brancher crashlytics
-    Renommer chaque occurence de "post" en "poll"
     Icône de l'application
-    Handle notification clic
 
     V2 : Trier StackedCircularAvatar pour afficher les following en premier
     V2 : Pouvoir supprimer ses propres polls

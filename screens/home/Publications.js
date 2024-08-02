@@ -1,11 +1,5 @@
-import { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TextInput,
-  Button,
-} from "react-native";
+import { useState } from "react";
+import { View, Text, StyleSheet, TextInput, Button } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { useAuth } from "../../contexts/AuthContext";
 import { createPoll } from "../../services/pollService";
@@ -17,7 +11,7 @@ export default function Publications() {
   const [choices, setChoices] = useState(["", ""]);
   const [error, setError] = useState("");
   const { user } = useAuth();
-  const [successModalVisible, setsuccessModalVisible] = useState(false);
+  const [successModalVisible, setSuccessModalVisible] = useState(false);
   const [failModalVisible, setFailModalVisible] = useState(false);
 
   const handleCreatePoll = async () => {
@@ -34,18 +28,18 @@ export default function Publications() {
 
     const response = await createPoll({
       body,
-      choices,
+      choices: validOptions, // Utiliser les options valides
       userId: user.id,
       visibility: "under_review",
       category,
     });
     if (response.success) {
       setBody("");
+      setCategory("");
       setChoices(["", ""]);
-      setsuccessModalVisible(true);
+      setSuccessModalVisible(true);
     } else {
       setFailModalVisible(true);
-      return;
     }
   };
 
@@ -57,6 +51,7 @@ export default function Publications() {
           buttonText="Close"
           headerText="Poll successfully created"
           coreText="Our team is currently reviewing it before showing it publicly"
+          onClose={() => setSuccessModalVisible(false)}
         />
       )}
 
@@ -66,18 +61,19 @@ export default function Publications() {
           buttonText="Close"
           headerText="Failed to create the poll"
           coreText="Please retry later"
+          onClose={() => setFailModalVisible(false)}
         />
       )}
 
-      <Text style={styles.label}>Create New Poll</Text>
+      <Text style={styles.label}>Situation</Text>
       <TextInput
         value={body}
         onChangeText={setBody}
-        placeholder="Type your question here"
+        placeholder="Submit cards & bids"
         style={styles.input}
       />
 
-<Text style={styles.label}>Category</Text>
+      <Text style={styles.label}>Category</Text>
       <TextInput
         value={category}
         onChangeText={setCategory}
@@ -86,7 +82,7 @@ export default function Publications() {
       />
 
       <Text style={styles.label}>Options</Text>
-      {choices?.map((option, index) => (
+      {choices.map((option, index) => (
         <View key={index} style={styles.optionContainer}>
           <TextInput
             value={option}
@@ -98,21 +94,32 @@ export default function Publications() {
             placeholder={`Option ${index + 1}`}
             style={styles.input}
           />
-          <Feather
-            name="x"
-            size={18}
-            color="gray"
-            onPress={() => {
-              // delete option based index
-              const updated = [...choices];
-              updated.splice(index, 1);
-              setChoices(updated);
-            }}
-            style={styles.removeOptionIcon}
-          />
+          {choices.length > 2 && (
+            <Feather
+              name="x"
+              size={18}
+              color="gray"
+              onPress={() => {
+                const updated = [...choices];
+                updated.splice(index, 1);
+                setChoices(updated);
+              }}
+              style={styles.removeOptionIcon}
+            />
+          )}
         </View>
       ))}
-      <Button title="Add option" onPress={() => setChoices([...choices, ""])} />
+
+      {choices.length < 4 && (
+        <>
+          <Button
+            title="Add option"
+            onPress={() => setChoices([...choices, ""])}
+          />
+          <View style={styles.buttonSpacer} />
+        </>
+      )}
+
       <Button title="Create Poll" onPress={handleCreatePoll} />
       {error ? <Text style={styles.errorText}>{error}</Text> : null}
     </View>
@@ -125,36 +132,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#f5f5f5",
     flex: 1,
   },
-  header: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 20,
-    color: "#333",
-    marginTop: 32,
-  },
-  pollItem: {
-    backgroundColor: "#fff",
-    padding: 15,
-    borderRadius: 10,
-    marginBottom: 10,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 5,
-  },
-  pollQuestion: {
-    fontSize: 18,
-    fontWeight: "bold",
-    marginBottom: 5,
-  },
-  pollOption: {
-    fontSize: 16,
-    color: "#555",
-  },
-  emptyText: {
-    textAlign: "center",
-    color: "#888",
-    fontStyle: "italic",
+  errorText: {
+    color: "crimson",
+    marginTop: 10,
   },
   label: {
     fontWeight: "500",
@@ -169,14 +149,14 @@ const styles = StyleSheet.create({
   },
   optionContainer: {
     position: "relative",
+    marginBottom: 10,
   },
   removeOptionIcon: {
     position: "absolute",
     right: 10,
     top: 10,
   },
-  errorText: {
-    color: "crimson",
-    marginTop: 10,
+  buttonSpacer: {
+    height: 10,
   },
 });

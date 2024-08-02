@@ -11,8 +11,6 @@ const NotificationItem = ({ router, item, removeNotification }) => {
   const notificationType = item?.type;
   const senderPseudonyme = item?.sender?.pseudonyme || "Unknown sender";
 
-  console.log(item);
-
   let content;
 
   switch (notificationType) {
@@ -38,7 +36,6 @@ const NotificationItem = ({ router, item, removeNotification }) => {
   };
 
   const handleCheckClick = async () => {
-    console.log("Check clic");
     const { success, msg } = await updateNotificationToChecked(item.id);
     if (success) {
       removeNotification(item.id);
