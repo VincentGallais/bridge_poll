@@ -14,7 +14,7 @@ import StackedCircularAvatar from "./StackedCircularAvatar";
 import AwesomeButton from "react-native-really-awesome-button";
 import cardBackgroundImage from "../assets/images/card_background.png";
 import Icon from "../assets/icons";
-import { createPollAnswer } from "../services/postService";
+import { createPollAnswer } from "../services/pollService";
 import AnimatedProgress from "../components/AnimatedProgress";
 import { LinearGradient } from "expo-linear-gradient";
 import CustomModal from "./CustomModal"; // Assurez-vous d'importer le CustomModal

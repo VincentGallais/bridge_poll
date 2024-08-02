@@ -33,7 +33,7 @@ const NotificationItem = ({ router, item, removeNotification }) => {
   }
 
   const handleNotificationClick = () => {
-    // let { postId, commentId } = JSON.parse(item?.data);
+    // let { pollUd, commentId } = JSON.parse(item?.data);
     // router.push({ pathname: "postDetails", params: { postId, commentId } });
   };
 

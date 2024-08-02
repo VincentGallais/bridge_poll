@@ -8,14 +8,14 @@ const { width, height } = Dimensions.get("window");
 const ITEM_SIZE = Platform.OS === "ios" ? width * 0.87 : width * 0.9;
 const EMPTY_ITEM_SIZE = (width - ITEM_SIZE) / 2;
 
-const Carousel = ({ polls, scrollX, getPosts, navigation }) => {
+const Carousel = ({ polls, scrollX, getPolls, navigation }) => {
   const { user } = useAuth();
   return (
     <View style={{ ...styles.container, backgroundColor: "green" }}>
       <Animated.FlatList
         showsHorizontalScrollIndicator={false}
         data={polls}
-        onEndReached={getPosts}
+        onEndReached={getPolls}
         onEndReachedThreshold={0}
         keyExtractor={(item) => item.key}
         horizontal

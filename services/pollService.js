@@ -8,17 +8,17 @@ export const createPoll = async ({body, choices, userId, visibility, category}) 
       .select();
 
     if (error) {
-      console.log("createPost error: ", error);
+      console.log("createPoll error: ", error);
       return { success: false, msg: "Could not create your poll" };
     }
     return { success: true, data: data };
   } catch (error) {
-    console.log("createPost error: ", error);
+    console.log("createPoll error: ", error);
     return { success: false, msg: "Could not create your poll" };
   }
 };
 
-export const fetchPosts = async (limit = 10) => {
+export const fetchPolls = async (limit = 10) => {
   try {
     const { data, error } = await supabase
       .from("polls")
@@ -34,17 +34,17 @@ export const fetchPosts = async (limit = 10) => {
       .order("created_at", { ascending: false })
       .limit(limit);
     if (error) {
-      console.log("fetchPosts error: ", error);
+      console.log("fetchPolls error: ", error);
       return { success: false, msg: "Could not fetch the polls" };
     }
     return { success: true, data: data };
   } catch (error) {
-    console.log("fetchPosts error: ", error);
+    console.log("fetchPolls error: ", error);
     return { success: false, msg: "Could not fetch the polls" };
   }
 };
 
-export const fetchPostDetails = async (postId) => {
+export const fetchPollDetails = async (pollId) => {
   try {
     const { data, error } = await supabase
       .from("polls")
@@ -56,56 +56,18 @@ export const fetchPostDetails = async (postId) => {
             commepollCommentsnts (*, user: users(id, pseudonyme, image))
         `
       )
-      .eq("id", postId)
+      .eq("id", pollId)
       .order("created_at", { ascending: false, foreignTable: "pollComments" })
       .single();
 
     if (error) {
-      console.log("postDetails error: ", error);
-      return { success: false, msg: "Could not fetch the post" };
+      console.log("pollDetails error: ", error);
+      return { success: false, msg: "Could not fetch the poll" };
     }
     return { success: true, data: data };
   } catch (error) {
-    console.log("postDetails error: ", error);
-    return { success: false, msg: "Could not fetch the post" };
-  }
-};
-
-export const createPostLike = async (postLike) => {
-  try {
-    const { data, error } = await supabase
-      .from("pollAnswers")
-      .insert(postLike)
-      .select()
-      .single();
-
-    if (error) {
-      console.log("postLike error: ", error);
-      return { success: false, msg: "Could not like this post" };
-    }
-    return { success: true, data: data };
-  } catch (error) {
-    console.log("postLike error: ", error);
-    return { success: false, msg: "Could not like this post" };
-  }
-};
-
-export const removePostLike = async (postId, userId) => {
-  try {
-    const { error } = await supabase
-      .from("pollAnswers")
-      .delete()
-      .eq("userId", userId)
-      .eq("pollId", postId);
-
-    if (error) {
-      console.log("postLike error: ", error);
-      return { success: false, msg: "Could not remove post like" };
-    }
-    return { success: true, data: { postId, userId } };
-  } catch (error) {
-    console.log("postLike error: ", error);
-    return { success: false, msg: "Could not remove post like" };
+    console.log("pollDetails error: ", error);
+    return { success: false, msg: "Could not fetch the poll" };
   }
 };
 
@@ -146,18 +108,18 @@ export const removeComment = async (commentId) => {
   }
 };
 
-export const removePost = async (pollId) => {
+export const removePoll = async (pollId) => {
   try {
     const { error } = await supabase.from("polls").delete().eq("id", pollId);
 
     if (error) {
-      console.log("removePost error: ", error);
-      return { success: false, msg: "Could not remove the post" };
+      console.log("removePoll error: ", error);
+      return { success: false, msg: "Could not remove the poll" };
     }
     return { success: true, data: { pollId } };
   } catch (error) {
-    console.log("removePost error: ", error);
-    return { success: false, msg: "Could not remove the post" };
+    console.log("removePoll error: ", error);
+    return { success: false, msg: "Could not remove the poll" };
   }
 };
 
@@ -180,7 +142,7 @@ export const createPollAnswer = async (answer) => {
   }
 };
 
-export const fetchPostsByUser = async (userId, limit = 10) => {
+export const fetchPollsByUser = async (userId, limit = 10) => {
   try {
     const { data, error } = await supabase
       .from("polls")
@@ -193,12 +155,12 @@ export const fetchPostsByUser = async (userId, limit = 10) => {
       .eq("userId", userId)
 
     if (error) {
-      console.log("fetchPostsByUser error: ", error);
+      console.log("fetchPollsByUser error: ", error);
       return { success: false, msg: "Could not fetch the user's polls" };
     }
     return { success: true, data: data };
   } catch (error) {
-    console.log("fetchPostsByUser error: ", error);
+    console.log("fetchPollsByUser error: ", error);
     return { success: false, msg: "Could not fetch the user's polls" };
   }
 };

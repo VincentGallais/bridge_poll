@@ -12,7 +12,7 @@ import FeatherIcon from "react-native-vector-icons/Feather";
 import { useFocusEffect, useIsFocused } from "@react-navigation/native";
 import { ROUTES } from "../../assets/constants";
 import FiltersModal from "../../components/FiltersModal";
-import { fetchPosts } from "../../services/postService";
+import { fetchPolls } from "../../services/pollService";
 import moment from 'moment';
 import CustomModal from "../../components/CustomModal";
 
@@ -46,24 +46,24 @@ const Quizz = ({ navigation }) => {
     }
     limit += 10; // get 10 more polls every time
     console.log("Fetching polls:", limit);
-    let res = await fetchPosts(limit);
+    let res = await fetchPolls(limit);
   
     if (res.success) {
       if (polls.length === res.data.length || res.data.length <= 10) {
         setHasMore(false);
       }
-      const formattedPolls = res.data.map((post) => {
+      const formattedPolls = res.data.map((poll) => {
         return {
-          key: post.id.toString(),
-          author: post.user.pseudonyme,
-          date: post.date,
-          answers: post.pollAnswers,
-          comments: post.pollComments[0]?.count || 0,
-          category: post.category,
-          choices: post.choices,
-          description: post.body,
-          visibility: post.visibility,
-          creationDate: moment(post?.created_at).format('MMM D')
+          key: poll.id.toString(),
+          author: poll.user.pseudonyme,
+          date: poll.date,
+          answers: poll.pollAnswers,
+          comments: poll.pollComments[0]?.count || 0,
+          category: poll.category,
+          choices: poll.choices,
+          description: poll.body,
+          visibility: poll.visibility,
+          creationDate: moment(poll?.created_at).format('MMM D')
         };
       });
       setPolls((prevPolls) => [...prevPolls, ...formattedPolls]);
@@ -130,7 +130,7 @@ const Quizz = ({ navigation }) => {
       <Carousel
         polls={[{ key: "empty-left" }, ...polls, { key: "empty-right" }]}
         scrollX={scrollX}
-        getPosts={getPolls}
+        getPolls={getPolls}
         navigation={navigation}
       />
 

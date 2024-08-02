@@ -73,7 +73,7 @@ const PollDetails = () => {
           value={newComment}
           onChangeText={setNewComment}
         />
-        <Button title="Post Comment" onPress={handleAddComment} />
+        <Button title="Add Comment" onPress={handleAddComment} />
       </View>
     </View>
   );

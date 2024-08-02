@@ -1,6 +1,6 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import { fetchNotifications, fetchSenderDetails, subscribeToNotifications, unsubscribeFromNotifications } from '../services/notificationService';
-import { fetchPostsByUser } from '../services/postService';
+import { fetchPollsByUser } from '../services/pollService';
 
 const AuthContext = createContext();
 
@@ -8,7 +8,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [notifications, setNotifications] = useState([]);
   const [notificationCount, setNotificationCount] = useState(0);
-  const [userPosts, setUserPosts] = useState([]);
+  const [userPolls, setUserPolls] = useState([]);
 
   const setAuth = (authUser) => {
     setUser(authUser);
@@ -27,10 +27,10 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const fetchAndSetUserPosts = async (userId) => {
-    const res = await fetchPostsByUser(userId);
+  const fetchAndSetUserPolls = async (userId) => {
+    const res = await fetchPollsByUser(userId);
     if (res.success) {
-      setUserPosts(res.data);      
+      setUserPolls(res.data);      
     }
   };
 
@@ -49,7 +49,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     if (user) {
       fetchAndSetNotifications(user.id);
-      fetchAndSetUserPosts(user.id);
+      fetchAndSetUserPolls(user.id);
       const notificationChannel = subscribeToNotifications(user.id, handleNewNotification);
 
       return () => {
@@ -59,7 +59,7 @@ export const AuthProvider = ({ children }) => {
   }, [user]);
 
   return (
-    <AuthContext.Provider value={{ user, setAuth, setUserData, notifications, setNotifications, notificationCount, setNotificationCount, userPosts }}>
+    <AuthContext.Provider value={{ user, setAuth, setUserData, notifications, setNotifications, notificationCount, setNotificationCount, userPolls }}>
       {children}
     </AuthContext.Provider>
   );

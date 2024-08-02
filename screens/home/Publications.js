@@ -5,17 +5,15 @@ import {
   StyleSheet,
   TextInput,
   Button,
-  FlatList,
-  Alert,
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
-import { supabase } from "../../lib/supabase";
 import { useAuth } from "../../contexts/AuthContext";
-import { createPoll } from "../../services/postService";
+import { createPoll } from "../../services/pollService";
 import CustomModal from "../../components/CustomModal";
 
 export default function Publications() {
   const [body, setBody] = useState("");
+  const [category, setCategory] = useState("");
   const [choices, setChoices] = useState(["", ""]);
   const [error, setError] = useState("");
   const { user } = useAuth();
@@ -39,7 +37,7 @@ export default function Publications() {
       choices,
       userId: user.id,
       visibility: "under_review",
-      category: "Bidding",
+      category,
     });
     if (response.success) {
       setBody("");
@@ -76,6 +74,14 @@ export default function Publications() {
         value={body}
         onChangeText={setBody}
         placeholder="Type your question here"
+        style={styles.input}
+      />
+
+<Text style={styles.label}>Category</Text>
+      <TextInput
+        value={category}
+        onChangeText={setCategory}
+        placeholder="Type the category here"
         style={styles.input}
       />
 

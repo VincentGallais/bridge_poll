@@ -41,7 +41,7 @@ const PollItem = ({ poll }) => {
 };
 
 const Profile = () => {
-  const { user: currentUser, setUserData, userPosts } = useAuth();
+  const { user: currentUser, setUserData, userPolls } = useAuth();
   const [user, setUser] = useState({
     pseudonyme: "",
     image: null,
@@ -222,9 +222,9 @@ const Profile = () => {
         <View style={{ marginTop: 26, marginHorizontal: 26 }}>
           <Text>Mes sondages publiés :</Text>
           <FlatList
-            data={userPosts} // Assurez-vous que userPosts est défini
+            data={userPolls}
             renderItem={({ item }) => <PollItem poll={item} />}
-            keyExtractor={(item) => item.id.toString()} // Utilisez une clé unique pour chaque élément
+            keyExtractor={(item) => item.id.toString()}
           />
         </View>
       </View>

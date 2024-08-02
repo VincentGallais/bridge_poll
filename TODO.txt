@@ -1,7 +1,5 @@
-Choix catégory sur le create poll
-Je veux que le header soit statique
-Ne pas afficher le profil par défaut sur la page profil pendant 1ms
-Page pollDetails à continuer (https://youtu.be/_ivIUCSOZ78?t=6964)
+Mettre l'image de l'user dans auth pour éviter de charger à chaque fois
+Page PollDetails à continuer (prendre tuto code by nomi) (https://youtu.be/_ivIUCSOZ78?t=6964)
 
 Page profile :
     Améliorer la vue "mes sondages publiés" (s'abonner aux mises à jour en eq sur user.id)
@@ -39,6 +37,7 @@ Autre :
     Brancher crashlytics
     Renommer chaque occurence de "post" en "poll"
     Icône de l'application
+    Handle notification clic
 
     V2 : Trier StackedCircularAvatar pour afficher les following en premier
     V2 : Pouvoir supprimer ses propres polls
