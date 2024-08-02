@@ -12,7 +12,6 @@ import Icon from "../assets/icons";
 const Header = ({ navigation, page }) => {
   const { user, notificationCount } = useAuth();
 
-  // Modale de filtre sur les quizz
   const [filterOptions, setFilterOptions] = useState({
     quizzDate: "Last Week",
     quizzType: "Lead",
@@ -156,7 +155,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "transparent",
-    marginRight: 16,
+    marginRight: 8,
     borderColor: "#ccc",
     borderRadius: 9999,
     borderWidth: 1,

@@ -50,12 +50,12 @@ const CustomModal = ({ messageType, buttonText, headerText, coreText, onClose, o
             ) : (
               <View style={styles.buttonContainer}>
                 <Button
-                  title="Cancel"
+                  title="Annuler"
                   buttonStyle={{ width: "48%", backgroundColor: 'gray' }}
                   onPress={onClose}
                 />
                 <Button
-                  title="Proceed"
+                  title={buttonText ? buttonText : "Proceed"}
                   buttonStyle={{ width: "48%", backgroundColor: color }}
                   onPress={onProceed}
                 />

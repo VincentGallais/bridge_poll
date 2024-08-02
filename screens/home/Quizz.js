@@ -96,9 +96,9 @@ const Quizz = ({ navigation }) => {
       {leaveAppModalVisible && (
         <CustomModal
           messageType="decision"
-          buttonText="Proceed"
+          buttonText="Quitter"
           headerText="Quitter l'application"
-          coreText="Voulez-vous vraiment quitter l'application?"
+          coreText="Voulez-vous vraiment quitter l'application ?"
           onClose={handleModalClose}
           onProceed={handleProceed}
         />

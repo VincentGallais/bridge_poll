@@ -65,6 +65,12 @@ const Register = ({ navigation }) => {
       return;
     }
 
+    if (pseudonyme.length < 3 ||pseudonyme.length > 10){
+      setErrorModalMessage("Pseudonyme must be between 3 and 10 characters.");
+      setErrorModalVisible(true);
+      return;
+    }
+
     setLoading(true);
 
     // Vérifier si le pseudo est déjà pris
