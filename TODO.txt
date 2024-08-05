@@ -1,16 +1,17 @@
 Page profile :
-    Améliorer la vue "mes sondages publiés" (s'abonner aux mises à jour en eq sur user.id)
-    Créer table followers sur le même modèle que notifications
-    Ajouter search user (pour follow d'autres joueurs en fournissant les premières lettres => recherche dès 3 lettres) & clic sur follower/following me donne la liste (https://www.youtube.com/watch?v=I48oThkeIxw)
+    Améliorer la vue "mes sondages publiés" (s'abonner aux mises à jour en eq sur user.id & redirection vers le sondage en question au clic)
+    Clic sur follower/following me donne la liste des utilisateurs (https://www.youtube.com/watch?v=I48oThkeIxw)
+    Pouvoir s'abonner/désabonner depuis les vue follower/following/searcheUser
+    Mettre à jour s'abonné / abonné sur toutes ces vues
 
 Page quizz :
-    Page PollDetails à continuer (prendre tuto code by nomi) (https://youtu.be/_ivIUCSOZ78?t=6964)
-    Gerer les likes de poll (insert / delete)
+    Page PollDetails à continuer (prendre tuto code by nomi pour les fonctionnalitées) (https://youtu.be/_ivIUCSOZ78?t=6964)
     Mettre à jour le fetching des quizz avec les filtres
     Cliquer sur le nom de l'auteur pour voir son profil
     Cliquer sur les têtes pour voir qui a répondu (possibilité d'ajouter en following) + voir le vote des gens quand l'user a voté
     Mettre la vraie photo de profil des gens qui ont voté (en premier ceux qui ont une photo)
     S'abonner aux changements sur les votes d'un quizz qui est dans notre range de visibilité (ou alors tirer à fond vers la droite lance un refresh)
+    Gerer les suivis (pollLike) de poll (insert / delete)
     
 Notifications :
     Faire marcher les notifications push (https://www.youtube.com/watch?v=Z_84yf7fNsc)
@@ -35,10 +36,11 @@ Autre :
     Brancher crashlytics
     Icône de l'application
 
-    V2 : Trier StackedCircularAvatar pour afficher les following en premier
-    V2 : Pouvoir supprimer ses propres polls
+    V2 : Trier StackedCircularAvatar pour afficher les following en premiers
+    V2 : Pouvoir supprimer / editer ses propres polls
     V2 : Pouvoir se connecter avec google
     V2 : Achivement (https://dribbble.com/search/3d-medals)
     V2 : Bouton partage génère un deeplink vers le sondage dans la vue élargie
     V2 : Poll publicitaire à faire
     V2 : Gérer le paiement & le restore purchase
+    V2 : Voir qui nous suit (premium)

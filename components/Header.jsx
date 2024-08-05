@@ -57,18 +57,6 @@ const Header = ({ navigation, page }) => {
           <TouchableOpacity onPress={openFilterModal}>
             <View style={styles.iconContainer}>
               <FeatherIcon name="sliders" size={20} color="white" />
-              {notificationCount > 0 && (
-                <View
-                  style={{
-                    ...styles.notificationBadge,
-                    backgroundColor: "red",
-                  }}
-                >
-                  <Text style={styles.notificationText}>
-                    {notificationCount}
-                  </Text>
-                </View>
-              )}
             </View>
           </TouchableOpacity>
 
@@ -77,18 +65,6 @@ const Header = ({ navigation, page }) => {
           >
             <View style={styles.iconContainer}>
               <FeatherIcon name="plus" size={20} color="white" />
-              {notificationCount > 0 && (
-                <View
-                  style={{
-                    ...styles.notificationBadge,
-                    backgroundColor: "red",
-                  }}
-                >
-                  <Text style={styles.notificationText}>
-                    {notificationCount}
-                  </Text>
-                </View>
-              )}
             </View>
           </TouchableOpacity>
 

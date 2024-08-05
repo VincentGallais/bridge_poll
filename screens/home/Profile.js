@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   View,
   Image,
-  ScrollView,
   FlatList,
 } from "react-native";
 import FeatherIcon from "react-native-vector-icons/Feather";
@@ -20,10 +19,10 @@ import Icon from "../../assets/icons";
 import { theme } from "../../assets/constants/theme";
 import * as ImagePicker from "expo-image-picker";
 import { uploadFile } from "../../services/imageService";
-import { updateUser } from "../../services/userService";
-import Loading from "../../components/Loading";
+import { searchUser, updateUser } from "../../services/userService";
 import CustomModal from "../../components/CustomModal";
 import moment from "moment";
+import SearchUserModal from "../../components/SearchUserModal";
 
 const PollItem = ({ poll }) => {
   return (
@@ -56,6 +55,12 @@ const Profile = () => {
   });
   const [errorModalVisible, setErrorModalVisible] = useState(false);
   const [errorModalMessage, setErrorModalMessage] = useState("");
+
+  const [searchModalVisible, setSearchModalVisible] = useState(false);
+
+  const handleSearchPlayers = () => {
+    setSearchModalVisible(true);
+  };
 
   useEffect(() => {
     if (currentUser) {
@@ -117,7 +122,6 @@ const Profile = () => {
 
       let userData = { ...user, image: imageUri };
 
-      setLoading(true);
       let imageResult = await uploadFile("profiles", imageUri, true);
       if (imageResult.success) {
         userData.image = imageResult.data;
@@ -126,7 +130,6 @@ const Profile = () => {
       }
 
       const res = await updateUser(currentUser?.id, userData);
-      setLoading(false);
       if (res.success) {
         setUserData({ ...currentUser, ...userData });
       } else {
@@ -188,7 +191,7 @@ const Profile = () => {
         <View style={styles.profileActionsContainer}>
           <TouchableOpacity
             onPress={() => {
-              console.log("Searching for a player ...");
+              handleSearchPlayers();
             }}
             style={styles.profileActionButton}
           >
@@ -225,7 +228,10 @@ const Profile = () => {
         </View>
       </View>
 
-      {/* Modals */}
+      <SearchUserModal
+        visible={searchModalVisible}
+        onClose={() => setSearchModalVisible(false)}
+      />
       <CountryPickerModal
         visible={countryModalVisible}
         onClose={() => setCountryModalVisible(false)}
